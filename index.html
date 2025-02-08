@@ -80,7 +80,7 @@
             <li><a href="#">Dropdown 4</a></li>
           </ul>
         </li>
-        <li><a href="#contact"><i class="bi bi-envelope navicon"></i> Contacto</a></li>
+        <li><a href="#contact"><i class="bi bi-envelope navicon"></i> Contact</a></li>
       </ul>
     </nav>
 
@@ -726,101 +726,71 @@
 
           <div class="col-lg-7">
             <form action="https://formspree.io/f/xdkadlvg" method="POST" class="php-email-form" data-aos="fade-up" data-aos-delay="200" id="contact-form">
-              <!-- El campo oculto _next permite que Formspree redireccione automáticamente en envíos tradicionales -->
-              <input type="hidden" name="_next" value="https://sebastiantutistarvalencia.github.io/portfolio/">
               <div class="row gy-4">
           
                 <div class="col-md-6">
-                  <label for="name-field" class="pb-2">Nombre</label>
-                  <input type="text" name="name" id="name-field" class="form-control" required>
+                  <label for="name-field" class="pb-2">Your Name</label>
+                  <input type="text" name="name" id="name-field" class="form-control" required="">
                 </div>
           
                 <div class="col-md-6">
-                  <label for="email-field" class="pb-2">Correo electrónico</label>
-                  <input type="email" name="email" id="email-field" class="form-control" required>
+                  <label for="email-field" class="pb-2">Your Email</label>
+                  <input type="email" class="form-control" name="email" id="email-field" required="">
                 </div>
           
                 <div class="col-md-12">
-                  <label for="subject-field" class="pb-2">Asunto</label>
-                  <input type="text" name="subject" id="subject-field" class="form-control" required>
+                  <label for="subject-field" class="pb-2">Subject</label>
+                  <input type="text" class="form-control" name="subject" id="subject-field" required="">
                 </div>
           
                 <div class="col-md-12">
-                  <label for="message-field" class="pb-2">Mensaje</label>
-                  <textarea name="message" id="message-field" rows="10" class="form-control" required></textarea>
+                  <label for="message-field" class="pb-2">Message</label>
+                  <textarea class="form-control" name="message" rows="10" id="message-field" required=""></textarea>
                 </div>
           
                 <div class="col-md-12 text-center">
-                  <div class="loading" style="display: none;">Cargando...</div>
-                  <div class="error-message" id="error-message" style="display: none;"></div>
-                  <div class="sent-message" id="sent-message" style="display: none;">Your message has been sent. Thank you!</div>
-                  <button type="submit">Enviar</button>
+                  <div class="loading">Loading...</div>
+                  <div class="error-message" id="error-message"></div>
+                  <div class="sent-message" id="sent-message" style="display:none;">Your message has been sent. Thank you!</div>
+          
+                  <button type="submit">Send Message</button>
                 </div>
           
               </div>
             </form>
-          </div>
-          <!-- End Contact Form -->
+          </div><!-- End Contact Form -->
           
           <script>
-            document.getElementById("contact-form").addEventListener("submit", function(event) {
-              event.preventDefault(); // Evita el envío tradicional
+            // Handle form submission
+            const form = document.getElementById("contact-form");
           
-              const form = event.target;
+            form.addEventListener("submit", function(event) {
+              event.preventDefault(); // Prevent default form submission
+          
               const formData = new FormData(form);
-          
-              // Referencias a los elementos de estado
-              const loadingEl = form.querySelector('.loading');
-              const errorMessageEl = document.getElementById("error-message");
-              const sentMessageEl = document.getElementById("sent-message");
-          
-              // Muestra el indicador de carga
-              if (loadingEl) loadingEl.style.display = "block";
-              // Esconde mensajes anteriores
-              if (errorMessageEl) errorMessageEl.style.display = "none";
-              if (sentMessageEl) sentMessageEl.style.display = "none";
-          
+              
+              // Send form data using Fetch API
               fetch(form.action, {
                 method: "POST",
-                headers: {
-                  "Accept": "application/json"  // Indica que esperamos respuesta en JSON
-                },
                 body: formData
               })
-              .then(response => {
-                // Si la respuesta HTTP no es 200, lanza un error
-                if (!response.ok) {
-                  throw new Error("Error en la respuesta del servidor");
-                }
-                return response.json();
-              })
+              .then(response => response.json())
               .then(data => {
                 if (data.ok) {
-                  // Si el servidor envía un campo "next", redirige
-                  if (data.next) {
-                    window.location.href = data.next;
-                  } else {
-                    // O muestra el mensaje de éxito
-                    if (sentMessageEl) sentMessageEl.style.display = "block";
-                    form.reset();
-                  }
+                  // Show success message and hide form
+                  document.getElementById("sent-message").style.display = "block";
+                  form.reset();
                 } else {
-                  throw new Error("El servidor indicó un fallo en el envío");
+                  // Show error message
+                  document.getElementById("sent-message").innerText = "Exitoso";
                 }
               })
               .catch(error => {
-                console.error("Error:", error);
-                if (errorMessageEl) {
-                  errorMessageEl.innerText = "Error al enviar el formulario. Inténtalo de nuevo.";
-                  errorMessageEl.style.display = "block";
-                }
-              })
-              .finally(() => {
-                if (loadingEl) loadingEl.style.display = "none";
+                // Handle error if Fetch fails
+                document.getElementById("error-message").innerText = "An error occurred. Please try again.";
               });
             });
           </script>
-          
           
           
           
