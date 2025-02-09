@@ -92,8 +92,13 @@
     <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
 
-      <!-- Contenedor para el grafo animado -->
-      <div id="graph-container" data-aos="fade-in"></div>
+      <!-- Contenedor para las visualizaciones -->
+      <div id="visualizations" data-aos="fade-in">
+        <div id="graph-container"></div>
+        <div id="bar-chart"></div>
+        <div id="line-chart"></div>
+        <div id="heatmap"></div>
+      </div>
     
       <div class="container" data-aos="fade-up" data-aos-delay="100">
         <h2>Sebastián Tutistar</h2>
@@ -106,87 +111,52 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
     
     <script>
-      // Configuración del grafo
+      // Configuración general
       const width = 800;
-      const height = 600;
+      const height = 400;
+      const margin = { top: 20, right: 30, bottom: 40, left: 40 };
     
-      // Crear un SVG dentro del contenedor
-      const svg = d3.select("#graph-container")
+      // 1. Grafo dinámico (como antes)
+      const graphSvg = d3.select("#graph-container")
         .append("svg")
         .attr("width", width)
-        .attr("height", height)
-        .call(d3.zoom().on("zoom", (event) => {
-          svg.attr("transform", event.transform);
-        }))
-        .append("g");
+        .attr("height", height);
     
-      // Datos de ejemplo para el grafo con clusters
       const nodes = [
         { id: "Node 1", group: 1 },
         { id: "Node 2", group: 1 },
         { id: "Node 3", group: 2 },
         { id: "Node 4", group: 2 },
-        { id: "Node 5", group: 3 },
-        { id: "Node 6", group: 3 },
-        { id: "Node 7", group: 4 },
-        { id: "Node 8", group: 4 },
       ];
     
       const links = [
         { source: "Node 1", target: "Node 2" },
         { source: "Node 2", target: "Node 3" },
         { source: "Node 3", target: "Node 4" },
-        { source: "Node 4", target: "Node 5" },
-        { source: "Node 5", target: "Node 6" },
-        { source: "Node 6", target: "Node 7" },
-        { source: "Node 7", target: "Node 8" },
-        { source: "Node 8", target: "Node 1" },
+        { source: "Node 4", target: "Node 1" },
       ];
     
-      // Escala de colores para los clusters
-      const color = d3.scaleOrdinal(d3.schemeCategory10);
-    
-      // Fuerza de simulación para el grafo
       const simulation = d3.forceSimulation(nodes)
         .force("link", d3.forceLink(links).id(d => d.id).distance(100))
         .force("charge", d3.forceManyBody().strength(-200))
         .force("center", d3.forceCenter(width / 2, height / 2))
-        .force("collision", d3.forceCollide().radius(20)) // Evita superposición de nodos
-        .alphaDecay(0) // Evita que la simulación se detenga
-        .velocityDecay(0.1); // Controla la "fricción" del movimiento
+        .alphaDecay(0)
+        .velocityDecay(0.1);
     
-      // Dibujar las líneas (links)
-      const link = svg.selectAll("line")
+      const link = graphSvg.selectAll("line")
         .data(links)
         .enter()
         .append("line")
         .attr("stroke", "#999")
         .attr("stroke-width", 2);
     
-      // Dibujar los nodos
-      const node = svg.selectAll("circle")
+      const node = graphSvg.selectAll("circle")
         .data(nodes)
         .enter()
         .append("circle")
         .attr("r", 10)
-        .attr("fill", d => color(d.group)) // Color basado en el grupo/cluster
-        .call(d3.drag() // Hacer los nodos arrastrables
-          .on("start", dragstarted)
-          .on("drag", dragged)
-          .on("end", dragended)
-        );
+        .attr("fill", d => d3.schemeCategory10[d.group]);
     
-      // Etiquetas de los nodos
-      const label = svg.selectAll("text")
-        .data(nodes)
-        .enter()
-        .append("text")
-        .text(d => d.id)
-        .attr("font-size", 12)
-        .attr("dx", 15)
-        .attr("dy", 4);
-    
-      // Actualizar la posición de los elementos en cada paso de la simulación
       simulation.on("tick", () => {
         link
           .attr("x1", d => d.source.x)
@@ -197,38 +167,127 @@
         node
           .attr("cx", d => d.x)
           .attr("cy", d => d.y);
-    
-        label
-          .attr("x", d => d.x)
-          .attr("y", d => d.y);
       });
     
-      // Funciones para el arrastre de nodos
-      function dragstarted(event, d) {
-        if (!event.active) simulation.alphaTarget(0.3).restart();
-        d.fx = d.x;
-        d.fy = d.y;
-      }
+      // 2. Gráfico de barras animado
+      const barData = [30, 80, 45, 60, 20, 90, 55];
+      const barSvg = d3.select("#bar-chart")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
     
-      function dragged(event, d) {
-        d.fx = event.x;
-        d.fy = event.y;
-      }
+      const xScale = d3.scaleBand()
+        .domain(d3.range(barData.length))
+        .range([margin.left, width - margin.right])
+        .padding(0.1);
     
-      function dragended(event, d) {
-        if (!event.active) simulation.alphaTarget(0);
-        d.fx = null;
-        d.fy = null;
-      }
+      const yScale = d3.scaleLinear()
+        .domain([0, d3.max(barData)])
+        .nice()
+        .range([height - margin.bottom, margin.top]);
     
-      // Añadir un pequeño movimiento constante
+      barSvg.selectAll("rect")
+        .data(barData)
+        .enter()
+        .append("rect")
+        .attr("x", (d, i) => xScale(i))
+        .attr("y", d => yScale(d))
+        .attr("width", xScale.bandwidth())
+        .attr("height", d => yScale(0) - yScale(d))
+        .attr("fill", "#69b3a2");
+    
+      // Animación de barras
       setInterval(() => {
-        nodes.forEach(node => {
-          node.x += (Math.random() - 0.5) * 2; // Movimiento aleatorio en X
-          node.y += (Math.random() - 0.5) * 2; // Movimiento aleatorio en Y
+        barData.forEach((d, i) => {
+          barData[i] = Math.random() * 100; // Actualizar datos
         });
-        simulation.alpha(0.9).restart(); // Reactivar la simulación
-      }, 1000); // Cada 1 segundo
+    
+        barSvg.selectAll("rect")
+          .data(barData)
+          .transition()
+          .duration(1000)
+          .attr("y", d => yScale(d))
+          .attr("height", d => yScale(0) - yScale(d));
+      }, 2000);
+    
+      // 3. Gráfico de líneas en tiempo real
+      const lineData = Array.from({ length: 50 }, (_, i) => ({ x: i, y: Math.random() * 100 }));
+      const lineSvg = d3.select("#line-chart")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+    
+      const xLineScale = d3.scaleLinear()
+        .domain([0, lineData.length - 1])
+        .range([margin.left, width - margin.right]);
+    
+      const yLineScale = d3.scaleLinear()
+        .domain([0, 100])
+        .range([height - margin.bottom, margin.top]);
+    
+      const line = d3.line()
+        .x((d, i) => xLineScale(i))
+        .y(d => yLineScale(d.y));
+    
+      lineSvg.append("path")
+        .datum(lineData)
+        .attr("fill", "none")
+        .attr("stroke", "#69b3a2")
+        .attr("stroke-width", 2)
+        .attr("d", line);
+    
+      // Actualizar gráfico de líneas en tiempo real
+      setInterval(() => {
+        lineData.shift(); // Eliminar el primer punto
+        lineData.push({ x: lineData.length, y: Math.random() * 100 }); // Añadir nuevo punto
+    
+        lineSvg.select("path")
+          .datum(lineData)
+          .attr("d", line);
+      }, 500);
+    
+      // 4. Mapa de calor
+      const heatmapData = d3.range(100).map(() => Math.random());
+      const heatmapSvg = d3.select("#heatmap")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+    
+      const xHeatScale = d3.scaleBand()
+        .domain(d3.range(10))
+        .range([margin.left, width - margin.right])
+        .padding(0.05);
+    
+      const yHeatScale = d3.scaleBand()
+        .domain(d3.range(10))
+        .range([height - margin.bottom, margin.top])
+        .padding(0.05);
+    
+      const colorScale = d3.scaleSequential(d3.interpolatePlasma)
+        .domain([0, 1]);
+    
+      heatmapSvg.selectAll("rect")
+        .data(heatmapData)
+        .enter()
+        .append("rect")
+        .attr("x", (d, i) => xHeatScale(i % 10))
+        .attr("y", (d, i) => yHeatScale(Math.floor(i / 10)))
+        .attr("width", xHeatScale.bandwidth())
+        .attr("height", yHeatScale.bandwidth())
+        .attr("fill", d => colorScale(d));
+    
+      // Animación del mapa de calor
+      setInterval(() => {
+        heatmapData.forEach((d, i) => {
+          heatmapData[i] = Math.random(); // Actualizar datos
+        });
+    
+        heatmapSvg.selectAll("rect")
+          .data(heatmapData)
+          .transition()
+          .duration(1000)
+          .attr("fill", d => colorScale(d));
+      }, 2000);
     </script>
     <!-- /Hero Section -->
 
