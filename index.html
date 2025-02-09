@@ -118,114 +118,71 @@
           <h2>Sebastián Tutistar</h2>
           <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
       </div>
-      <canvas id="graphCanvas"></canvas>
+      <canvas id="cuadroMatrix3d"></canvas>
   </section>
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <script>
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('graphCanvas'), antialias: true, alpha: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setClearColor(0x000000, 0); // Fondo transparente
-
-// Iluminación
-const light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.set(5, 5, 5).normalize();
-scene.add(light);
-scene.add(new THREE.AmbientLight(0x404040));
-
-// Crear un grafo
-const graph = {
-    nodes: [],
-    edges: []
-};
-
-// Parámetros del grafo
-const numNodes = 5; // Número de nodos (etapas de tu carrera)
-const nodeRadius = 0.5; // Tamaño de los nodos
-const edgeRadius = 0.05; // Grosor de las aristas
-const spaceSize = 2; // Tamaño del espacio 3D (reducido)
-
-// Función para generar colores aleatorios
-function randomColor() {
-    return new THREE.Color(Math.random() * 0.5 + 0.5, Math.random() * 0.5 + 0.5, Math.random() * 0.5 + 0.5);
-}
-
-// Posiciones fijas de los nodos
-const nodePositions = [
-    { x: -1.5, y: 1, z: 0, label: "Innovación" },
-    { x: 0, y: 0, z: 0, label: "Progreso" },
-    { x: 1.5, y: 1, z: 0, label: "Desarrollo" },
-    { x: -1.5, y: -1, z: 0, label: "Habilidades Técnicas" },
-    { x: 0, y: -2, z: 0, label: "Objetivos Profesionales" },
-];
-
-// Material de texto blanco
-const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-
-nodePositions.forEach((position) => {
-    const nodeMaterial = new THREE.MeshPhongMaterial({ color: randomColor(), shininess: 100 });
-    const node = new THREE.Mesh(new THREE.SphereGeometry(nodeRadius, 32, 32), nodeMaterial);
-    node.position.set(position.x, position.y, position.z);
-    node.label = position.label; // Asignar etiqueta a cada nodo
-    scene.add(node);
-    graph.nodes.push(node);
-
-    // Crear etiqueta para cada nodo con tamaño de letra reducido
-    const fontLoader = new THREE.FontLoader();
-    fontLoader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function (font) {
-        const textGeometry = new THREE.TextGeometry(position.label, {
-            font: font,
-            size: 0.15,  // Tamaño reducido de la letra
-            height: 0.05,
-        });
-        const text = new THREE.Mesh(textGeometry, textMaterial);
-        text.position.set(position.x - 0.2, position.y + 0.2, position.z); // Ajustar posición de la etiqueta
-        scene.add(text);
-    });
-});
-
-// Crear aristas (cilindros) que conectan los nodos
-const edgeMaterial = new THREE.MeshPhongMaterial({ color: 0xFFFFFF, shininess: 50 });
-
-for (let i = 0; i < numNodes - 1; i++) {
-    const start = graph.nodes[i].position;
-    const end = graph.nodes[i + 1].position;
-    const edgeGeometry = new THREE.CylinderGeometry(edgeRadius, edgeRadius, start.distanceTo(end), 8);
-    const edge = new THREE.Mesh(edgeGeometry, edgeMaterial);
-
-    // Posicionar y rotar la arista para que conecte los nodos correctamente
-    edge.position.copy(start).lerp(end, 0.5);
-    edge.lookAt(end);
-    edge.rotateX(Math.PI / 2); // Ajustar la orientación
-
-    scene.add(edge);
-    graph.edges.push({ start: graph.nodes[i], end: graph.nodes[i + 1], mesh: edge });
-}
-
-// Establecer cámara
-camera.position.z = 5; // Cámara estática más cerca del centro
-
-// Función para renderizar la escena
-function render() {
-    renderer.render(scene, camera);
-}
-
-// Animación fija (sin movimientos)
-function animate() {
-    requestAnimationFrame(animate);
-    render();
-}
-
-animate();
-
-window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
+    document.addEventListener("DOMContentLoaded", function () {
+    // Configurar la escena
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("cuadroMatrix3d"), alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+    
+    // Crear un cuadrado mágico 3x3
+    const magicSquare = [
+        [8, 1, 6],
+        [3, 5, 7],
+        [4, 9, 2]
+    ];
+    
+    // Crear cubos para representar el cuadrado mágico
+    const cubeSize = 1.5;
+    const cubes = [];
+    const fontLoader = new THREE.FontLoader();
+    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
+
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            const geometry = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
+            const cube = new THREE.Mesh(geometry, material);
+            cube.position.set(j * cubeSize - 2, -i * cubeSize + 2, 0);
+            scene.add(cube);
+            cubes.push({ cube, value: magicSquare[i][j] });
+        }
+    }
+    
+    // Cargar fuente y agregar números
+    fontLoader.load("https://threejs.org/examples/fonts/helvetiker_regular.typeface.json", function (font) {
+        cubes.forEach(({ cube, value }) => {
+            const textGeometry = new THREE.TextGeometry(value.toString(), {
+                font: font,
+                size: 0.5,
+                height: 0.1
+            });
+            const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+            const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+            textMesh.position.set(cube.position.x - 0.3, cube.position.y - 0.3, cube.position.z + 0.75);
+            scene.add(textMesh);
+        });
+    });
+
+    camera.position.z = 5;
+
+    // Animación
+    function animate() {
+        requestAnimationFrame(animate);
+        cubes.forEach(({ cube }) => {
+            cube.rotation.y += 0.01;
+        });
+        renderer.render(scene, camera);
+    }
+    animate();
 });
+
 
   </script>
   
