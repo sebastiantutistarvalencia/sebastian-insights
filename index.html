@@ -118,18 +118,20 @@
           <h2>Sebastián Tutistar</h2>
           <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
       </div>
-      <canvas id="threejs-canvas"></canvas>
+      <div id="threejs-container" style="width: 100%; height: 400px;"></div>
   </section>
   
   <script type="module">
       import * as THREE from 'https://cdn.jsdelivr.net/npm/three@latest/build/three.module.js';
       import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@latest/examples/jsm/controls/OrbitControls.js';
   
+      const container = document.getElementById('threejs-container');
       const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('threejs-canvas'), alpha: true });
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      document.body.appendChild(renderer.domElement);
+      const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+      
+      const renderer = new THREE.WebGLRenderer({ alpha: true });
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      container.appendChild(renderer.domElement);
   
       const geometry = new THREE.BoxGeometry();
       const material = new THREE.MeshStandardMaterial({ color: 0x0077ff });
@@ -156,11 +158,12 @@
       animate();
   
       window.addEventListener('resize', () => {
-          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.aspect = container.clientWidth / container.clientHeight;
           camera.updateProjectionMatrix();
-          renderer.setSize(window.innerWidth, window.innerHeight);
+          renderer.setSize(container.clientWidth, container.clientHeight);
       });
   </script>
+  
   
   
   
