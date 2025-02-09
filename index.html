@@ -124,6 +124,16 @@
 </section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<section id="hero" class="hero section dark-background">
+  <img src="assets/img/hero-bg.png" alt="" data-aos="fade-in" class="">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <h2>Sebastián Tutistar</h2>
+      <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
+  </div>
+  <canvas id="graphCanvas"></canvas>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -145,9 +155,9 @@
 
   // Parámetros del grafo
   const numNodes = 5; // Número de nodos (etapas de tu carrera)
-  const nodeRadius = 0.5; // Radio de los nodos
-  const edgeRadius = 0.05; // Grosor de las aristas
-  const spaceSize = 15; // Tamaño del espacio 3D
+  const nodeRadius = 0.3; // Reducido el radio de los nodos
+  const edgeRadius = 0.03; // Reducido el grosor de las aristas
+  const spaceSize = 8; // Tamaño del espacio 3D reducido
   const forceStrength = 0.01; // Fuerza de atracción/repulsión
 
   // Función para generar colores elegantes
@@ -157,11 +167,11 @@
 
   // Crear nodos (esferas) con posiciones definidas para simular etapas
   const nodePositions = [
-      { x: -10, y: 0, z: 0 }, // Formación Académica
-      { x: -5, y: 5, z: 0 },  // Primer empleo
+      { x: -6, y: 0, z: 0 }, // Formación Académica
+      { x: -3, y: 3, z: 0 },  // Primer empleo
       { x: 0, y: 0, z: 0 },   // Habilidades Técnicas
-      { x: 5, y: 5, z: 0 },   // Proyectos Realizados
-      { x: 10, y: 0, z: 0 },  // Objetivos Profesionales
+      { x: 3, y: 3, z: 0 },   // Proyectos Realizados
+      { x: 6, y: 0, z: 0 },  // Objetivos Profesionales
   ];
 
   nodePositions.forEach((position, i) => {
@@ -200,7 +210,7 @@
           const distance = direction.length();
 
           // Si los nodos están demasiado alejados, atraemos al siguiente nodo
-          if (distance > 2) {
+          if (distance > 1.5) {
               const force = direction.normalize().multiplyScalar(forceStrength * distance);
               node.velocity.add(force);
           }
@@ -233,7 +243,7 @@
   }
 
   // Animación
-  camera.position.z = 20;
+  camera.position.z = 15;
 
   const animate = function () {
       requestAnimationFrame(animate);
