@@ -121,6 +121,9 @@
       <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
   </div>
   <canvas id="graphCanvas"></canvas>
+  <div id="nodeInfo" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 24px; color: white; display: none;">
+      <p id="infoText"></p>
+  </div>
 </section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -145,9 +148,9 @@
 
   // Parámetros del grafo
   const numNodes = 5; // Número de nodos (etapas de tu carrera)
-  const nodeRadius = 0.1; // Mucho más pequeño
-  const edgeRadius = 0.01; // Más delgado
-  const spaceSize = 3; // Mucho más pequeño espacio 3D
+  const nodeRadius = 0.5; // Aumento de tamaño de los nodos
+  const edgeRadius = 0.01; // Grosor de las aristas
+  const spaceSize = 3; // Tamaño del espacio 3D
   const forceStrength = 0.01; // Fuerza de atracción/repulsión
 
   // Función para generar colores elegantes
@@ -157,17 +160,18 @@
 
   // Crear nodos (esferas) con posiciones definidas para simular etapas
   const nodePositions = [
-      { x: -2.5, y: 0, z: 0 }, // Formación Académica
-      { x: -1.5, y: 1, z: 0 },  // Primer empleo
-      { x: 0, y: 0, z: 0 },   // Habilidades Técnicas
-      { x: 1.5, y: 1, z: 0 },   // Proyectos Realizados
-      { x: 2.5, y: 0, z: 0 },  // Objetivos Profesionales
+      { x: -2.5, y: 0, z: 0, label: "Innovación" },
+      { x: -1.5, y: 1, z: 0, label: "Progreso" },
+      { x: 0, y: 0, z: 0, label: "Desarrollo" },
+      { x: 1.5, y: 1, z: 0, label: "Habilidades Técnicas" },
+      { x: 2.5, y: 0, z: 0, label: "Objetivos Profesionales" },
   ];
 
   nodePositions.forEach((position, i) => {
       const nodeMaterial = new THREE.MeshPhongMaterial({ color: randomColor(), shininess: 100 });
       const node = new THREE.Mesh(new THREE.SphereGeometry(nodeRadius, 32, 32), nodeMaterial);
       node.position.set(position.x, position.y, position.z);
+      node.label = position.label; // Asignar etiqueta a cada nodo
       node.velocity = new THREE.Vector3(0, 0, 0);
       scene.add(node);
       graph.nodes.push(node);
@@ -190,6 +194,31 @@
       scene.add(edge);
       graph.edges.push({ start: graph.nodes[i], end: graph.nodes[i + 1], mesh: edge });
   }
+
+  // Función para detectar clic en los nodos
+  let raycaster = new THREE.Raycaster();
+  let mouse = new THREE.Vector2();
+
+  function onMouseClick(event) {
+      event.preventDefault();
+      
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+      raycaster.updateMatrixWorld();
+      raycaster.setFromCamera(mouse, camera);
+
+      const intersects = raycaster.intersectObjects(graph.nodes);
+      if (intersects.length > 0) {
+          const node = intersects[0].object;
+          const infoText = document.getElementById("infoText");
+          infoText.textContent = node.label; // Mostrar la etiqueta del nodo
+          document.getElementById("nodeInfo").style.display = "block"; // Mostrar el texto
+      }
+  }
+
+  // Agregar el evento de clic
+  window.addEventListener('click', onMouseClick, false);
 
   // Función para aplicar fuerzas de atracción/repulsión entre nodos
   function applyForces() {
@@ -252,6 +281,7 @@
       renderer.setSize(window.innerWidth, window.innerHeight);
   });
 </script>
+
 
 
 
