@@ -141,10 +141,13 @@
       };
   
       // Parámetros del grafo
-      const numNodes = 20; // Número de nodos
+      const numNodes = 50; // Más nodos para más caos
       const nodeRadius = 0.2; // Radio de los nodos
       const edgeRadius = 0.02; // Grosor de las aristas
-      const spaceSize = 10; // Tamaño del espacio 3D
+      const spaceSize = 15; // Tamaño del espacio 3D
+      const forceStrength = 0.02; // Fuerza de atracción/repulsión
+      const chaosStrength = 0.05; // Fuerza de caos aleatorio
+      const gravityStrength = 0.001; // Fuerza de gravedad
   
       // Crear nodos (esferas)
       const nodeGeometry = new THREE.SphereGeometry(nodeRadius, 32, 32);
@@ -157,6 +160,11 @@
               (Math.random() - 0.5) * spaceSize,
               (Math.random() - 0.5) * spaceSize
           );
+          node.velocity = new THREE.Vector3(
+              (Math.random() - 0.5) * 0.5, // Velocidad inicial más caótica
+              (Math.random() - 0.5) * 0.5,
+              (Math.random() - 0.5) * 0.5
+          );
           scene.add(node);
           graph.nodes.push(node);
       }
@@ -166,7 +174,7 @@
   
       for (let i = 0; i < numNodes; i++) {
           for (let j = i + 1; j < numNodes; j++) {
-              if (Math.random() < 0.2) { // Probabilidad de crear una arista
+              if (Math.random() < 0.3) { // Más aristas para más conexiones
                   const start = graph.nodes[i].position;
                   const end = graph.nodes[j].position;
                   const edgeGeometry = new THREE.CylinderGeometry(edgeRadius, edgeRadius, start.distanceTo(end), 8);
@@ -183,55 +191,85 @@
           }
       }
   
-      // Interacción: Mover nodos con el mouse
-      const raycaster = new THREE.Raycaster();
-      const mouse = new THREE.Vector2();
-      let selectedNode = null;
+      // Función para aplicar fuerzas entre nodos
+      function applyForces() {
+          for (let i = 0; i < graph.nodes.length; i++) {
+              for (let j = i + 1; j < graph.nodes.length; j++) {
+                  const nodeA = graph.nodes[i];
+                  const nodeB = graph.nodes[j];
+                  const direction = new THREE.Vector3().subVectors(nodeB.position, nodeA.position);
+                  const distance = direction.length();
   
-      window.addEventListener('mousedown', (event) => {
-          mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-          mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-          raycaster.setFromCamera(mouse, camera);
-  
-          const intersects = raycaster.intersectObjects(graph.nodes);
-          if (intersects.length > 0) {
-              selectedNode = intersects[0].object;
-          }
-      });
-  
-      window.addEventListener('mousemove', (event) => {
-          if (selectedNode) {
-              mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-              mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-              raycaster.setFromCamera(mouse, camera);
-  
-              const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
-              const intersection = new THREE.Vector3();
-              raycaster.ray.intersectPlane(plane, intersection);
-              selectedNode.position.copy(intersection);
-  
-              // Actualizar aristas conectadas
-              graph.edges.forEach(edge => {
-                  if (edge.start === selectedNode || edge.end === selectedNode) {
-                      const start = edge.start.position;
-                      const end = edge.end.position;
-                      edge.mesh.position.copy(start).lerp(end, 0.5);
-                      edge.mesh.lookAt(end);
-                      edge.mesh.rotateX(Math.PI / 2);
+                  // Fuerza de repulsión (si están muy cerca)
+                  if (distance < nodeRadius * 4) {
+                      const force = direction.normalize().multiplyScalar(-forceStrength / distance);
+                      nodeA.velocity.add(force);
+                      nodeB.velocity.sub(force);
                   }
-              });
-          }
-      });
   
-      window.addEventListener('mouseup', () => {
-          selectedNode = null;
-      });
+                  // Fuerza de atracción (si están conectados por una arista)
+                  const isConnected = graph.edges.some(edge => 
+                      (edge.start === nodeA && edge.end === nodeB) || 
+                      (edge.start === nodeB && edge.end === nodeA)
+                  );
+                  if (isConnected && distance > nodeRadius * 2) {
+                      const force = direction.normalize().multiplyScalar(forceStrength * distance * 0.1);
+                      nodeA.velocity.add(force);
+                      nodeB.velocity.sub(force);
+                  }
+              }
+          }
+  
+          // Aplicar gravedad (atracción hacia el centro)
+          graph.nodes.forEach(node => {
+              const directionToCenter = new THREE.Vector3().subVectors(new THREE.Vector3(0, 0, 0), node.position);
+              node.velocity.add(directionToCenter.multiplyScalar(gravityStrength));
+          });
+  
+          // Aplicar caos (fuerzas aleatorias)
+          graph.nodes.forEach(node => {
+              node.velocity.add(new THREE.Vector3(
+                  (Math.random() - 0.5) * chaosStrength,
+                  (Math.random() - 0.5) * chaosStrength,
+                  (Math.random() - 0.5) * chaosStrength
+              ));
+          });
+      }
+  
+      // Función para actualizar la posición de los nodos y aristas
+      function updatePositions() {
+          graph.nodes.forEach(node => {
+              node.position.add(node.velocity);
+  
+              // Limitar el movimiento dentro del espacio
+              node.position.clamp(
+                  new THREE.Vector3(-spaceSize, -spaceSize, -spaceSize),
+                  new THREE.Vector3(spaceSize, spaceSize, spaceSize)
+              );
+  
+              // Reducir la velocidad gradualmente
+              node.velocity.multiplyScalar(0.95);
+          });
+  
+          graph.edges.forEach(edge => {
+              const start = edge.start.position;
+              const end = edge.end.position;
+              edge.mesh.position.copy(start).lerp(end, 0.5);
+              edge.mesh.lookAt(end);
+              edge.mesh.rotateX(Math.PI / 2);
+              edge.mesh.scale.y = start.distanceTo(end); // Ajustar la longitud de la arista
+          });
+      }
   
       // Animación
-      camera.position.z = 15;
+      camera.position.z = 25;
   
       const animate = function () {
           requestAnimationFrame(animate);
+  
+          applyForces(); // Aplicar fuerzas entre nodos
+          updatePositions(); // Actualizar posiciones
+  
           renderer.render(scene, camera);
       };
   
