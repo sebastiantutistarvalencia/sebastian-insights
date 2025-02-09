@@ -124,7 +124,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <script>
-const scene = new THREE.Scene();
+    const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('graphCanvas'), antialias: true, alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -153,26 +153,23 @@ function randomColor() {
     return new THREE.Color(Math.random() * 0.5 + 0.5, Math.random() * 0.5 + 0.5, Math.random() * 0.5 + 0.5);
 }
 
-// Crear nodos (esferas) con posiciones aleatorias para un grafo más contenido
-const nodePositions = [];
-for (let i = 0; i < numNodes; i++) {
-    nodePositions.push({
-        x: Math.random() * spaceSize * 2 - spaceSize,
-        y: Math.random() * spaceSize * 2 - spaceSize,
-        z: Math.random() * spaceSize * 2 - spaceSize,
-        label: `Etapa ${i + 1}`
-    });
-}
+// Posiciones fijas de los nodos
+const nodePositions = [
+    { x: -1.5, y: 1, z: 0, label: "Innovación" },
+    { x: 0, y: 0, z: 0, label: "Progreso" },
+    { x: 1.5, y: 1, z: 0, label: "Desarrollo" },
+    { x: -1.5, y: -1, z: 0, label: "Habilidades Técnicas" },
+    { x: 0, y: -2, z: 0, label: "Objetivos Profesionales" },
+];
 
 // Material de texto
 const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
 
-nodePositions.forEach((position, i) => {
+nodePositions.forEach((position) => {
     const nodeMaterial = new THREE.MeshPhongMaterial({ color: randomColor(), shininess: 100 });
     const node = new THREE.Mesh(new THREE.SphereGeometry(nodeRadius, 32, 32), nodeMaterial);
     node.position.set(position.x, position.y, position.z);
     node.label = position.label; // Asignar etiqueta a cada nodo
-    node.velocity = new THREE.Vector3(0, 0, 0);
     scene.add(node);
     graph.nodes.push(node);
 
@@ -208,58 +205,19 @@ for (let i = 0; i < numNodes - 1; i++) {
     graph.edges.push({ start: graph.nodes[i], end: graph.nodes[i + 1], mesh: edge });
 }
 
-// Función para aplicar fuerzas de atracción/repulsión entre nodos
-function applyForces() {
-    graph.nodes.forEach((node, i) => {
-        if (i === 0) return; // Evitar repulsión con el primer nodo
-        const prevNode = graph.nodes[i - 1];
-        const direction = new THREE.Vector3().subVectors(node.position, prevNode.position);
-        const distance = direction.length();
+// Establecer cámara
+camera.position.z = 5; // Cámara estática más cerca del centro
 
-        // Si los nodos están demasiado alejados, atraemos al siguiente nodo
-        if (distance > 1) {
-            const force = direction.normalize().multiplyScalar(0.01 * distance);
-            node.velocity.add(force);
-        }
-    });
-}
-
-// Función para actualizar la posición de los nodos y las aristas
-function updatePositions() {
-    graph.nodes.forEach(node => {
-        node.position.add(node.velocity);
-
-        // Limitar el movimiento dentro del espacio 3D
-        node.position.clamp(
-            new THREE.Vector3(-spaceSize, -spaceSize, -spaceSize),
-            new THREE.Vector3(spaceSize, spaceSize, spaceSize)
-        );
-
-        // Reducir la velocidad gradualmente para suavizar el movimiento
-        node.velocity.multiplyScalar(0.95);
-    });
-
-    graph.edges.forEach(edge => {
-        const start = edge.start.position;
-        const end = edge.end.position;
-        edge.mesh.position.copy(start).lerp(end, 0.5);
-        edge.mesh.lookAt(end);
-        edge.mesh.rotateX(Math.PI / 2);
-        edge.mesh.scale.y = start.distanceTo(end); // Ajustar la longitud de la arista
-    });
-}
-
-// Animación
-camera.position.z = 5; // Cámara más cercana
-
-const animate = function () {
-    requestAnimationFrame(animate);
-
-    applyForces(); // Aplicar fuerzas de atracción/repulsión entre nodos
-    updatePositions(); // Actualizar posiciones de los nodos y aristas
-
+// Función para renderizar la escena
+function render() {
     renderer.render(scene, camera);
-};
+}
+
+// Animación fija (sin movimientos)
+function animate() {
+    requestAnimationFrame(animate);
+    render();
+}
 
 animate();
 
@@ -268,6 +226,7 @@ window.addEventListener('resize', () => {
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
+
 
   </script>
   
