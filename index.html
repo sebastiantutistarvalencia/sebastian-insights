@@ -116,58 +116,74 @@
       <img src="assets/img/hero-bg.png" alt="" data-aos="fade-in" class="">
       <div class="container" data-aos="fade-up" data-aos-delay="100">
           <h2>Sebastián Tutistar</h2>
-          <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
+          <p>I'm a <span class="typed" data-typed-items="Data-Driven Engineer, Data Analyst, Insights Specialist"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
       </div>
       <canvas id="dataCanvas"></canvas>
-  </section>
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script>
-      // Configuración de Three.js
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("dataCanvas"), alpha: true });
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      document.getElementById("hero").appendChild(renderer.domElement);
-  
-      // Crear partículas simulando datos
-      const particles = new THREE.Group();
-      scene.add(particles);
-  
-      for (let i = 0; i < 100; i++) {
-          const geometry = new THREE.SphereGeometry(0.1, 16, 16);
-          const material = new THREE.MeshBasicMaterial({ color: Math.random() * 0xffffff });
-          const sphere = new THREE.Mesh(geometry, material);
-          sphere.position.set((Math.random() - 0.5) * 10, (Math.random() - 0.5) * 10, (Math.random() - 0.5) * 10);
-          particles.add(sphere);
-      }
-  
-      camera.position.z = 5;
-  
-      // Animación
-      function animate() {
-          requestAnimationFrame(animate);
-          particles.rotation.x += 0.002;
-          particles.rotation.y += 0.002;
-          renderer.render(scene, camera);
-      }
-      animate();
-  
-      // Responsividad
-      window.addEventListener("resize", () => {
-          renderer.setSize(window.innerWidth, window.innerHeight);
-          camera.aspect = window.innerWidth / window.innerHeight;
-          camera.updateProjectionMatrix();
-      });
-  
-      // Interacción con el mouse
-      window.addEventListener("mousemove", (event) => {
-          const x = (event.clientX / window.innerWidth) * 2 - 1;
-          const y = -(event.clientY / window.innerHeight) * 2 + 1;
-          particles.rotation.x = y * 0.2;
-          particles.rotation.y = x * 0.2;
-      });
-  </script>
+    </section>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Configuración de Three.js
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("dataCanvas"), alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById("hero").appendChild(renderer.domElement);
+    
+        // Crear partículas que simulan el flujo de datos
+        const particles = new THREE.Group();
+        scene.add(particles);
+        const numParticles = 200;
+    
+        // Creación de partículas con movimientos dinámicos
+        let particleArray = [];
+        for (let i = 0; i < numParticles; i++) {
+            const geometry = new THREE.SphereGeometry(0.05, 16, 16);
+            const material = new THREE.MeshBasicMaterial({ color: Math.random() * 0xffffff });
+            const sphere = new THREE.Mesh(geometry, material);
+            particleArray.push(sphere);
+            particles.add(sphere);
+            sphere.position.set((Math.random() - 0.5) * 10, (Math.random() - 0.5) * 10, (Math.random() - 0.5) * 10);
+            sphere.velocity = new THREE.Vector3(Math.random() * 0.1, Math.random() * 0.1, Math.random() * 0.1);  // Velocidad inicial
+        }
+    
+        camera.position.z = 5;
+    
+        // Animación del flujo de datos
+        function animate() {
+            requestAnimationFrame(animate);
+    
+            // Movimiento fluido de las partículas
+            particleArray.forEach(particle => {
+                particle.position.add(particle.velocity);
+    
+                // Condiciones de borde para reubicar las partículas cuando salgan del campo de visión
+                if (particle.position.x > 5 || particle.position.x < -5) particle.velocity.x *= -1;
+                if (particle.position.y > 5 || particle.position.y < -5) particle.velocity.y *= -1;
+                if (particle.position.z > 5 || particle.position.z < -5) particle.velocity.z *= -1;
+            });
+    
+            renderer.render(scene, camera);
+        }
+    
+        animate();
+    
+        // Responsividad
+        window.addEventListener("resize", () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+        });
+    
+        // Interacción con el mouse para mover las partículas
+        window.addEventListener("mousemove", (event) => {
+            const x = (event.clientX / window.innerWidth) * 2 - 1;
+            const y = -(event.clientY / window.innerHeight) * 2 + 1;
+            particles.rotation.x = y * 0.2;
+            particles.rotation.y = x * 0.2;
+        });
+    </script>
+    
   
   
   
