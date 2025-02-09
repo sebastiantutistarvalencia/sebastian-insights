@@ -117,14 +117,14 @@
           <h2>Sebastián Tutistar</h2>
           <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
       </div>
-      <canvas id="graphCanvas"></canvas>
+      <canvas id="globeCanvas"></canvas>
   </section>
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('graphCanvas'), antialias: true, alpha: true });
+      const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('globeCanvas'), antialias: true, alpha: true });
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setClearColor(0x000000, 0); // Fondo transparente
   
@@ -134,147 +134,51 @@
       scene.add(light);
       scene.add(new THREE.AmbientLight(0x404040));
   
-      // Crear un grafo
-      const graph = {
-          nodes: [],
-          edges: []
-      };
+      // Crear el globo terráqueo
+      const globeRadius = 5; // Radio del globo
+      const globeGeometry = new THREE.SphereGeometry(globeRadius, 64, 64);
   
-      // Parámetros del grafo
-      const numNodes = 50; // Más nodos para más caos
-      const nodeRadius = 0.2; // Radio de los nodos
-      const edgeRadius = 0.02; // Grosor de las aristas
-      const spaceSize = 15; // Tamaño del espacio 3D
-      const forceStrength = 0.02; // Fuerza de atracción/repulsión
-      const chaosStrength = 0.05; // Fuerza de caos aleatorio
-      const gravityStrength = 0.001; // Fuerza de gravedad
+      // Textura de la Tierra
+      const textureLoader = new THREE.TextureLoader();
+      const earthTexture = textureLoader.load('https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg');
+      const earthMaterial = new THREE.MeshPhongMaterial({ map: earthTexture, transparent: true });
   
-      // Crear nodos (esferas)
-      const nodeGeometry = new THREE.SphereGeometry(nodeRadius, 32, 32);
-      const nodeMaterial = new THREE.MeshPhongMaterial({ color: 0x00ff00, shininess: 100 });
+      const globe = new THREE.Mesh(globeGeometry, earthMaterial);
+      scene.add(globe);
   
-      for (let i = 0; i < numNodes; i++) {
-          const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
-          node.position.set(
-              (Math.random() - 0.5) * spaceSize,
-              (Math.random() - 0.5) * spaceSize,
-              (Math.random() - 0.5) * spaceSize
-          );
-          node.velocity = new THREE.Vector3(
-              (Math.random() - 0.5) * 0.5, // Velocidad inicial más caótica
-              (Math.random() - 0.5) * 0.5,
-              (Math.random() - 0.5) * 0.5
-          );
-          scene.add(node);
-          graph.nodes.push(node);
-      }
+      // Resaltar Colombia
+      const colombiaGeometry = new THREE.SphereGeometry(globeRadius * 1.001, 64, 64); // Ligeramente más grande
+      const colombiaMaterial = new THREE.MeshPhongMaterial({
+          color: 0xff0000, // Color rojo para Colombia
+          transparent: true,
+          opacity: 0.5
+      });
   
-      // Crear aristas (cilindros)
-      const edgeMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff, shininess: 50 });
+      const colombiaHighlight = new THREE.Mesh(colombiaGeometry, colombiaMaterial);
+      scene.add(colombiaHighlight);
   
-      for (let i = 0; i < numNodes; i++) {
-          for (let j = i + 1; j < numNodes; j++) {
-              if (Math.random() < 0.3) { // Más aristas para más conexiones
-                  const start = graph.nodes[i].position;
-                  const end = graph.nodes[j].position;
-                  const edgeGeometry = new THREE.CylinderGeometry(edgeRadius, edgeRadius, start.distanceTo(end), 8);
-                  const edge = new THREE.Mesh(edgeGeometry, edgeMaterial);
+      // Aplicar máscara para resaltar solo Colombia
+      const colombiaMaskTexture = textureLoader.load('https://i.imgur.com/3QZQZQz.png'); // Mapa de máscara de Colombia
+      colombiaMaterial.alphaMap = colombiaMaskTexture;
+      colombiaMaterial.needsUpdate = true;
   
-                  // Posicionar y rotar la arista
-                  edge.position.copy(start).lerp(end, 0.5);
-                  edge.lookAt(end);
-                  edge.rotateX(Math.PI / 2); // Ajustar la orientación
+      // Posicionar la cámara
+      camera.position.z = 15;
   
-                  scene.add(edge);
-                  graph.edges.push({ start: graph.nodes[i], end: graph.nodes[j], mesh: edge });
-              }
-          }
-      }
-  
-      // Función para aplicar fuerzas entre nodos
-      function applyForces() {
-          for (let i = 0; i < graph.nodes.length; i++) {
-              for (let j = i + 1; j < graph.nodes.length; j++) {
-                  const nodeA = graph.nodes[i];
-                  const nodeB = graph.nodes[j];
-                  const direction = new THREE.Vector3().subVectors(nodeB.position, nodeA.position);
-                  const distance = direction.length();
-  
-                  // Fuerza de repulsión (si están muy cerca)
-                  if (distance < nodeRadius * 4) {
-                      const force = direction.normalize().multiplyScalar(-forceStrength / distance);
-                      nodeA.velocity.add(force);
-                      nodeB.velocity.sub(force);
-                  }
-  
-                  // Fuerza de atracción (si están conectados por una arista)
-                  const isConnected = graph.edges.some(edge => 
-                      (edge.start === nodeA && edge.end === nodeB) || 
-                      (edge.start === nodeB && edge.end === nodeA)
-                  );
-                  if (isConnected && distance > nodeRadius * 2) {
-                      const force = direction.normalize().multiplyScalar(forceStrength * distance * 0.1);
-                      nodeA.velocity.add(force);
-                      nodeB.velocity.sub(force);
-                  }
-              }
-          }
-  
-          // Aplicar gravedad (atracción hacia el centro)
-          graph.nodes.forEach(node => {
-              const directionToCenter = new THREE.Vector3().subVectors(new THREE.Vector3(0, 0, 0), node.position);
-              node.velocity.add(directionToCenter.multiplyScalar(gravityStrength));
-          });
-  
-          // Aplicar caos (fuerzas aleatorias)
-          graph.nodes.forEach(node => {
-              node.velocity.add(new THREE.Vector3(
-                  (Math.random() - 0.5) * chaosStrength,
-                  (Math.random() - 0.5) * chaosStrength,
-                  (Math.random() - 0.5) * chaosStrength
-              ));
-          });
-      }
-  
-      // Función para actualizar la posición de los nodos y aristas
-      function updatePositions() {
-          graph.nodes.forEach(node => {
-              node.position.add(node.velocity);
-  
-              // Limitar el movimiento dentro del espacio
-              node.position.clamp(
-                  new THREE.Vector3(-spaceSize, -spaceSize, -spaceSize),
-                  new THREE.Vector3(spaceSize, spaceSize, spaceSize)
-              );
-  
-              // Reducir la velocidad gradualmente
-              node.velocity.multiplyScalar(0.95);
-          });
-  
-          graph.edges.forEach(edge => {
-              const start = edge.start.position;
-              const end = edge.end.position;
-              edge.mesh.position.copy(start).lerp(end, 0.5);
-              edge.mesh.lookAt(end);
-              edge.mesh.rotateX(Math.PI / 2);
-              edge.mesh.scale.y = start.distanceTo(end); // Ajustar la longitud de la arista
-          });
-      }
-  
-      // Animación
-      camera.position.z = 25;
-  
+      // Animación: Rotar el globo
       const animate = function () {
           requestAnimationFrame(animate);
   
-          applyForces(); // Aplicar fuerzas entre nodos
-          updatePositions(); // Actualizar posiciones
+          // Rotar el globo
+          globe.rotation.y += 0.001;
+          colombiaHighlight.rotation.y += 0.001; // Sincronizar con el globo
   
           renderer.render(scene, camera);
       };
   
       animate();
   
+      // Ajustar el tamaño del canvas al cambiar el tamaño de la ventana
       window.addEventListener('resize', () => {
           camera.aspect = window.innerWidth / window.innerHeight;
           camera.updateProjectionMatrix();
