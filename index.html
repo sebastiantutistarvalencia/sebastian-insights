@@ -124,7 +124,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
     // Configurar la escena
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -140,7 +140,7 @@
     ];
     
     // Crear cubos para representar el cuadrado mágico
-    const cubeSize = 1.5;
+    const cubeSize = 1.0;
     const cubes = [];
     const fontLoader = new THREE.FontLoader();
     const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
@@ -149,7 +149,7 @@
         for (let j = 0; j < 3; j++) {
             const geometry = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
             const cube = new THREE.Mesh(geometry, material);
-            cube.position.set(j * cubeSize - 2, -i * cubeSize + 2, 0);
+            cube.position.set(j * cubeSize - 1.5, -i * cubeSize + 1.5, 0);
             scene.add(cube);
             cubes.push({ cube, value: magicSquare[i][j] });
         }
@@ -160,12 +160,12 @@
         cubes.forEach(({ cube, value }) => {
             const textGeometry = new THREE.TextGeometry(value.toString(), {
                 font: font,
-                size: 0.5,
+                size: 0.3,
                 height: 0.1
             });
             const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
             const textMesh = new THREE.Mesh(textGeometry, textMaterial);
-            textMesh.position.set(cube.position.x - 0.3, cube.position.y - 0.3, cube.position.z + 0.75);
+            textMesh.position.set(cube.position.x - 0.15, cube.position.y - 0.15, cube.position.z + 0.5);
             scene.add(textMesh);
         });
     });
