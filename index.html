@@ -132,6 +132,16 @@
 </section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<section id="hero" class="hero section dark-background">
+  <img src="assets/img/hero-bg.png" alt="" data-aos="fade-in" class="">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <h2>Sebastián Tutistar</h2>
+      <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
+  </div>
+  <canvas id="graphCanvas"></canvas>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -158,11 +168,16 @@
   const spaceSize = 10; // Tamaño del espacio 3D
   const forceStrength = 0.01; // Fuerza de atracción/repulsión
 
+  // Función para generar colores aleatorios
+  function randomColor() {
+      return new THREE.Color(Math.random(), Math.random(), Math.random());
+  }
+
   // Crear nodos (esferas)
   const nodeGeometry = new THREE.SphereGeometry(nodeRadius, 32, 32);
-  const nodeMaterial = new THREE.MeshPhongMaterial({ color: 0x00ff00, shininess: 100 });
 
   for (let i = 0; i < numNodes; i++) {
+      const nodeMaterial = new THREE.MeshPhongMaterial({ color: randomColor(), shininess: 100 });
       const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
       node.position.set(
           (Math.random() - 0.5) * spaceSize,
