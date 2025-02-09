@@ -124,7 +124,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <script>
-    const scene = new THREE.Scene();
+const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('graphCanvas'), antialias: true, alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -158,10 +158,11 @@ const nodePositions = [
     { x: -1.5, y: 1, z: 0, label: "Innovación" },
     { x: 0, y: 0, z: 0, label: "Progreso" },
     { x: 1.5, y: 1, z: 0, label: "Desarrollo" },
-    { x: 0, y: -2, z: 0, label: "Objetivos Empresariales" },
+    { x: -1.5, y: -1, z: 0, label: "Habilidades Técnicas" },
+    { x: 0, y: -2, z: 0, label: "Objetivos Profesionales" },
 ];
 
-// Material de texto
+// Material de texto blanco
 const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
 
 nodePositions.forEach((position) => {
@@ -172,16 +173,16 @@ nodePositions.forEach((position) => {
     scene.add(node);
     graph.nodes.push(node);
 
-    // Crear etiqueta para cada nodo
+    // Crear etiqueta para cada nodo con tamaño de letra reducido
     const fontLoader = new THREE.FontLoader();
     fontLoader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function (font) {
         const textGeometry = new THREE.TextGeometry(position.label, {
             font: font,
-            size: 0.2,
+            size: 0.15,  // Tamaño reducido de la letra
             height: 0.05,
         });
         const text = new THREE.Mesh(textGeometry, textMaterial);
-        text.position.set(position.x - 0.2, position.y + 0.3, position.z); // Ajustar posición de la etiqueta
+        text.position.set(position.x - 0.2, position.y + 0.2, position.z); // Ajustar posición de la etiqueta
         scene.add(text);
     });
 });
@@ -225,7 +226,6 @@ window.addEventListener('resize', () => {
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
-
 
   </script>
   
