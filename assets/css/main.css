@@ -17,20 +17,6 @@
   --nav-font: "Poppins",  sans-serif;
 }
 
-.hero .container {
-  position: relative;
-  z-index: 1; /* Asegúrate de que el texto esté por encima del gráfico */
-}
-
-.graph-canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1; /* Para que el contenido de texto quede encima */
-}
-
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
 :root { 
   --background-color: #ffffff; /* Background color for the entire website, including individual sections */
