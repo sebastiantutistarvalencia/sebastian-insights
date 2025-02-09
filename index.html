@@ -89,261 +89,105 @@
 
   <main class="main">
 
-    <!-- Hero Section -->
-    <section id="hero" class="hero section dark-background">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-      <!-- Contenedor para las visualizaciones -->
-      <div id="visualizations" data-aos="fade-in">
-        <div id="graph-container" class="visualization"></div>
-        <div id="bar-chart" class="visualization"></div>
-        <div id="line-chart" class="visualization"></div>
-        <div id="heatmap" class="visualization"></div>
-      </div>
-    
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <h2>Sebastián Tutistar</h2>
-        <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
-      </div>
-    
-    </section>
-    <section id="hero" class="hero section dark-background">
+<!-- Hero Section -->
+<section id="hero" class="hero section dark-background">
+  <!-- Canvas para la animación -->
+  <canvas id="graph-animation" class="graph-canvas"></canvas>
 
-      <!-- Contenedor para las visualizaciones -->
-      <div id="visualizations" data-aos="fade-in">
-        <div id="graph-container" class="visualization"></div>
-        <div id="bar-chart" class="visualization"></div>
-        <div id="line-chart" class="visualization"></div>
-        <div id="heatmap" class="visualization"></div>
-      </div>
-    
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <h2>Sebastián Tutistar</h2>
-        <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
-      </div>
-    
-    </section>
-    
-    <!-- Incluir D3.js -->
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-    
-    <!-- Estilos CSS -->
-    <style>
-      #hero {
-        display: flex;
-        flex-direction: column;
-        align-items: center; /* Centrar horizontalmente */
-        justify-content: center; /* Centrar verticalmente */
-        height: 100vh; /* Altura completa de la ventana */
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <h2>Sebastián Tutistar</h2>
+    <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
+  </div>
+</section><!-- /Hero Section -->
+
+<script>
+  // Configuración de la escena Three.js
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('graph-animation'), alpha: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+  // Crear nodos (puntos) y conexiones (aristas)
+  const nodes = [];
+  const edges = [];
+  const numNodes = 100; // Número de nodos
+  const maxDistance = 50; // Distancia máxima para conectar nodos
+
+  // Crear geometría y material para los nodos
+  const nodeGeometry = new THREE.SphereGeometry(0.2, 8, 8);
+  const nodeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+
+  // Crear nodos y agregarlos a la escena
+  for (let i = 0; i < numNodes; i++) {
+    const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
+    node.position.set(
+      (Math.random() - 0.5) * 50,
+      (Math.random() - 0.5) * 50,
+      (Math.random() - 0.5) * 50
+    );
+    nodes.push(node);
+    scene.add(node);
+  }
+
+  // Crear conexiones entre nodos cercanos
+  for (let i = 0; i < numNodes; i++) {
+    for (let j = i + 1; j < numNodes; j++) {
+      const distance = nodes[i].position.distanceTo(nodes[j].position);
+      if (distance < maxDistance) {
+        const edgeGeometry = new THREE.BufferGeometry().setFromPoints([
+          nodes[i].position,
+          nodes[j].position
+        ]);
+        const edgeMaterial = new THREE.LineBasicMaterial({ color: 0x00ff00, transparent: true, opacity: 0.5 });
+        const edge = new THREE.Line(edgeGeometry, edgeMaterial);
+        edges.push(edge);
+        scene.add(edge);
       }
-    
-      #visualizations {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr); /* Dos columnas */
-        grid-template-rows: repeat(2, 1fr); /* Dos filas */
-        gap: 10px; /* Espacio entre visualizaciones */
-        width: 90%; /* Ancho del contenedor */
-        max-width: 1200px; /* Ancho máximo */
-        margin: 0 auto; /* Centrar horizontalmente */
-      }
-    
-      .visualization {
-        width: 100%;
-        height: 100%;
-        border: 1px solid #ccc; /* Borde para distinguir las visualizaciones */
-        box-sizing: border-box;
-      }
-    
-      .visualization svg {
-        width: 100%;
-        height: 100%;
-      }
-    
-      .container {
-        text-align: center; /* Centrar el texto */
-        margin-top: 20px; /* Espacio entre las visualizaciones y el texto */
-      }
-    </style>
-    
-    <script>
-      // Configuración general
-      const width = 400; // Ancho reducido para ajustarse al diseño
-      const height = 280; // Altura reducida para ajustarse al diseño
-      const margin = { top: 20, right: 30, bottom: 40, left: 40 };
-    
-      // 1. Grafo dinámico
-      const graphSvg = d3.select("#graph-container")
-        .append("svg")
-        .attr("width", width)
-        .attr("height", height);
-    
-      const nodes = [
-        { id: "Node 1", group: 1 },
-        { id: "Node 2", group: 1 },
-        { id: "Node 3", group: 2 },
-        { id: "Node 4", group: 2 },
-      ];
-    
-      const links = [
-        { source: "Node 1", target: "Node 2" },
-        { source: "Node 2", target: "Node 3" },
-        { source: "Node 3", target: "Node 4" },
-        { source: "Node 4", target: "Node 1" },
-      ];
-    
-      const simulation = d3.forceSimulation(nodes)
-        .force("link", d3.forceLink(links).id(d => d.id).distance(100))
-        .force("charge", d3.forceManyBody().strength(-200))
-        .force("center", d3.forceCenter(width / 2, height / 2))
-        .alphaDecay(0)
-        .velocityDecay(0.1);
-    
-      const link = graphSvg.selectAll("line")
-        .data(links)
-        .enter()
-        .append("line")
-        .attr("stroke", "#999")
-        .attr("stroke-width", 2);
-    
-      const node = graphSvg.selectAll("circle")
-        .data(nodes)
-        .enter()
-        .append("circle")
-        .attr("r", 10)
-        .attr("fill", d => d3.schemeCategory10[d.group]);
-    
-      simulation.on("tick", () => {
-        link
-          .attr("x1", d => d.source.x)
-          .attr("y1", d => d.source.y)
-          .attr("x2", d => d.target.x)
-          .attr("y2", d => d.target.y);
-    
-        node
-          .attr("cx", d => d.x)
-          .attr("cy", d => d.y);
-      });
-    
-      // 2. Gráfico de barras animado
-      const barData = [30, 80, 45, 60, 20, 90, 55];
-      const barSvg = d3.select("#bar-chart")
-        .append("svg")
-        .attr("width", width)
-        .attr("height", height);
-    
-      const xScale = d3.scaleBand()
-        .domain(d3.range(barData.length))
-        .range([margin.left, width - margin.right])
-        .padding(0.1);
-    
-      const yScale = d3.scaleLinear()
-        .domain([0, d3.max(barData)])
-        .nice()
-        .range([height - margin.bottom, margin.top]);
-    
-      barSvg.selectAll("rect")
-        .data(barData)
-        .enter()
-        .append("rect")
-        .attr("x", (d, i) => xScale(i))
-        .attr("y", d => yScale(d))
-        .attr("width", xScale.bandwidth())
-        .attr("height", d => yScale(0) - yScale(d))
-        .attr("fill", "#69b3a2");
-    
-      // Animación de barras
-      setInterval(() => {
-        barData.forEach((d, i) => {
-          barData[i] = Math.random() * 100; // Actualizar datos
-        });
-    
-        barSvg.selectAll("rect")
-          .data(barData)
-          .transition()
-          .duration(1000)
-          .attr("y", d => yScale(d))
-          .attr("height", d => yScale(0) - yScale(d));
-      }, 2000);
-    
-      // 3. Gráfico de líneas en tiempo real
-      const lineData = Array.from({ length: 50 }, (_, i) => ({ x: i, y: Math.random() * 100 }));
-      const lineSvg = d3.select("#line-chart")
-        .append("svg")
-        .attr("width", width)
-        .attr("height", height);
-    
-      const xLineScale = d3.scaleLinear()
-        .domain([0, lineData.length - 1])
-        .range([margin.left, width - margin.right]);
-    
-      const yLineScale = d3.scaleLinear()
-        .domain([0, 100])
-        .range([height - margin.bottom, margin.top]);
-    
-      const line = d3.line()
-        .x((d, i) => xLineScale(i))
-        .y(d => yLineScale(d.y));
-    
-      lineSvg.append("path")
-        .datum(lineData)
-        .attr("fill", "none")
-        .attr("stroke", "#69b3a2")
-        .attr("stroke-width", 2)
-        .attr("d", line);
-    
-      // Actualizar gráfico de líneas en tiempo real
-      setInterval(() => {
-        lineData.shift(); // Eliminar el primer punto
-        lineData.push({ x: lineData.length, y: Math.random() * 100 }); // Añadir nuevo punto
-    
-        lineSvg.select("path")
-          .datum(lineData)
-          .attr("d", line);
-      }, 500);
-    
-      // 4. Mapa de calor
-      const heatmapData = d3.range(100).map(() => Math.random());
-      const heatmapSvg = d3.select("#heatmap")
-        .append("svg")
-        .attr("width", width)
-        .attr("height", height);
-    
-      const xHeatScale = d3.scaleBand()
-        .domain(d3.range(10))
-        .range([margin.left, width - margin.right])
-        .padding(0.05);
-    
-      const yHeatScale = d3.scaleBand()
-        .domain(d3.range(10))
-        .range([height - margin.bottom, margin.top])
-        .padding(0.05);
-    
-      const colorScale = d3.scaleSequential(d3.interpolatePlasma)
-        .domain([0, 1]);
-    
-      heatmapSvg.selectAll("rect")
-        .data(heatmapData)
-        .enter()
-        .append("rect")
-        .attr("x", (d, i) => xHeatScale(i % 10))
-        .attr("y", (d, i) => yHeatScale(Math.floor(i / 10)))
-        .attr("width", xHeatScale.bandwidth())
-        .attr("height", yHeatScale.bandwidth())
-        .attr("fill", d => colorScale(d));
-    
-      // Animación del mapa de calor
-      setInterval(() => {
-        heatmapData.forEach((d, i) => {
-          heatmapData[i] = Math.random(); // Actualizar datos
-        });
-    
-        heatmapSvg.selectAll("rect")
-          .data(heatmapData)
-          .transition()
-          .duration(1000)
-          .attr("fill", d => colorScale(d));
-      }, 2000);
-    </script>
-    <!-- /Hero Section -->
+    }
+  }
+
+  // Posicionar la cámara
+  camera.position.z = 50;
+
+  // Animación
+  function animate() {
+    requestAnimationFrame(animate);
+
+    // Mover nodos aleatoriamente
+    nodes.forEach(node => {
+      node.position.x += (Math.random() - 0.5) * 0.2;
+      node.position.y += (Math.random() - 0.5) * 0.2;
+      node.position.z += (Math.random() - 0.5) * 0.2;
+    });
+
+    // Actualizar aristas
+    edges.forEach(edge => {
+      const positions = edge.geometry.attributes.position.array;
+      positions[0] = edge.geometry.vertices[0].x;
+      positions[1] = edge.geometry.vertices[0].y;
+      positions[2] = edge.geometry.vertices[0].z;
+      positions[3] = edge.geometry.vertices[1].x;
+      positions[4] = edge.geometry.vertices[1].y;
+      positions[5] = edge.geometry.vertices[1].z;
+      edge.geometry.attributes.position.needsUpdate = true;
+    });
+
+    renderer.render(scene, camera);
+  }
+
+  animate();
+
+  // Ajustar el tamaño del canvas al redimensionar la ventana
+  window.addEventListener('resize', () => {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    renderer.setSize(width, height);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+  });
+</script>
 
     <!-- About Section -->
     <section id="about" class="about section">
