@@ -84,31 +84,69 @@
         <li><a href="#contact"><i class="bi bi-envelope navicon"></i> Contact</a></li>
       </ul>
     </nav>
-
   </header>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <main class="main">
 
-    <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
-
+      <!-- Canvas para el gráfico 3D -->
+      <canvas id="hero-3d-graph"></canvas>
+    
       <div class="container" data-aos="fade-up" data-aos-delay="100">
         <h2>Sebastián Tutistar</h2>
         <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
       </div>
-
-      <div id="store-density"></div>
-
-<script type="module">
-import { chart }
-  from "https://acme.observablehq.cloud/store-density.js";
-
-chart().then((el) => 
-  document.querySelector("#store-density").append(el)
-);
-</script>
-
     </section><!-- /Hero Section -->
+    
+    <script>
+      // Configuración básica de Three.js
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('hero-3d-graph'), alpha: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    
+      // Crear un gráfico dinámico (por ejemplo, una esfera)
+      const geometry = new THREE.SphereGeometry(5, 32, 32);
+      const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
+      const sphere = new THREE.Mesh(geometry, material);
+      scene.add(sphere);
+    
+      // Posicionar la cámara
+      camera.position.z = 15;
+    
+      // Animación del gráfico
+      function animate() {
+        requestAnimationFrame(animate);
+        sphere.rotation.x += 0.01;
+        sphere.rotation.y += 0.01;
+        renderer.render(scene, camera);
+      }
+      animate();
+    
+      // Ajustar el tamaño del canvas cuando cambie el tamaño de la ventana
+      window.addEventListener('resize', () => {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        renderer.setSize(width, height);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+      });
+    </script>
+
+    <style>
+      .hero-3d-graph {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1; /* Para que esté detrás del contenido */
+    }
+    </style>
+
+
 
     <!-- About Section -->
     <section id="about" class="about section">
