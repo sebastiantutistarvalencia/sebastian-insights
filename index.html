@@ -121,40 +121,35 @@
       <canvas id="vitalSignsChart"></canvas>
   </section>
   
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
   document.addEventListener("DOMContentLoaded", function () {
-      const ctx = document.getElementById("vitalSignsChart").getContext("2d");
-      const vitalSignsChart = new Chart(ctx, {
-          type: "line",
-          data: {
-              labels: ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00"],
-              datasets: [
-                  {
-                      label: "Frecuencia Cardíaca (bpm)",
-                      data: [72, 75, 73, 70, 68, 74, 76],
-                      borderColor: "red",
-                      backgroundColor: "rgba(255, 0, 0, 0.2)",
-                      fill: true
-                  },
-                  {
-                      label: "Presión Arterial Sistólica (mmHg)",
-                      data: [120, 118, 119, 121, 122, 117, 116],
-                      borderColor: "blue",
-                      backgroundColor: "rgba(0, 0, 255, 0.2)",
-                      fill: true
-                  }
-              ]
-          },
-          options: {
-              responsive: true,
-              scales: {
-                  y: {
-                      beginAtZero: false
-                  }
-              }
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.getElementById("vitalSignsChart").replaceWith(renderer.domElement);
+      
+      const material = new THREE.LineBasicMaterial({ color: 0xff0000 });
+      const points = [];
+      for (let i = 0; i < 100; i++) {
+          points.push(new THREE.Vector3(i * 0.1, Math.sin(i * 0.1), 0));
+      }
+      const geometry = new THREE.BufferGeometry().setFromPoints(points);
+      const line = new THREE.Line(geometry, material);
+      scene.add(line);
+      
+      camera.position.z = 5;
+      
+      function animate() {
+          requestAnimationFrame(animate);
+          for (let i = 0; i < points.length; i++) {
+              points[i].y = Math.sin(i * 0.1 + Date.now() * 0.002);
           }
-      });
+          geometry.setFromPoints(points);
+          renderer.render(scene, camera);
+      }
+      animate();
   });
   </script>
   
