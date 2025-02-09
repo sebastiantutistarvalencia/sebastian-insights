@@ -91,103 +91,60 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-<!-- Hero Section -->
-<section id="hero" class="hero section dark-background">
-  <!-- Canvas para la animación -->
-  <canvas id="graph-animation" class="graph-canvas"></canvas>
+    <!-- Hero Section -->
+    <section id="hero" class="hero section dark-background">
 
-  <div class="container" data-aos="fade-up" data-aos-delay="100">
-    <h2>Sebastián Tutistar</h2>
-    <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <h2>Sebastián Tutistar</h2>
+        <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
+      </div>
+
+    </section><!-- /Hero Section -->
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <!-- D3.js -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <style>
+    #map { height: 500px; }
+    .bi-chart { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <div class="bi-chart">
+    <h3>Gráfico de Barras (Ejemplo BI)</h3>
+    <svg width="400" height="200"></svg>
   </div>
-</section><!-- /Hero Section -->
 
-<script>
-  // Configuración de la escena Three.js
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('graph-animation'), alpha: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  <script>
+    // Configuración del mapa
+    const map = L.map('map').setView([4.5709, -74.2973], 5); // Centrado en Colombia
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
 
-  // Crear nodos (puntos) y conexiones (aristas)
-  const nodes = [];
-  const edges = [];
-  const numNodes = 100; // Número de nodos
-  const maxDistance = 50; // Distancia máxima para conectar nodos
+    // Datos de ejemplo para el gráfico de barras
+    const data = [30, 80, 45, 60, 20, 90, 55];
+    const svg = d3.select("svg"),
+          width = 400,
+          height = 200,
+          barWidth = 40,
+          barOffset = 5;
 
-  // Crear geometría y material para los nodos
-  const nodeGeometry = new THREE.SphereGeometry(0.2, 8, 8);
-  const nodeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    svg.selectAll("rect")
+      .data(data)
+      .enter()
+      .append("rect")
+      .attr("x", (d, i) => i * (barWidth + barOffset))
+      .attr("y", d => height - d)
+      .attr("width", barWidth)
+      .attr("height", d => d)
+      .attr("fill", "steelblue");
 
-  // Crear nodos y agregarlos a la escena
-  for (let i = 0; i < numNodes; i++) {
-    const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
-    node.position.set(
-      (Math.random() - 0.5) * 50,
-      (Math.random() - 0.5) * 50,
-      (Math.random() - 0.5) * 50
-    );
-    nodes.push(node);
-    scene.add(node);
-  }
-
-  // Crear conexiones entre nodos cercanos
-  for (let i = 0; i < numNodes; i++) {
-    for (let j = i + 1; j < numNodes; j++) {
-      const distance = nodes[i].position.distanceTo(nodes[j].position);
-      if (distance < maxDistance) {
-        const edgeGeometry = new THREE.BufferGeometry().setFromPoints([
-          nodes[i].position,
-          nodes[j].position
-        ]);
-        const edgeMaterial = new THREE.LineBasicMaterial({ color: 0x00ff00, transparent: true, opacity: 0.5 });
-        const edge = new THREE.Line(edgeGeometry, edgeMaterial);
-        edges.push(edge);
-        scene.add(edge);
-      }
-    }
-  }
-
-  // Posicionar la cámara
-  camera.position.z = 50;
-
-  // Animación
-  function animate() {
-    requestAnimationFrame(animate);
-
-    // Mover nodos aleatoriamente
-    nodes.forEach(node => {
-      node.position.x += (Math.random() - 0.5) * 0.2;
-      node.position.y += (Math.random() - 0.5) * 0.2;
-      node.position.z += (Math.random() - 0.5) * 0.2;
-    });
-
-    // Actualizar aristas
-    edges.forEach(edge => {
-      const positions = edge.geometry.attributes.position.array;
-      positions[0] = edge.geometry.vertices[0].x;
-      positions[1] = edge.geometry.vertices[0].y;
-      positions[2] = edge.geometry.vertices[0].z;
-      positions[3] = edge.geometry.vertices[1].x;
-      positions[4] = edge.geometry.vertices[1].y;
-      positions[5] = edge.geometry.vertices[1].z;
-      edge.geometry.attributes.position.needsUpdate = true;
-    });
-
-    renderer.render(scene, camera);
-  }
-
-  animate();
-
-  // Ajustar el tamaño del canvas al redimensionar la ventana
-  window.addEventListener('resize', () => {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    renderer.setSize(width, height);
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
-  });
-</script>
+    // Aquí puedes agregar más elementos de BI, como gráficos de líneas, etc.
+  </script>
 
     <!-- About Section -->
     <section id="about" class="about section">
