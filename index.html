@@ -84,74 +84,67 @@
         <li><a href="#contact"><i class="bi bi-envelope navicon"></i> Contact</a></li>
       </ul>
     </nav>
-  </header>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  </header>
 
   <main class="main">
 
+    <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
-      <!-- Canvas para el gráfico 3D -->
-      <canvas id="hero-3d-graph"></canvas>
+      <!-- Canvas para el mapa 3D -->
+      <canvas id="3d-map" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;"></canvas>
     
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="container" data-aos="fade-up" data-aos-delay="100" style="position: relative; z-index: 1;">
         <h2>Sebastián Tutistar</h2>
         <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
       </div>
-    </section><!-- /Hero Section -->
+    </section>
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-      // Configuración básica de Three.js
+      // Configuración de Three.js
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('hero-3d-graph'), alpha: true });
+      const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('3d-map'), alpha: true });
       renderer.setSize(window.innerWidth, window.innerHeight);
     
-      // Crear un gráfico dinámico (por ejemplo, una esfera)
-      const geometry = new THREE.SphereGeometry(5, 32, 32);
-      const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
-      const sphere = new THREE.Mesh(geometry, material);
-      scene.add(sphere);
+      // Crear un mapa coroplético básico
+      const geometry = new THREE.PlaneGeometry(10, 5, 10, 5);
+      const material = new THREE.MeshBasicMaterial({ 
+        vertexColors: true,
+        wireframe: false,
+        side: THREE.DoubleSide
+      });
     
-      // Posicionar la cámara
-      camera.position.z = 15;
+      // Colores animados
+      const colors = [];
+      for (let i = 0; i < geometry.attributes.position.count; i++) {
+        colors.push(Math.random(), Math.random(), Math.random());
+      }
+      geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
     
-      // Animación del gráfico
+      const map = new THREE.Mesh(geometry, material);
+      scene.add(map);
+    
+      camera.position.z = 5;
+    
+      // Animación
       function animate() {
         requestAnimationFrame(animate);
-        sphere.rotation.x += 0.01;
-        sphere.rotation.y += 0.01;
+    
+        // Cambiar colores dinámicamente
+        const colors = map.geometry.attributes.color.array;
+        for (let i = 0; i < colors.length; i += 3) {
+          colors[i] = Math.sin(Date.now() * 0.001 + i) * 0.5 + 0.5;
+          colors[i + 1] = Math.cos(Date.now() * 0.001 + i) * 0.5 + 0.5;
+          colors[i + 2] = Math.sin(Date.now() * 0.002 + i) * 0.5 + 0.5;
+        }
+        map.geometry.attributes.color.needsUpdate = true;
+    
         renderer.render(scene, camera);
       }
       animate();
-    
-      // Ajustar el tamaño del canvas cuando cambie el tamaño de la ventana
-      window.addEventListener('resize', () => {
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-        renderer.setSize(width, height);
-        camera.aspect = width / height;
-        camera.updateProjectionMatrix();
-      });
     </script>
-
-    <style>
-    .hero-3d-graph {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0; /* Canvas detrás del texto */
-    }
-
-    .container {
-      position: relative;
-      z-index: 1; /* Texto por encima del canvas */
-    }
-    </style>
-
-
 
     <!-- About Section -->
     <section id="about" class="about section">
