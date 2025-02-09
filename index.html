@@ -91,66 +91,19 @@
   <main class="main">
 
     <!-- Hero Section -->
-    <section id="hero" class="hero section dark-background">
+<section id="hero" class="hero section dark-background">
   <div class="container" data-aos="fade-up" data-aos-delay="100">
     <h2>Sebastián Tutistar</h2>
-    <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
+    <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span>
+      <span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span>
+      <span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span>
+    </p>
+    
+    <div class="image-container">
+      <img src="A_3D_multivectorial_matrix_focused_on_Data_Analysi.png" alt="3D Multivectorial Matrix for Data Analysis">
+    </div>
   </div>
-
-  <!-- Contenedor para la animación 3D -->
-  <div id="3d-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></div>
-</section>
-
-<script>
-  // Configuración de la escena Three.js
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  const renderer = new THREE.WebGLRenderer({ alpha: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.getElementById('3d-container').appendChild(renderer.domElement);
-
-  // Crear una matriz de puntos
-  const points = [];
-  const geometry = new THREE.BufferGeometry();
-  const material = new THREE.PointsMaterial({ color: 0x00ff00, size: 0.1 });
-
-  for (let x = -5; x <= 5; x++) {
-    for (let y = -5; y <= 5; y++) {
-      for (let z = -5; z <= 5; z++) {
-        points.push(new THREE.Vector3(x, y, z));
-      }
-    }
-  }
-
-  geometry.setFromPoints(points);
-  const pointCloud = new THREE.Points(geometry, material);
-  scene.add(pointCloud);
-
-  // Posición de la cámara
-  camera.position.z = 15;
-
-  // Animación
-  function animate() {
-    requestAnimationFrame(animate);
-
-    // Rotar la nube de puntos
-    pointCloud.rotation.x += 0.005;
-    pointCloud.rotation.y += 0.005;
-
-    renderer.render(scene, camera);
-  }
-
-  animate();
-
-  // Ajustar el tamaño del renderizador cuando cambie el tamaño de la ventana
-  window.addEventListener('resize', () => {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    renderer.setSize(width, height);
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
-  });
-</script>
+</section><!-- /Hero Section -->
 
     <!-- About Section -->
     <section id="about" class="about section">
