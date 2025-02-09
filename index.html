@@ -114,28 +114,26 @@
 
     <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
-
       <img src="assets/img/hero-bg.png" alt="" data-aos="fade-in" class="">
-
       <div class="container" data-aos="fade-up" data-aos-delay="100">
           <h2>Sebastián Tutistar</h2>
           <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
       </div>
       <canvas id="matrixCanvas"></canvas>
   </section>
-
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
       const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('matrixCanvas'), alpha: true });
       renderer.setSize(window.innerWidth, window.innerHeight);
-
+  
       // Crear vectores (líneas) flotantes
       const vectors = [];
       const numVectors = 50; // Número de vectores
       const vectorLength = 2; // Longitud de los vectores
-
+  
       for (let i = 0; i < numVectors; i++) {
           const startPoint = new THREE.Vector3(
               (Math.random() - 0.5) * 10,
@@ -147,32 +145,72 @@
               startPoint.y + (Math.random() - 0.5) * vectorLength,
               startPoint.z + (Math.random() - 0.5) * vectorLength
           );
-
+  
           const geometry = new THREE.BufferGeometry().setFromPoints([startPoint, endPoint]);
           const material = new THREE.LineBasicMaterial({ color: 0x00ff00 });
           const line = new THREE.Line(geometry, material);
-
+  
           scene.add(line);
-          vectors.push({ line, speed: Math.random() * 0.02 + 0.01 });
+          vectors.push({ 
+              line, 
+              speed: new THREE.Vector3(
+                  (Math.random() - 0.5) * 0.02,
+                  (Math.random() - 0.5) * 0.02,
+                  (Math.random() - 0.5) * 0.02
+              ),
+              position: startPoint.clone()
+          });
       }
-
+  
       camera.position.z = 15;
-
+  
+      // Función para detectar colisiones
+      function checkCollisions() {
+          for (let i = 0; i < vectors.length; i++) {
+              for (let j = i + 1; j < vectors.length; j++) {
+                  const dist = vectors[i].position.distanceTo(vectors[j].position);
+                  if (dist < vectorLength) {
+                      // Simular una colisión cambiando las direcciones
+                      const temp = vectors[i].speed.clone();
+                      vectors[i].speed = vectors[j].speed.clone();
+                      vectors[j].speed = temp;
+  
+                      // Cambiar el color para indicar una "conexión neuronal"
+                      vectors[i].line.material.color.set(0xff0000);
+                      vectors[j].line.material.color.set(0xff0000);
+  
+                      // Restaurar el color después de un tiempo
+                      setTimeout(() => {
+                          vectors[i].line.material.color.set(0x00ff00);
+                          vectors[j].line.material.color.set(0x00ff00);
+                      }, 200);
+                  }
+              }
+          }
+      }
+  
       const animate = function () {
           requestAnimationFrame(animate);
-
+  
           // Mover los vectores
           vectors.forEach(vector => {
-              vector.line.rotation.x += vector.speed * 0.1;
-              vector.line.rotation.y += vector.speed * 0.1;
-              vector.line.rotation.z += vector.speed * 0.1;
+              vector.position.add(vector.speed);
+              vector.line.position.copy(vector.position);
+  
+              // Rebotar en los límites del espacio
+              if (vector.position.x > 5 || vector.position.x < -5) vector.speed.x *= -1;
+              if (vector.position.y > 5 || vector.position.y < -5) vector.speed.y *= -1;
+              if (vector.position.z > 5 || vector.position.z < -5) vector.speed.z *= -1;
           });
-
+  
+          // Verificar colisiones
+          checkCollisions();
+  
           renderer.render(scene, camera);
       };
-
+  
       animate();
-
+  
       window.addEventListener('resize', () => {
           camera.aspect = window.innerWidth / window.innerHeight;
           camera.updateProjectionMatrix();
