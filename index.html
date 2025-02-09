@@ -89,112 +89,103 @@
 
   <main class="main">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
 
     <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
 
-      <!-- Contenedor para el grafo 3D -->
-      <div id="graph3d-container" class="graph3d-container"></div>
-    
+      <!-- Contenedor para el gráfico -->
+      <div id="graph-container" data-aos="fade-in"></div>
+
       <div class="container" data-aos="fade-up" data-aos-delay="100">
         <h2>Sebastián Tutistar</h2>
         <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
-
-        <div> 
-          <script>
-            // Configuración de Three.js
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ alpha: true }); // Fondo transparente
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            document.getElementById('graph3d-container').appendChild(renderer.domElement);
-          
-            // Crear nodos del grafo
-            const nodes = [];
-            const nodeGeometry = new THREE.SphereGeometry(0.1, 32, 32);
-            const nodeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-          
-            for (let i = 0; i < 10; i++) {
-              const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
-              node.position.x = (Math.random() - 0.5) * 10;
-              node.position.y = (Math.random() - 0.5) * 10;
-              node.position.z = (Math.random() - 0.5) * 10;
-              scene.add(node);
-              nodes.push(node);
-            }
-          
-            // Crear conexiones entre nodos
-            const edges = [];
-            const edgeMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
-          
-            for (let i = 0; i < nodes.length; i++) {
-              for (let j = i + 1; j < nodes.length; j++) {
-                const edgeGeometry = new THREE.BufferGeometry().setFromPoints([
-                  nodes[i].position,
-                  nodes[j].position,
-                ]);
-                const edge = new THREE.Line(edgeGeometry, edgeMaterial);
-                scene.add(edge);
-                edges.push(edge);
-              }
-            }
-          
-            // Posición de la cámara
-            camera.position.z = 15;
-          
-            // Animación
-            function animate() {
-              requestAnimationFrame(animate);
-          
-              // Rotar los nodos para un efecto dinámico
-              nodes.forEach(node => {
-                node.rotation.x += 0.01;
-                node.rotation.y += 0.01;
-              });
-          
-              renderer.render(scene, camera);
-            }
-          
-            animate();
-          
-            // Ajustar el tamaño del renderizador al cambiar el tamaño de la ventana
-            window.addEventListener('resize', () => {
-              const width = window.innerWidth;
-              const height = window.innerHeight;
-              renderer.setSize(width, height);
-              camera.aspect = width / height;
-              camera.updateProjectionMatrix();
-            });
-          </script>
-          
-          <style>
-            .graph3d-container {
-              position: absolute;
-              top: 0;
-              left: 0;
-              width: 100%;
-              height: 100%;
-              z-index: -1; /* Para que el grafo esté detrás del contenido */
-            }
-          
-            .hero {
-              position: relative;
-              overflow: hidden;
-            }
-          
-            .dark-background {
-              background-color: #000; /* Fondo oscuro para resaltar el grafo */
-            }
-          </style>
-      
-
-
-        </div>
       </div>
-    
+
     </section><!-- /Hero Section -->
+
+    <script>
+      // Datos del grafo (nodos y enlaces)
+      const graphData = {
+        nodes: [
+          { id: "Engineering", group: 1 },
+          { id: "Data Analyst", group: 2 },
+          { id: "Developer", group: 3 },
+          { id: "Machine Learning", group: 4 },
+          { id: "Big Data", group: 5 },
+          { id: "AI", group: 6 },
+        ],
+        links: [
+          { source: "Engineering", target: "Data Analyst", value: 1 },
+          { source: "Engineering", target: "Developer", value: 2 },
+          { source: "Data Analyst", target: "Machine Learning", value: 1 },
+          { source: "Data Analyst", target: "Big Data", value: 1 },
+          { source: "Developer", target: "AI", value: 1 },
+          { source: "Machine Learning", target: "AI", value: 2 },
+        ],
+      };
     
+      // Configuración del gráfico
+      const width = window.innerWidth;
+      const height = window.innerHeight * 0.6;
+    
+      const svg = d3
+        .select("#graph-container")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+    
+      const simulation = d3
+        .forceSimulation(graphData.nodes)
+        .force(
+          "link",
+          d3.forceLink(graphData.links).id((d) => d.id)
+        )
+        .force("charge", d3.forceManyBody().strength(-1000))
+        .force("center", d3.forceCenter(width / 2, height / 2));
+    
+      const link = svg
+        .append("g")
+        .selectAll("line")
+        .data(graphData.links)
+        .enter()
+        .append("line")
+        .attr("stroke", "#999")
+        .attr("stroke-width", (d) => Math.sqrt(d.value));
+    
+      const node = svg
+        .append("g")
+        .selectAll("circle")
+        .data(graphData.nodes)
+        .enter()
+        .append("circle")
+        .attr("r", 10)
+        .attr("fill", (d) => d3.schemeCategory10[d.group]);
+    
+      const label = svg
+        .append("g")
+        .selectAll("text")
+        .data(graphData.nodes)
+        .enter()
+        .append("text")
+        .text((d) => d.id)
+        .attr("font-size", 12)
+        .attr("dx", 15)
+        .attr("dy", 4);
+    
+      simulation.on("tick", () => {
+        link
+          .attr("x1", (d) => d.source.x)
+          .attr("y1", (d) => d.source.y)
+          .attr("x2", (d) => d.target.x)
+          .attr("y2", (d) => d.target.y);
+    
+        node.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
+    
+        label.attr("x", (d) => d.x).attr("y", (d) => d.y);
+      });
+    </script>
+
     <!-- About Section -->
     <section id="about" class="about section">
 
