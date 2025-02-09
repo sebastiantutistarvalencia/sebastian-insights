@@ -111,101 +111,127 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   
   <main class="main">
-
-    <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
       <img src="assets/img/hero-bg.png" alt="" data-aos="fade-in" class="">
       <div class="container" data-aos="fade-up" data-aos-delay="100">
           <h2>Sebastián Tutistar</h2>
           <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
       </div>
-      <canvas id="matrixCanvas"></canvas>
+      <canvas id="graphCanvas"></canvas>
   </section>
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('matrixCanvas'), alpha: true });
+      const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('graphCanvas'), antialias: true, alpha: true });
       renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setClearColor(0x000000, 0); // Fondo transparente
   
-      // Crear vectores (líneas) flotantes
-      const vectors = [];
-      const numVectors = 50; // Número de vectores
-      const vectorLength = 2; // Longitud de los vectores
+      // Iluminación
+      const light = new THREE.DirectionalLight(0xffffff, 1);
+      light.position.set(5, 5, 5).normalize();
+      scene.add(light);
+      scene.add(new THREE.AmbientLight(0x404040));
   
-      for (let i = 0; i < numVectors; i++) {
-          const startPoint = new THREE.Vector3(
-              (Math.random() - 0.5) * 10,
-              (Math.random() - 0.5) * 10,
-              (Math.random() - 0.5) * 10
+      // Crear un grafo
+      const graph = {
+          nodes: [],
+          edges: []
+      };
+  
+      // Parámetros del grafo
+      const numNodes = 20; // Número de nodos
+      const nodeRadius = 0.2; // Radio de los nodos
+      const edgeRadius = 0.02; // Grosor de las aristas
+      const spaceSize = 10; // Tamaño del espacio 3D
+  
+      // Crear nodos (esferas)
+      const nodeGeometry = new THREE.SphereGeometry(nodeRadius, 32, 32);
+      const nodeMaterial = new THREE.MeshPhongMaterial({ color: 0x00ff00, shininess: 100 });
+  
+      for (let i = 0; i < numNodes; i++) {
+          const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
+          node.position.set(
+              (Math.random() - 0.5) * spaceSize,
+              (Math.random() - 0.5) * spaceSize,
+              (Math.random() - 0.5) * spaceSize
           );
-          const endPoint = new THREE.Vector3(
-              startPoint.x + (Math.random() - 0.5) * vectorLength,
-              startPoint.y + (Math.random() - 0.5) * vectorLength,
-              startPoint.z + (Math.random() - 0.5) * vectorLength
-          );
-  
-          const geometry = new THREE.BufferGeometry().setFromPoints([startPoint, endPoint]);
-          const material = new THREE.LineBasicMaterial({ color: 0x00ff00 });
-          const line = new THREE.Line(geometry, material);
-  
-          scene.add(line);
-          vectors.push({ 
-              line, 
-              speed: new THREE.Vector3(
-                  (Math.random() - 0.5) * 0.02,
-                  (Math.random() - 0.5) * 0.02,
-                  (Math.random() - 0.5) * 0.02
-              ),
-              position: startPoint.clone()
-          });
+          scene.add(node);
+          graph.nodes.push(node);
       }
   
-      camera.position.z = 15;
+      // Crear aristas (cilindros)
+      const edgeMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff, shininess: 50 });
   
-      // Función para detectar colisiones
-      function checkCollisions() {
-          for (let i = 0; i < vectors.length; i++) {
-              for (let j = i + 1; j < vectors.length; j++) {
-                  const dist = vectors[i].position.distanceTo(vectors[j].position);
-                  if (dist < vectorLength) {
-                      // Simular una colisión cambiando las direcciones
-                      const temp = vectors[i].speed.clone();
-                      vectors[i].speed = vectors[j].speed.clone();
-                      vectors[j].speed = temp;
+      for (let i = 0; i < numNodes; i++) {
+          for (let j = i + 1; j < numNodes; j++) {
+              if (Math.random() < 0.2) { // Probabilidad de crear una arista
+                  const start = graph.nodes[i].position;
+                  const end = graph.nodes[j].position;
+                  const edgeGeometry = new THREE.CylinderGeometry(edgeRadius, edgeRadius, start.distanceTo(end), 8);
+                  const edge = new THREE.Mesh(edgeGeometry, edgeMaterial);
   
-                      // Cambiar el color para indicar una "conexión neuronal"
-                      vectors[i].line.material.color.set(0xff0000);
-                      vectors[j].line.material.color.set(0xff0000);
+                  // Posicionar y rotar la arista
+                  edge.position.copy(start).lerp(end, 0.5);
+                  edge.lookAt(end);
+                  edge.rotateX(Math.PI / 2); // Ajustar la orientación
   
-                      // Restaurar el color después de un tiempo
-                      setTimeout(() => {
-                          vectors[i].line.material.color.set(0x00ff00);
-                          vectors[j].line.material.color.set(0x00ff00);
-                      }, 200);
-                  }
+                  scene.add(edge);
+                  graph.edges.push({ start: graph.nodes[i], end: graph.nodes[j], mesh: edge });
               }
           }
       }
   
+      // Interacción: Mover nodos con el mouse
+      const raycaster = new THREE.Raycaster();
+      const mouse = new THREE.Vector2();
+      let selectedNode = null;
+  
+      window.addEventListener('mousedown', (event) => {
+          mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+          mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+          raycaster.setFromCamera(mouse, camera);
+  
+          const intersects = raycaster.intersectObjects(graph.nodes);
+          if (intersects.length > 0) {
+              selectedNode = intersects[0].object;
+          }
+      });
+  
+      window.addEventListener('mousemove', (event) => {
+          if (selectedNode) {
+              mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+              mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+              raycaster.setFromCamera(mouse, camera);
+  
+              const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+              const intersection = new THREE.Vector3();
+              raycaster.ray.intersectPlane(plane, intersection);
+              selectedNode.position.copy(intersection);
+  
+              // Actualizar aristas conectadas
+              graph.edges.forEach(edge => {
+                  if (edge.start === selectedNode || edge.end === selectedNode) {
+                      const start = edge.start.position;
+                      const end = edge.end.position;
+                      edge.mesh.position.copy(start).lerp(end, 0.5);
+                      edge.mesh.lookAt(end);
+                      edge.mesh.rotateX(Math.PI / 2);
+                  }
+              });
+          }
+      });
+  
+      window.addEventListener('mouseup', () => {
+          selectedNode = null;
+      });
+  
+      // Animación
+      camera.position.z = 15;
+  
       const animate = function () {
           requestAnimationFrame(animate);
-  
-          // Mover los vectores
-          vectors.forEach(vector => {
-              vector.position.add(vector.speed);
-              vector.line.position.copy(vector.position);
-  
-              // Rebotar en los límites del espacio
-              if (vector.position.x > 5 || vector.position.x < -5) vector.speed.x *= -1;
-              if (vector.position.y > 5 || vector.position.y < -5) vector.speed.y *= -1;
-              if (vector.position.z > 5 || vector.position.z < -5) vector.speed.z *= -1;
-          });
-  
-          // Verificar colisiones
-          checkCollisions();
-  
           renderer.render(scene, camera);
       };
   
