@@ -121,176 +121,160 @@
   </section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<section id="hero" class="hero section dark-background">
+  <img src="assets/img/hero-bg.png" alt="" data-aos="fade-in" class="">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <h2>Sebastián Tutistar</h2>
+      <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
+  </div>
+  <canvas id="graphCanvas"></canvas>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('graphCanvas'), antialias: true, alpha: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x000000, 0); // Fondo transparente
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('graphCanvas'), antialias: true, alpha: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setClearColor(0x000000, 0); // Fondo transparente
 
-    // Iluminación
-    const light = new THREE.DirectionalLight(0xffffff, 1);
-    light.position.set(5, 5, 5).normalize();
-    scene.add(light);
-    scene.add(new THREE.AmbientLight(0x404040));
+  // Iluminación
+  const light = new THREE.DirectionalLight(0xffffff, 1);
+  light.position.set(5, 5, 5).normalize();
+  scene.add(light);
+  scene.add(new THREE.AmbientLight(0x404040));
 
-    // Grafo de nodos
-    const graph = {
-        nodes: [],
-        edges: []
-    };
+  // Crear un grafo
+  const graph = {
+      nodes: [],
+      edges: []
+  };
 
-    // Parámetros del grafo
-    const numNodes = 20;
-    const nodeRadius = 0.2;
-    const edgeRadius = 0.02;
-    const spaceSize = 10;
-    const forceStrength = 0.01;
+  // Parámetros del grafo
+  const numNodes = 20; // Número de nodos
+  const nodeRadius = 0.2; // Radio de los nodos
+  const edgeRadius = 0.02; // Grosor de las aristas
+  const spaceSize = 10; // Tamaño del espacio 3D
+  const forceStrength = 0.01; // Fuerza de atracción/repulsión
 
-    // Crear nodos (esferas)
-    const nodeGeometry = new THREE.SphereGeometry(nodeRadius, 32, 32);
-    const nodeMaterial = new THREE.MeshPhongMaterial({ color: 0x00ff00, shininess: 100 });
+  // Crear nodos (esferas)
+  const nodeGeometry = new THREE.SphereGeometry(nodeRadius, 32, 32);
+  const nodeMaterial = new THREE.MeshPhongMaterial({ color: 0x00ff00, shininess: 100 });
 
-    for (let i = 0; i < numNodes; i++) {
-        const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
-        node.position.set(
-            (Math.random() - 0.5) * spaceSize,
-            (Math.random() - 0.5) * spaceSize,
-            (Math.random() - 0.5) * spaceSize
-        );
-        node.velocity = new THREE.Vector3(
-            (Math.random() - 0.5) * 0.1,
-            (Math.random() - 0.5) * 0.1,
-            (Math.random() - 0.5) * 0.1
-        );
-        scene.add(node);
-        graph.nodes.push(node);
-    }
+  for (let i = 0; i < numNodes; i++) {
+      const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
+      node.position.set(
+          (Math.random() - 0.5) * spaceSize,
+          (Math.random() - 0.5) * spaceSize,
+          (Math.random() - 0.5) * spaceSize
+      );
+      node.velocity = new THREE.Vector3(
+          (Math.random() - 0.5) * 0.1,
+          (Math.random() - 0.5) * 0.1,
+          (Math.random() - 0.5) * 0.1
+      );
+      scene.add(node);
+      graph.nodes.push(node);
+  }
 
-    // Crear aristas (cilindros)
-    const edgeMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff, shininess: 50 });
+  // Crear aristas (cilindros)
+  const edgeMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff, shininess: 50 });
 
-    for (let i = 0; i < numNodes; i++) {
-        for (let j = i + 1; j < numNodes; j++) {
-            if (Math.random() < 0.2) {
-                const start = graph.nodes[i].position;
-                const end = graph.nodes[j].position;
-                const edgeGeometry = new THREE.CylinderGeometry(edgeRadius, edgeRadius, start.distanceTo(end), 8);
-                const edge = new THREE.Mesh(edgeGeometry, edgeMaterial);
+  for (let i = 0; i < numNodes; i++) {
+      for (let j = i + 1; j < numNodes; j++) {
+          if (Math.random() < 0.2) { // Probabilidad de crear una arista
+              const start = graph.nodes[i].position;
+              const end = graph.nodes[j].position;
+              const edgeGeometry = new THREE.CylinderGeometry(edgeRadius, edgeRadius, start.distanceTo(end), 8);
+              const edge = new THREE.Mesh(edgeGeometry, edgeMaterial);
 
-                // Posicionar y rotar la arista
-                edge.position.copy(start).lerp(end, 0.5);
-                edge.lookAt(end);
-                edge.rotateX(Math.PI / 2); 
+              // Posicionar y rotar la arista
+              edge.position.copy(start).lerp(end, 0.5);
+              edge.lookAt(end);
+              edge.rotateX(Math.PI / 2); // Ajustar la orientación
 
-                scene.add(edge);
-                graph.edges.push({ start: graph.nodes[i], end: graph.nodes[j], mesh: edge });
-            }
-        }
-    }
+              scene.add(edge);
+              graph.edges.push({ start: graph.nodes[i], end: graph.nodes[j], mesh: edge });
+          }
+      }
+  }
 
-    // Crear el globo terráqueo con atmósfera (inicialmente oculto)
-    const globeRadius = 5;
-    const globeGeometry = new THREE.SphereGeometry(globeRadius, 64, 64);
-    const textureLoader = new THREE.TextureLoader();
-    const earthTexture = textureLoader.load('https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg');
-    const earthMaterial = new THREE.MeshPhongMaterial({ map: earthTexture, transparent: true });
+  // Función para aplicar fuerzas entre nodos
+  function applyForces() {
+      for (let i = 0; i < graph.nodes.length; i++) {
+          for (let j = i + 1; j < graph.nodes.length; j++) {
+              const nodeA = graph.nodes[i];
+              const nodeB = graph.nodes[j];
+              const direction = new THREE.Vector3().subVectors(nodeB.position, nodeA.position);
+              const distance = direction.length();
 
-    // Material para la atmósfera
-    const atmosphereGeometry = new THREE.SphereGeometry(globeRadius * 1.05, 64, 64);
-    const atmosphereMaterial = new THREE.MeshBasicMaterial({
-        color: 0xADD8E6, // Color azul para la atmósfera
-        transparent: true,
-        opacity: 0.3
-    });
+              // Fuerza de repulsión (si están muy cerca)
+              if (distance < nodeRadius * 4) {
+                  const force = direction.normalize().multiplyScalar(-forceStrength / distance);
+                  nodeA.velocity.add(force);
+                  nodeB.velocity.sub(force);
+              }
 
-    const globe = new THREE.Mesh(globeGeometry, earthMaterial);
-    const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
-    globe.visible = false; // Hacer invisible al principio
-    atmosphere.visible = false; // Hacer invisible al principio
-    scene.add(globe);
-    scene.add(atmosphere);
+              // Fuerza de atracción (si están conectados por una arista)
+              const isConnected = graph.edges.some(edge => 
+                  (edge.start === nodeA && edge.end === nodeB) || 
+                  (edge.start === nodeB && edge.end === nodeA)
+              );
+              if (isConnected && distance > nodeRadius * 2) {
+                  const force = direction.normalize().multiplyScalar(forceStrength * distance * 0.1);
+                  nodeA.velocity.add(force);
+                  nodeB.velocity.sub(force);
+              }
+          }
+      }
+  }
 
-    // Función para aplicar fuerzas entre nodos
-    function applyForces() {
-        for (let i = 0; i < graph.nodes.length; i++) {
-            for (let j = i + 1; j < graph.nodes.length; j++) {
-                const nodeA = graph.nodes[i];
-                const nodeB = graph.nodes[j];
-                const direction = new THREE.Vector3().subVectors(nodeB.position, nodeA.position);
-                const distance = direction.length();
+  // Función para actualizar la posición de los nodos y aristas
+  function updatePositions() {
+      graph.nodes.forEach(node => {
+          node.position.add(node.velocity);
 
-                // Fuerza de repulsión
-                if (distance < nodeRadius * 4) {
-                    const force = direction.normalize().multiplyScalar(-forceStrength / distance);
-                    nodeA.velocity.add(force);
-                    nodeB.velocity.sub(force);
-                }
+          // Limitar el movimiento dentro del espacio
+          node.position.clamp(
+              new THREE.Vector3(-spaceSize, -spaceSize, -spaceSize),
+              new THREE.Vector3(spaceSize, spaceSize, spaceSize)
+          );
 
-                // Fuerza de atracción
-                const isConnected = graph.edges.some(edge => 
-                    (edge.start === nodeA && edge.end === nodeB) || 
-                    (edge.start === nodeB && edge.end === nodeA)
-                );
-                if (isConnected && distance > nodeRadius * 2) {
-                    const force = direction.normalize().multiplyScalar(forceStrength * distance * 0.1);
-                    nodeA.velocity.add(force);
-                    nodeB.velocity.sub(force);
-                }
-            }
-        }
-    }
+          // Reducir la velocidad gradualmente
+          node.velocity.multiplyScalar(0.95);
+      });
 
-    // Función para actualizar la posición de los nodos y aristas
-    function updatePositions() {
-        graph.nodes.forEach(node => {
-            node.position.add(node.velocity);
-            node.position.clamp(
-                new THREE.Vector3(-spaceSize, -spaceSize, -spaceSize),
-                new THREE.Vector3(spaceSize, spaceSize, spaceSize)
-            );
-            node.velocity.multiplyScalar(0.95);
-        });
+      graph.edges.forEach(edge => {
+          const start = edge.start.position;
+          const end = edge.end.position;
+          edge.mesh.position.copy(start).lerp(end, 0.5);
+          edge.mesh.lookAt(end);
+          edge.mesh.rotateX(Math.PI / 2);
+          edge.mesh.scale.y = start.distanceTo(end); // Ajustar la longitud de la arista
+      });
+  }
 
-        graph.edges.forEach(edge => {
-            const start = edge.start.position;
-            const end = edge.end.position;
-            edge.mesh.position.copy(start).lerp(end, 0.5);
-            edge.mesh.lookAt(end);
-            edge.mesh.rotateX(Math.PI / 2);
-            edge.mesh.scale.y = start.distanceTo(end);
-        });
-    }
+  // Animación
+  camera.position.z = 15;
 
-    // Animación
-    camera.position.z = 15;
+  const animate = function () {
+      requestAnimationFrame(animate);
 
-    const animate = function () {
-        requestAnimationFrame(animate);
-        applyForces(); 
-        updatePositions(); 
+      applyForces(); // Aplicar fuerzas entre nodos
+      updatePositions(); // Actualizar posiciones
 
-        // Mostrar el globo de la Tierra después de unos segundos
-        if (globe.visible === false && Date.now() > startTime + 3000) {
-            globe.visible = true;
-            atmosphere.visible = true;
-        }
+      renderer.render(scene, camera);
+  };
 
-        globe.rotation.y += 0.002; // Rotar el globo
-        atmosphere.rotation.y += 0.002; // Rotar la atmósfera
-        renderer.render(scene, camera);
-    };
+  animate();
 
-    const startTime = Date.now(); // Tiempo de inicio
-    animate();
-
-    window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    });
+  window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+  });
 </script>
-
 
     <!-- About Section -->
     <section id="about" class="about section">
