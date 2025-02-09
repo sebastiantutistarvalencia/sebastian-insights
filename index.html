@@ -99,6 +99,17 @@
         <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
       </div>
 
+      <div id="store-density"></div>
+
+<script type="module">
+import { chart }
+  from "https://acme.observablehq.cloud/store-density.js";
+
+chart().then((el) => 
+  document.querySelector("#store-density").append(el)
+);
+</script>
+
     </section><!-- /Hero Section -->
 
     <!-- About Section -->
