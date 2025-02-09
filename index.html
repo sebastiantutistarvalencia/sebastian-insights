@@ -100,98 +100,101 @@
       <div class="container" data-aos="fade-up" data-aos-delay="100">
         <h2>Sebastián Tutistar</h2>
         <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
+
+        <div> 
+          <script>
+            // Configuración de Three.js
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true }); // Fondo transparente
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.getElementById('graph3d-container').appendChild(renderer.domElement);
+          
+            // Crear nodos del grafo
+            const nodes = [];
+            const nodeGeometry = new THREE.SphereGeometry(0.1, 32, 32);
+            const nodeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+          
+            for (let i = 0; i < 10; i++) {
+              const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
+              node.position.x = (Math.random() - 0.5) * 10;
+              node.position.y = (Math.random() - 0.5) * 10;
+              node.position.z = (Math.random() - 0.5) * 10;
+              scene.add(node);
+              nodes.push(node);
+            }
+          
+            // Crear conexiones entre nodos
+            const edges = [];
+            const edgeMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
+          
+            for (let i = 0; i < nodes.length; i++) {
+              for (let j = i + 1; j < nodes.length; j++) {
+                const edgeGeometry = new THREE.BufferGeometry().setFromPoints([
+                  nodes[i].position,
+                  nodes[j].position,
+                ]);
+                const edge = new THREE.Line(edgeGeometry, edgeMaterial);
+                scene.add(edge);
+                edges.push(edge);
+              }
+            }
+          
+            // Posición de la cámara
+            camera.position.z = 15;
+          
+            // Animación
+            function animate() {
+              requestAnimationFrame(animate);
+          
+              // Rotar los nodos para un efecto dinámico
+              nodes.forEach(node => {
+                node.rotation.x += 0.01;
+                node.rotation.y += 0.01;
+              });
+          
+              renderer.render(scene, camera);
+            }
+          
+            animate();
+          
+            // Ajustar el tamaño del renderizador al cambiar el tamaño de la ventana
+            window.addEventListener('resize', () => {
+              const width = window.innerWidth;
+              const height = window.innerHeight;
+              renderer.setSize(width, height);
+              camera.aspect = width / height;
+              camera.updateProjectionMatrix();
+            });
+          </script>
+          
+          <style>
+            .graph3d-container {
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              z-index: -1; /* Para que el grafo esté detrás del contenido */
+            }
+          
+            .hero {
+              position: relative;
+              overflow: hidden;
+            }
+          
+            .dark-background {
+              background-color: #000; /* Fondo oscuro para resaltar el grafo */
+            }
+          </style>
+      
+
+
+        </div>
       </div>
     
     </section><!-- /Hero Section -->
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     
-    <script>
-      // Configuración de Three.js
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      const renderer = new THREE.WebGLRenderer({ alpha: true }); // Fondo transparente
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      document.getElementById('graph3d-container').appendChild(renderer.domElement);
-    
-      // Crear nodos del grafo
-      const nodes = [];
-      const nodeGeometry = new THREE.SphereGeometry(0.1, 32, 32);
-      const nodeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    
-      for (let i = 0; i < 10; i++) {
-        const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
-        node.position.x = (Math.random() - 0.5) * 10;
-        node.position.y = (Math.random() - 0.5) * 10;
-        node.position.z = (Math.random() - 0.5) * 10;
-        scene.add(node);
-        nodes.push(node);
-      }
-    
-      // Crear conexiones entre nodos
-      const edges = [];
-      const edgeMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
-    
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const edgeGeometry = new THREE.BufferGeometry().setFromPoints([
-            nodes[i].position,
-            nodes[j].position,
-          ]);
-          const edge = new THREE.Line(edgeGeometry, edgeMaterial);
-          scene.add(edge);
-          edges.push(edge);
-        }
-      }
-    
-      // Posición de la cámara
-      camera.position.z = 15;
-    
-      // Animación
-      function animate() {
-        requestAnimationFrame(animate);
-    
-        // Rotar los nodos para un efecto dinámico
-        nodes.forEach(node => {
-          node.rotation.x += 0.01;
-          node.rotation.y += 0.01;
-        });
-    
-        renderer.render(scene, camera);
-      }
-    
-      animate();
-    
-      // Ajustar el tamaño del renderizador al cambiar el tamaño de la ventana
-      window.addEventListener('resize', () => {
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-        renderer.setSize(width, height);
-        camera.aspect = width / height;
-        camera.updateProjectionMatrix();
-      });
-    </script>
-    
-    <style>
-      .graph3d-container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1; /* Para que el grafo esté detrás del contenido */
-      }
-    
-      .hero {
-        position: relative;
-        overflow: hidden;
-      }
-    
-      .dark-background {
-        background-color: #000; /* Fondo oscuro para resaltar el grafo */
-      }
-    </style>
-
     <!-- About Section -->
     <section id="about" class="about section">
 
