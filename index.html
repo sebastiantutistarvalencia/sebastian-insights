@@ -106,19 +106,44 @@
       </div>
     
     </section>
+    <section id="hero" class="hero section dark-background">
+
+      <!-- Contenedor para las visualizaciones -->
+      <div id="visualizations" data-aos="fade-in">
+        <div id="graph-container" class="visualization"></div>
+        <div id="bar-chart" class="visualization"></div>
+        <div id="line-chart" class="visualization"></div>
+        <div id="heatmap" class="visualization"></div>
+      </div>
+    
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <h2>Sebastián Tutistar</h2>
+        <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
+      </div>
+    
+    </section>
     
     <!-- Incluir D3.js -->
     <script src="https://d3js.org/d3.v7.min.js"></script>
     
     <!-- Estilos CSS -->
     <style>
+      #hero {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Centrar horizontalmente */
+        justify-content: center; /* Centrar verticalmente */
+        height: 100vh; /* Altura completa de la ventana */
+      }
+    
       #visualizations {
         display: grid;
         grid-template-columns: repeat(2, 1fr); /* Dos columnas */
         grid-template-rows: repeat(2, 1fr); /* Dos filas */
         gap: 10px; /* Espacio entre visualizaciones */
-        width: 100%;
-        height: 600px; /* Altura total del contenedor */
+        width: 90%; /* Ancho del contenedor */
+        max-width: 1200px; /* Ancho máximo */
+        margin: 0 auto; /* Centrar horizontalmente */
       }
     
       .visualization {
@@ -131,6 +156,11 @@
       .visualization svg {
         width: 100%;
         height: 100%;
+      }
+    
+      .container {
+        text-align: center; /* Centrar el texto */
+        margin-top: 20px; /* Espacio entre las visualizaciones y el texto */
       }
     </style>
     
