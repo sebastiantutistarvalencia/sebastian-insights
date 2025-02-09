@@ -17,6 +17,10 @@
   --nav-font: "Poppins",  sans-serif;
 }
 
+.hero .container {
+  position: relative;
+  z-index: 1; /* Asegúrate de que el texto esté por encima del gráfico */
+}
 
 .graph-canvas {
   position: absolute;
