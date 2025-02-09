@@ -121,42 +121,51 @@
   </section>
   
   <script>
-    // Asegúrate de que el mapa de la Tierra y el resaltado de Colombia se visualicen correctamente
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('globeCanvas'), antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0x000000, 0); // Fondo transparente
 
-    // Iluminación
-    const light = new THREE.DirectionalLight(0xffffff, 1);
+    // Iluminación mejorada
+    const light = new THREE.DirectionalLight(0xffffff, 1.5); // Aumentar la intensidad de la luz
     light.position.set(5, 5, 5).normalize();
     scene.add(light);
-    scene.add(new THREE.AmbientLight(0x404040));
+    scene.add(new THREE.AmbientLight(0x404040, 0.5)); // Luz ambiental adicional
 
-    // Crear el globo terráqueo
+    // Crear el globo terráqueo con efectos de atmósfera
     const globeRadius = 5;
     const globeGeometry = new THREE.SphereGeometry(globeRadius, 64, 64);
     const textureLoader = new THREE.TextureLoader();
     const earthTexture = textureLoader.load('https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg');
     const earthMaterial = new THREE.MeshPhongMaterial({ map: earthTexture, transparent: true });
 
+    // Material para la atmósfera
+    const atmosphereGeometry = new THREE.SphereGeometry(globeRadius * 1.05, 64, 64);
+    const atmosphereMaterial = new THREE.MeshBasicMaterial({
+        color: 0xADD8E6, // Color azul para la atmósfera
+        transparent: true,
+        opacity: 0.3
+    });
+
     const globe = new THREE.Mesh(globeGeometry, earthMaterial);
+    const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
     scene.add(globe);
+    scene.add(atmosphere);
 
     // Resaltar Colombia
-    const colombiaGeometry = new THREE.SphereGeometry(globeRadius * 1.001, 64, 64); // Ligeramente más grande
+    const colombiaGeometry = new THREE.SphereGeometry(globeRadius * 1.001, 64, 64);
     const colombiaMaterial = new THREE.MeshPhongMaterial({
-        color: 0x00ff00, // Cambiar a verde brillante
+        color: 0xff0000, // Rojo brillante para resaltar Colombia
         transparent: true,
-        opacity: 0.7 // Asegurar que sea más visible pero con transparencia
+        opacity: 0.8
     });
 
     const colombiaHighlight = new THREE.Mesh(colombiaGeometry, colombiaMaterial);
     scene.add(colombiaHighlight);
 
     // Aplicar máscara para resaltar solo Colombia
-    const colombiaMaskTexture = textureLoader.load('https://i.imgur.com/3QZQZQz.png'); // Asegúrate de que esta imagen sea adecuada
+    const colombiaMaskTexture = textureLoader.load('https://i.imgur.com/3QZQZQz.png');
     colombiaMaterial.alphaMap = colombiaMaskTexture;
     colombiaMaterial.needsUpdate = true;
 
@@ -167,9 +176,10 @@
     const animate = function () {
         requestAnimationFrame(animate);
 
-        // Rotar el globo
-        globe.rotation.y += 0.001;
-        colombiaHighlight.rotation.y += 0.001; // Sincronizar con el globo
+        // Rotar el globo y la atmósfera para darle dinamismo
+        globe.rotation.y += 0.002;
+        colombiaHighlight.rotation.y += 0.002;
+        atmosphere.rotation.y += 0.002; // La atmósfera rota también
 
         renderer.render(scene, camera);
     };
@@ -183,6 +193,7 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
     });
 </script>
+
 
 
     <!-- About Section -->
