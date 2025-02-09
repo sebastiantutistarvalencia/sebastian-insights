@@ -91,124 +91,79 @@
 
     <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
-      <!-- Contenedor para la animación -->
-      <div id="graph-animation" class="graph-container"></div>
+
+      <!-- Contenedor para el grafo animado -->
+      <div id="graph-container" data-aos="fade-in"></div>
     
       <div class="container" data-aos="fade-up" data-aos-delay="100">
         <h2>Sebastián Tutistar</h2>
         <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
       </div>
-    </section><!-- /Hero Section -->
-
-    <script type="module">
-      import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.132/build/three.module.js';
     
-      // Escena, cámara y renderer
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      const renderer = new THREE.WebGLRenderer({ alpha: true });
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      document.getElementById('graph-animation').appendChild(renderer.domElement);
+    </section>
     
-      // Partículas
-      const particlesGeometry = new THREE.BufferGeometry();
-      const particlesCount = 1000;
-      const posArray = new Float32Array(particlesCount * 3);
+    <!-- Incluir D3.js -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     
-      for (let i = 0; i < particlesCount * 3; i++) {
-        posArray[i] = (Math.random() - 0.5) * 10;
-      }
-    
-      particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    
-      const particlesMaterial = new THREE.PointsMaterial({
-        size: 0.02,
-        color: 0x00ff00,
-        transparent: true,
-        opacity: 0.8,
-      });
-    
-      const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-      scene.add(particlesMesh);
-    
-      // Posición de la cámara
-      camera.position.z = 5;
-    
-      // Animación
-      function animate() {
-        requestAnimationFrame(animate);
-    
-        // Rotar las partículas
-        particlesMesh.rotation.x += 0.001;
-        particlesMesh.rotation.y += 0.001;
-    
-        renderer.render(scene, camera);
-      }
-      animate();
-    
-      // Ajustar el tamaño al cambiar la ventana
-      window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-      });
-    </script>
-    
-
-
-    <!-- Agregar D3.js -->
-    <script src="https://d3js.org/d3.v6.min.js"></script>
     <script>
-      // Configuración del SVG
-      const width = 600, height = 400;
+      // Configuración del grafo
+      const width = 800;
+      const height = 400;
+    
+      // Crear un SVG dentro del contenedor
       const svg = d3.select("#graph-container")
         .append("svg")
         .attr("width", width)
         .attr("height", height);
     
-      // Definir los nodos y enlaces
+      // Datos de ejemplo para el grafo
       const nodes = [
-        { id: "Data Analyst" }, { id: "Python" }, { id: "SQL" },
-        { id: "D3.js" }, { id: "Power BI" }, { id: "Tableau" }
+        { id: "Node 1" },
+        { id: "Node 2" },
+        { id: "Node 3" },
+        { id: "Node 4" },
       ];
     
       const links = [
-        { source: "Data Analyst", target: "Python" },
-        { source: "Data Analyst", target: "SQL" },
-        { source: "Data Analyst", target: "D3.js" },
-        { source: "Data Analyst", target: "Power BI" },
-        { source: "Data Analyst", target: "Tableau" }
+        { source: "Node 1", target: "Node 2" },
+        { source: "Node 2", target: "Node 3" },
+        { source: "Node 3", target: "Node 4" },
+        { source: "Node 4", target: "Node 1" },
       ];
     
-      // Crear la simulación
+      // Fuerza de simulación para el grafo
       const simulation = d3.forceSimulation(nodes)
         .force("link", d3.forceLink(links).id(d => d.id).distance(100))
         .force("charge", d3.forceManyBody().strength(-200))
         .force("center", d3.forceCenter(width / 2, height / 2));
     
-      // Dibujar enlaces
-      const link = svg.selectAll(".link")
+      // Dibujar las líneas (links)
+      const link = svg.selectAll("line")
         .data(links)
-        .enter().append("line")
-        .attr("stroke", "#ffffff")
-        .attr("stroke-width", 1.5);
+        .enter()
+        .append("line")
+        .attr("stroke", "#ccc")
+        .attr("stroke-width", 2);
     
-      // Dibujar nodos
-      const node = svg.selectAll(".node")
+      // Dibujar los nodos
+      const node = svg.selectAll("circle")
         .data(nodes)
-        .enter().append("circle")
+        .enter()
+        .append("circle")
         .attr("r", 10)
-        .attr("fill", "#ffcc00");
+        .attr("fill", "#69b3a2");
     
-      // Agregar nombres a los nodos
-      const labels = svg.selectAll(".label")
+      // Etiquetas de los nodos
+      const label = svg.selectAll("text")
         .data(nodes)
-        .enter().append("text")
-        .attr("font-size", "12px")
-        .attr("fill", "#ffffff")
-        .text(d => d.id);
+        .enter()
+        .append("text")
+        .text(d => d.id)
+        .attr("font-size", 12)
+        .attr("dx", 15)
+        .attr("dy", 4);
     
-      // Actualizar posiciones en cada tick
+      // Actualizar la posición de los elementos en cada paso de la simulación
       simulation.on("tick", () => {
         link
           .attr("x1", d => d.source.x)
@@ -220,14 +175,13 @@
           .attr("cx", d => d.x)
           .attr("cy", d => d.y);
     
-        labels
-          .attr("x", d => d.x + 12)
-          .attr("y", d => d.y + 4);
+        label
+          .attr("x", d => d.x)
+          .attr("y", d => d.y);
       });
     </script>
+    <!-- /Hero Section -->
 
-
-    
     <!-- About Section -->
     <section id="about" class="about section">
 
