@@ -118,40 +118,51 @@
           <h2>Sebastián Tutistar</h2>
           <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
       </div>
-      <canvas id="vitalSignsChart"></canvas>
+      <canvas id="threejs-canvas"></canvas>
   </section>
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script>
-  document.addEventListener("DOMContentLoaded", function () {
+  <script type="module">
+      import * as THREE from 'https://cdn.jsdelivr.net/npm/three@latest/build/three.module.js';
+      import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@latest/examples/jsm/controls/OrbitControls.js';
+  
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      const renderer = new THREE.WebGLRenderer();
+      const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('threejs-canvas'), alpha: true });
       renderer.setSize(window.innerWidth, window.innerHeight);
-      document.getElementById("vitalSignsChart").replaceWith(renderer.domElement);
-      
-      const material = new THREE.LineBasicMaterial({ color: 0xff0000 });
-      const points = [];
-      for (let i = 0; i < 100; i++) {
-          points.push(new THREE.Vector3(i * 0.1, Math.sin(i * 0.1), 0));
-      }
-      const geometry = new THREE.BufferGeometry().setFromPoints(points);
-      const line = new THREE.Line(geometry, material);
-      scene.add(line);
-      
-      camera.position.z = 5;
-      
+      document.body.appendChild(renderer.domElement);
+  
+      const geometry = new THREE.BoxGeometry();
+      const material = new THREE.MeshStandardMaterial({ color: 0x0077ff });
+      const cube = new THREE.Mesh(geometry, material);
+      scene.add(cube);
+  
+      const light = new THREE.AmbientLight(0xffffff, 0.6);
+      scene.add(light);
+  
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+      directionalLight.position.set(5, 5, 5);
+      scene.add(directionalLight);
+  
+      const controls = new OrbitControls(camera, renderer.domElement);
+      camera.position.z = 2;
+  
       function animate() {
           requestAnimationFrame(animate);
-          for (let i = 0; i < points.length; i++) {
-              points[i].y = Math.sin(i * 0.1 + Date.now() * 0.002);
-          }
-          geometry.setFromPoints(points);
+          cube.rotation.x += 0.01;
+          cube.rotation.y += 0.01;
+          controls.update();
           renderer.render(scene, camera);
       }
       animate();
-  });
+  
+      window.addEventListener('resize', () => {
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight);
+      });
   </script>
+  
+  
   
     <!-- About Section -->
     <section id="about" class="about section">
