@@ -93,58 +93,61 @@
 
     <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
-
+      <div id="graph-container"></div>
+      
       <div class="container" data-aos="fade-up" data-aos-delay="100">
         <h2>Sebastián Tutistar</h2>
-        <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
+        <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
       </div>
-
-    </section><!-- /Hero Section -->
-
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <!-- D3.js -->
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <!-- Leaflet JS -->
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <style>
-    #map { height: 500px; }
-    .bi-chart { margin-top: 20px; }
-  </style>
-</head>
-<body>
-  <div id="map"></div>
-  <div class="bi-chart">
-    <h3>Gráfico de Barras (Ejemplo BI)</h3>
-    <svg width="400" height="200"></svg>
-  </div>
-
-  <script>
-    // Configuración del mapa
-    const map = L.map('map').setView([4.5709, -74.2973], 5); // Centrado en Colombia
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-
-    // Datos de ejemplo para el gráfico de barras
-    const data = [30, 80, 45, 60, 20, 90, 55];
-    const svg = d3.select("svg"),
-          width = 400,
-          height = 200,
-          barWidth = 40,
-          barOffset = 5;
-
-    svg.selectAll("rect")
-      .data(data)
-      .enter()
-      .append("rect")
-      .attr("x", (d, i) => i * (barWidth + barOffset))
-      .attr("y", d => height - d)
-      .attr("width", barWidth)
-      .attr("height", d => d)
-      .attr("fill", "steelblue");
-
-    // Aquí puedes agregar más elementos de BI, como gráficos de líneas, etc.
-  </script>
+    </section>
+    
+    <!-- Incluye Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById("graph-container").appendChild(renderer.domElement);
+    
+        // Crear nodos y aristas
+        const nodes = [];
+        const edges = [];
+        const nodeMaterial = new THREE.MeshBasicMaterial({ color: 0x44aa88 });
+        const edgeMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
+        
+        for (let i = 0; i < 10; i++) {
+          const geometry = new THREE.SphereGeometry(0.2, 16, 16);
+          const node = new THREE.Mesh(geometry, nodeMaterial);
+          node.position.set(Math.random() * 4 - 2, Math.random() * 4 - 2, Math.random() * 4 - 2);
+          nodes.push(node);
+          scene.add(node);
+        }
+    
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            if (Math.random() > 0.5) {
+              const points = [nodes[i].position, nodes[j].position];
+              const geometry = new THREE.BufferGeometry().setFromPoints(points);
+              const edge = new THREE.Line(geometry, edgeMaterial);
+              edges.push(edge);
+              scene.add(edge);
+            }
+          }
+        }
+        
+        camera.position.z = 5;
+    
+        function animate() {
+          requestAnimationFrame(animate);
+          nodes.forEach(node => node.rotation.y += 0.01);
+          renderer.render(scene, camera);
+        }
+        animate();
+      });
+    </script>
+    
 
     <!-- About Section -->
     <section id="about" class="about section">
