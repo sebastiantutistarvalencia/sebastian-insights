@@ -94,10 +94,10 @@
 
       <!-- Contenedor para las visualizaciones -->
       <div id="visualizations" data-aos="fade-in">
-        <div id="graph-container"></div>
-        <div id="bar-chart"></div>
-        <div id="line-chart"></div>
-        <div id="heatmap"></div>
+        <div id="graph-container" class="visualization"></div>
+        <div id="bar-chart" class="visualization"></div>
+        <div id="line-chart" class="visualization"></div>
+        <div id="heatmap" class="visualization"></div>
       </div>
     
       <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -110,13 +110,37 @@
     <!-- Incluir D3.js -->
     <script src="https://d3js.org/d3.v7.min.js"></script>
     
+    <!-- Estilos CSS -->
+    <style>
+      #visualizations {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* Dos columnas */
+        grid-template-rows: repeat(2, 1fr); /* Dos filas */
+        gap: 10px; /* Espacio entre visualizaciones */
+        width: 100%;
+        height: 600px; /* Altura total del contenedor */
+      }
+    
+      .visualization {
+        width: 100%;
+        height: 100%;
+        border: 1px solid #ccc; /* Borde para distinguir las visualizaciones */
+        box-sizing: border-box;
+      }
+    
+      .visualization svg {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+    
     <script>
       // Configuración general
-      const width = 800;
-      const height = 400;
+      const width = 400; // Ancho reducido para ajustarse al diseño
+      const height = 280; // Altura reducida para ajustarse al diseño
       const margin = { top: 20, right: 30, bottom: 40, left: 40 };
     
-      // 1. Grafo dinámico (como antes)
+      // 1. Grafo dinámico
       const graphSvg = d3.select("#graph-container")
         .append("svg")
         .attr("width", width)
