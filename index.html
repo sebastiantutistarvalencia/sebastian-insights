@@ -131,7 +131,7 @@
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setClearColor(0x000000, 0); // Fondo transparente
 
-  // Iluminación mejorada
+  // Iluminación
   const light = new THREE.DirectionalLight(0xffffff, 1);
   light.position.set(5, 5, 5).normalize();
   scene.add(light);
@@ -144,10 +144,10 @@
   };
 
   // Parámetros del grafo
-  const numNodes = 5; // Menos nodos para una trayectoria más clara
-  const nodeRadius = 0.3; // Tamaño más grande de los nodos
-  const edgeRadius = 0.02; // Grosor de las aristas
-  const spaceSize = 15; // Espacio más grande para movimiento
+  const numNodes = 5; // Número de nodos (etapas de tu carrera)
+  const nodeRadius = 0.5; // Radio de los nodos
+  const edgeRadius = 0.05; // Grosor de las aristas
+  const spaceSize = 15; // Tamaño del espacio 3D
   const forceStrength = 0.01; // Fuerza de atracción/repulsión
 
   // Función para generar colores elegantes
@@ -155,28 +155,25 @@
       return new THREE.Color(Math.random() * 0.5 + 0.5, Math.random() * 0.5 + 0.5, Math.random() * 0.5 + 0.5);
   }
 
-  // Crear nodos (esferas)
-  const nodeGeometry = new THREE.SphereGeometry(nodeRadius, 32, 32);
-
-  // Trayectoria profesional: organizamos nodos en un camino
+  // Crear nodos (esferas) con posiciones definidas para simular etapas
   const nodePositions = [
       { x: -10, y: 0, z: 0 }, // Formación Académica
-      { x: -5, y: 2, z: 1 }, // Primer empleo
-      { x: 0, y: 0, z: 3 },  // Habilidades Técnicas
-      { x: 5, y: -2, z: 4 }, // Proyectos Realizados
-      { x: 10, y: 0, z: 5 }, // Objetivos Profesionales
+      { x: -5, y: 5, z: 0 },  // Primer empleo
+      { x: 0, y: 0, z: 0 },   // Habilidades Técnicas
+      { x: 5, y: 5, z: 0 },   // Proyectos Realizados
+      { x: 10, y: 0, z: 0 },  // Objetivos Profesionales
   ];
 
   nodePositions.forEach((position, i) => {
       const nodeMaterial = new THREE.MeshPhongMaterial({ color: randomColor(), shininess: 100 });
-      const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
+      const node = new THREE.Mesh(new THREE.SphereGeometry(nodeRadius, 32, 32), nodeMaterial);
       node.position.set(position.x, position.y, position.z);
       node.velocity = new THREE.Vector3(0, 0, 0);
       scene.add(node);
       graph.nodes.push(node);
   });
 
-  // Crear aristas (cilindros) con colores suaves
+  // Crear aristas (cilindros) que conectan los nodos
   const edgeMaterial = new THREE.MeshPhongMaterial({ color: 0xFFFFFF, shininess: 50 });
 
   for (let i = 0; i < numNodes - 1; i++) {
@@ -185,7 +182,7 @@
       const edgeGeometry = new THREE.CylinderGeometry(edgeRadius, edgeRadius, start.distanceTo(end), 8);
       const edge = new THREE.Mesh(edgeGeometry, edgeMaterial);
 
-      // Posicionar y rotar la arista
+      // Posicionar y rotar la arista para que conecte los nodos correctamente
       edge.position.copy(start).lerp(end, 0.5);
       edge.lookAt(end);
       edge.rotateX(Math.PI / 2); // Ajustar la orientación
@@ -194,7 +191,7 @@
       graph.edges.push({ start: graph.nodes[i], end: graph.nodes[i + 1], mesh: edge });
   }
 
-  // Función para aplicar fuerzas entre nodos (mantenerlos en su lugar)
+  // Función para aplicar fuerzas de atracción/repulsión entre nodos
   function applyForces() {
       graph.nodes.forEach((node, i) => {
           if (i === 0) return; // Evitar repulsión con el primer nodo
@@ -202,7 +199,7 @@
           const direction = new THREE.Vector3().subVectors(node.position, prevNode.position);
           const distance = direction.length();
 
-          // Si el nodo está demasiado lejos, lo atraemos
+          // Si los nodos están demasiado alejados, atraemos al siguiente nodo
           if (distance > 2) {
               const force = direction.normalize().multiplyScalar(forceStrength * distance);
               node.velocity.add(force);
@@ -210,12 +207,12 @@
       });
   }
 
-  // Función para actualizar la posición de los nodos
+  // Función para actualizar la posición de los nodos y las aristas
   function updatePositions() {
       graph.nodes.forEach(node => {
           node.position.add(node.velocity);
 
-          // Limitar el movimiento dentro del espacio
+          // Limitar el movimiento dentro del espacio 3D
           node.position.clamp(
               new THREE.Vector3(-spaceSize, -spaceSize, -spaceSize),
               new THREE.Vector3(spaceSize, spaceSize, spaceSize)
@@ -235,14 +232,14 @@
       });
   }
 
-  // Animación y movimiento suave
+  // Animación
   camera.position.z = 20;
 
   const animate = function () {
       requestAnimationFrame(animate);
 
       applyForces(); // Aplicar fuerzas de atracción/repulsión entre nodos
-      updatePositions(); // Actualizar posiciones
+      updatePositions(); // Actualizar posiciones de los nodos y aristas
 
       renderer.render(scene, camera);
   };
@@ -255,6 +252,7 @@
       renderer.setSize(window.innerWidth, window.innerHeight);
   });
 </script>
+
 
 
     <!-- About Section -->
