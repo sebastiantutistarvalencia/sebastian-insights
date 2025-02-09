@@ -118,72 +118,44 @@
           <h2>Sebastián Tutistar</h2>
           <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
       </div>
-      <canvas id="cuadroMatrix3d"></canvas>
+      <canvas id="vitalSignsChart"></canvas>
   </section>
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-document.addEventListener("DOMContentLoaded", function () {
-    // Configurar la escena
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("cuadroMatrix3d"), alpha: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
-    
-    // Crear un cuadrado mágico 3x3
-    const magicSquare = [
-        [8, 1, 6],
-        [3, 5, 7],
-        [4, 9, 2]
-    ];
-    
-    // Crear cubos para representar el cuadrado mágico
-    const cubeSize = 1.0;
-    const cubes = [];
-    const fontLoader = new THREE.FontLoader();
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
-
-    for (let i = 0; i < 3; i++) {
-        for (let j = 0; j < 3; j++) {
-            const geometry = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
-            const cube = new THREE.Mesh(geometry, material);
-            cube.position.set(j * cubeSize - 1.5, -i * cubeSize + 1.5, 0);
-            scene.add(cube);
-            cubes.push({ cube, value: magicSquare[i][j] });
-        }
-    }
-    
-    // Cargar fuente y agregar números
-    fontLoader.load("https://threejs.org/examples/fonts/helvetiker_regular.typeface.json", function (font) {
-        cubes.forEach(({ cube, value }) => {
-            const textGeometry = new THREE.TextGeometry(value.toString(), {
-                font: font,
-                size: 0.3,
-                height: 0.1
-            });
-            const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-            const textMesh = new THREE.Mesh(textGeometry, textMaterial);
-            textMesh.position.set(cube.position.x - 0.15, cube.position.y - 0.15, cube.position.z + 0.5);
-            scene.add(textMesh);
-        });
-    });
-
-    camera.position.z = 5;
-
-    // Animación
-    function animate() {
-        requestAnimationFrame(animate);
-        cubes.forEach(({ cube }) => {
-            cube.rotation.y += 0.01;
-        });
-        renderer.render(scene, camera);
-    }
-    animate();
-});
-
-
+  document.addEventListener("DOMContentLoaded", function () {
+      const ctx = document.getElementById("vitalSignsChart").getContext("2d");
+      const vitalSignsChart = new Chart(ctx, {
+          type: "line",
+          data: {
+              labels: ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00"],
+              datasets: [
+                  {
+                      label: "Frecuencia Cardíaca (bpm)",
+                      data: [72, 75, 73, 70, 68, 74, 76],
+                      borderColor: "red",
+                      backgroundColor: "rgba(255, 0, 0, 0.2)",
+                      fill: true
+                  },
+                  {
+                      label: "Presión Arterial Sistólica (mmHg)",
+                      data: [120, 118, 119, 121, 122, 117, 116],
+                      borderColor: "blue",
+                      backgroundColor: "rgba(0, 0, 255, 0.2)",
+                      fill: true
+                  }
+              ]
+          },
+          options: {
+              responsive: true,
+              scales: {
+                  y: {
+                      beginAtZero: false
+                  }
+              }
+          }
+      });
+  });
   </script>
   
     <!-- About Section -->
