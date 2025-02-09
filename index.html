@@ -124,7 +124,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <script>
-    const scene = new THREE.Scene();
+const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('graphCanvas'), antialias: true, alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -144,16 +144,16 @@ const graph = {
 
 // Parámetros del grafo
 const numNodes = 5; // Número de nodos (etapas de tu carrera)
-const nodeRadius = 0.5; // Aumento de tamaño de los nodos
-const edgeRadius = 0.05; // Grosor aumentado de las aristas
-const spaceSize = 5; // Tamaño más grande del espacio 3D
+const nodeRadius = 0.5; // Tamaño de los nodos
+const edgeRadius = 0.05; // Grosor de las aristas
+const spaceSize = 2; // Tamaño del espacio 3D (reducido)
 
-// Función para generar colores elegantes
+// Función para generar colores aleatorios
 function randomColor() {
     return new THREE.Color(Math.random() * 0.5 + 0.5, Math.random() * 0.5 + 0.5, Math.random() * 0.5 + 0.5);
 }
 
-// Crear nodos (esferas) con posiciones aleatorias para un grafo más disperso
+// Crear nodos (esferas) con posiciones aleatorias para un grafo más contenido
 const nodePositions = [];
 for (let i = 0; i < numNodes; i++) {
     nodePositions.push({
@@ -250,7 +250,7 @@ function updatePositions() {
 }
 
 // Animación
-camera.position.z = 10;
+camera.position.z = 5; // Cámara más cercana
 
 const animate = function () {
     requestAnimationFrame(animate);
@@ -269,17 +269,8 @@ window.addEventListener('resize', () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-
-
   </script>
   
-  
-
-
-
-
-
-
     <!-- About Section -->
     <section id="about" class="about section">
 
