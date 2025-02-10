@@ -132,7 +132,7 @@
       renderer.setSize(window.innerWidth, window.innerHeight);
       document.body.appendChild(renderer.domElement);
   
-      // Crear una fuente para el texto
+      // Cargar la fuente para el texto
       const loader = new THREE.FontLoader();
       loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function(font) {
           // Crear un texto en 3D
@@ -146,8 +146,8 @@
           const textMesh = new THREE.Mesh(geometry, material);
           scene.add(textMesh);
   
-          // Posicionar el texto en el centro de la escena
-          textMesh.position.set(-50, 0, -100);
+          // Posicionar el texto más a la derecha
+          textMesh.position.set(50, 0, -100); // Ajusta el valor de X para moverlo más a la derecha
   
           // Animación de la escena
           function animate() {
@@ -174,6 +174,7 @@
           camera.updateProjectionMatrix();
       });
   </script>
+  
   
   
   
