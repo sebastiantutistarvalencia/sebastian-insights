@@ -111,7 +111,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   
   <main class="main">
-
     <section id="hero" class="hero section dark-background">
       <img src="assets/img/hero-bg.png" alt="" data-aos="fade-in" class="">
       <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -119,116 +118,125 @@
           <p>I'm <span class="typed" data-typed-items="Engineering, Data Analyst, Developer"></span><span class="typed-cursor typed-cursor--blink" aria-hidden="true"></span></p>
       </div>
       <canvas id="geometryText"></canvas>
-  </section>
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
-  <script src="https://threejs.org/examples/js/loaders/FontLoader.js"></script>
-  <script>
-      let camera, scene, renderer;
-  
-      init();
-  
-      function init() {
-          // Configuración de la cámara
-          camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
-          camera.position.set(0, 0, 800); // Ajustamos la posición de la cámara
-  
-          // Escena
-          scene = new THREE.Scene();
-          scene.background = new THREE.Color(0xf0f0f0);
-  
-          // Cargar la fuente
-          const loader = new THREE.FontLoader();
-          loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function (font) {
-              const color = 0x006699;
-  
-              // Materiales
-              const matDark = new THREE.LineBasicMaterial({
-                  color: color,
-                  side: THREE.DoubleSide
-              });
-  
-              const matLite = new THREE.MeshBasicMaterial({
-                  color: color,
-                  transparent: true,
-                  opacity: 0.4,
-                  side: THREE.DoubleSide
-              });
-  
-              // Texto
-              const message = 'Lo que no se mide, \nno se puede mejorar.';
-              const shapes = font.generateShapes(message, 100);
-              const geometry = new THREE.ShapeGeometry(shapes);
-  
-              geometry.computeBoundingBox();
-  
-              // Centrar el texto
-              const xMid = -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
-              geometry.translate(xMid, 0, 0);
-  
-              // Crear el mesh del texto
-              const text = new THREE.Mesh(geometry, matLite);
-              text.position.set(0, 0, 0); // Posición del texto en la escena
-              scene.add(text);
-  
-              // Crear las líneas del texto
-              const holeShapes = [];
-              for (let i = 0; i < shapes.length; i++) {
-                  const shape = shapes[i];
-                  if (shape.holes && shape.holes.length > 0) {
-                      for (let j = 0; j < shape.holes.length; j++) {
-                          const hole = shape.holes[j];
-                          holeShapes.push(hole);
-                      }
-                  }
-              }
-              shapes.push.apply(shapes, holeShapes);
-  
-              const lineText = new THREE.Object3D();
-              for (let i = 0; i < shapes.length; i++) {
-                  const shape = shapes[i];
-                  const points = shape.getPoints();
-                  const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
-                  lineGeometry.translate(xMid, 0, 0);
-                  const lineMesh = new THREE.Line(lineGeometry, matDark);
-                  lineText.add(lineMesh);
-              }
-              scene.add(lineText);
-  
-              render();
-          });
-  
-          // Renderer
-          renderer = new THREE.WebGLRenderer({
-              antialias: true,
-              canvas: document.getElementById('geometryText')
-          });
-          renderer.setPixelRatio(window.devicePixelRatio);
-          renderer.setSize(window.innerWidth, window.innerHeight);
-  
-          // Controles de órbita (opcional)
-          const controls = new THREE.OrbitControls(camera, renderer.domElement);
-          controls.target.set(0, 0, 0);
-          controls.update();
-          controls.addEventListener('change', render);
-  
-          // Ajustar el tamaño del canvas al cambiar el tamaño de la ventana
-          window.addEventListener('resize', onWindowResize);
-      }
-  
-      function onWindowResize() {
-          camera.aspect = window.innerWidth / window.innerHeight;
-          camera.updateProjectionMatrix();
-          renderer.setSize(window.innerWidth, window.innerHeight);
-          render();
-      }
-  
-      function render() {
-          renderer.render(scene, camera);
-      }
-  </script>
-  
+    </section>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://threejs.org/examples/js/loaders/FontLoader.js"></script>
+    <script>
+        let camera, scene, renderer, text;
+    
+        init();
+    
+        function init() {
+            // Configuración de la cámara
+            camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
+            camera.position.set(0, 0, 800); // Ajustamos la posición de la cámara
+    
+            // Escena
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xf0f0f0);
+    
+            // Cargar la fuente
+            const loader = new THREE.FontLoader();
+            loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function (font) {
+                const color = 0x006699;
+    
+                // Materiales
+                const matDark = new THREE.LineBasicMaterial({
+                    color: color,
+                    side: THREE.DoubleSide
+                });
+    
+                const matLite = new THREE.MeshBasicMaterial({
+                    color: color,
+                    transparent: true,
+                    opacity: 0.4,
+                    side: THREE.DoubleSide
+                });
+    
+                // Texto
+                const message = 'Lo que no se mide, \nno se puede mejorar.';
+                const shapes = font.generateShapes(message, 100);
+                const geometry = new THREE.ShapeGeometry(shapes);
+    
+                geometry.computeBoundingBox();
+    
+                // Centrar el texto
+                const xMid = -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
+                geometry.translate(xMid, 0, 0);
+    
+                // Crear el mesh del texto
+                text = new THREE.Mesh(geometry, matLite);
+                text.position.set(0, 0, 0); // Posición del texto en la escena
+                scene.add(text);
+    
+                // Crear las líneas del texto
+                const holeShapes = [];
+                for (let i = 0; i < shapes.length; i++) {
+                    const shape = shapes[i];
+                    if (shape.holes && shape.holes.length > 0) {
+                        for (let j = 0; j < shape.holes.length; j++) {
+                            const hole = shape.holes[j];
+                            holeShapes.push(hole);
+                        }
+                    }
+                }
+                shapes.push.apply(shapes, holeShapes);
+    
+                const lineText = new THREE.Object3D();
+                for (let i = 0; i < shapes.length; i++) {
+                    const shape = shapes[i];
+                    const points = shape.getPoints();
+                    const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
+                    lineGeometry.translate(xMid, 0, 0);
+                    const lineMesh = new THREE.Line(lineGeometry, matDark);
+                    lineText.add(lineMesh);
+                }
+                scene.add(lineText);
+    
+                render();
+            });
+    
+            // Renderer
+            renderer = new THREE.WebGLRenderer({
+                antialias: true,
+                canvas: document.getElementById('geometryText')
+            });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+    
+            // Controles de órbita (opcional)
+            const controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.target.set(0, 0, 0);
+            controls.update();
+            controls.addEventListener('change', render);
+    
+            // Ajustar el tamaño del canvas al cambiar el tamaño de la ventana
+            window.addEventListener('resize', onWindowResize);
+        }
+    
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            render();
+        }
+    
+        function animateTextScale() {
+            const scale = Math.min(window.innerWidth, window.innerHeight) / 1500;
+            if (text) {
+                text.scale.set(scale, scale, scale);
+            }
+        }
+    
+        function render() {
+            animateTextScale();
+            requestAnimationFrame(render);
+            renderer.render(scene, camera);
+        }
+    </script>
+      
   
     <!-- About Section -->
     <section id="about" class="about section">
