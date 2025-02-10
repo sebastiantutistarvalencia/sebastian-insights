@@ -121,55 +121,10 @@
       <canvas id="geometryText"></canvas>
   </section>
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
-      // Crear la escena y la cámara
-      const scene = new THREE.Scene();
-      scene.background = new THREE.Color(0xffffff); // Fondo blanco
-  
-      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      camera.position.z = 200; // Posición de la cámara
-  
-      // Crear el renderizador y agregarlo al canvas
-      const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('geometryText'), antialias: true });
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      document.body.appendChild(renderer.domElement);
-  
-      // Cargar la fuente para el texto
-      const loader = new THREE.FontLoader();
-      loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function(font) {
-          // Crear un texto en 3D
-          const geometry = new THREE.TextGeometry('"Lo que no se mide, no se puede mejorar"', {
-              font: font,
-              size: 10,
-              height: 2
-          });
-  
-          const material = new THREE.MeshBasicMaterial({ color: 0x87CEEB }); // Azul cielo
-          const textMesh = new THREE.Mesh(geometry, material);
-          scene.add(textMesh);
-  
-          // Posicionar el texto más a la derecha
-          textMesh.position.set(50, 0, -100);
-  
-          // Renderizar la escena (sin animaciones)
-          renderer.render(scene, camera);
-      });
-  
-      // Redimensionar el canvas si la ventana cambia de tamaño
-      window.addEventListener('resize', function() {
-          renderer.setSize(window.innerWidth, window.innerHeight);
-          camera.aspect = window.innerWidth / window.innerHeight;
-          camera.updateProjectionMatrix();
-          renderer.render(scene, camera);
-      });
+    
   </script>
-  
-  
-  
-  
-  
-  
+
     <!-- About Section -->
     <section id="about" class="about section">
 
@@ -639,66 +594,6 @@
       </div>
 
     </section><!-- /Portfolio Section -->
-
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="testimonials section light-background">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Testimonios</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi odit architecto praesentium tempora rem ratione reiciendis asperiores rerum, illo quo quas, voluptatibus porro voluptas nostrum dolorum sint eligendi officiis harum?</p>
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="swiper init-swiper">
-          <script type="application/json" class="swiper-config">
-            {
-              "loop": true,
-              "speed": 600,
-              "autoplay": {
-                "delay": 5000
-              },
-              "slidesPerView": "auto",
-              "pagination": {
-                "el": ".swiper-pagination",
-                "type": "bullets",
-                "clickable": true
-              },
-              "breakpoints": {
-                "320": {
-                  "slidesPerView": 1,
-                  "spaceBetween": 40
-                },
-                "1200": {
-                  "slidesPerView": 3,
-                  "spaceBetween": 1
-                }
-              }
-            }
-          </script>
-          <div class="swiper-wrapper">
-
-            <div class="swiper-slide">
-              <div class="testimonial-item">
-                <p>
-                  <i class="bi bi-quote quote-icon-left"></i>
-                  <span>Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.</span>
-                  <i class="bi bi-quote quote-icon-right"></i>
-                </p>
-                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
-                <h3>Karolynna Hernández</h3>
-                <h4>CEO &amp; INCOLBALLET</h4>
-              </div>
-            </div><!-- End testimonial item -->
-
-          </div>
-          <div class="swiper-pagination"></div>
-        </div>
-
-      </div>
-
-    </section><!-- /Testimonials Section -->
 
     <!-- Contact Section -->
     <section id="contact" class="contact section">
