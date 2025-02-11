@@ -23,6 +23,10 @@
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
@@ -149,29 +153,48 @@
                   }
                 }
               </script>
-
               <div class="swiper-wrapper align-items-center">
-
                 <div class="swiper-slide">
-                  <img src="assets/img/portfolio/app-1.png" alt="">
+                  <a href="assets/img/portfolio/app-1.png" class="zoom-popup">
+                    <img src="assets/img/portfolio/app-1.png" alt="">
+                  </a>
                 </div>
-
+              
                 <div class="swiper-slide">
-                  <img src="assets/img/portfolio/app-2.png" alt="">
+                  <a href="assets/img/portfolio/app-2.png" class="zoom-popup">
+                    <img src="assets/img/portfolio/app-2.png" alt="">
+                  </a>
                 </div>
-
+              
                 <div class="swiper-slide">
-                  <img src="assets/img/portfolio/app-3.png" alt="">
+                  <a href="assets/img/portfolio/app-3.png" class="zoom-popup">
+                    <img src="assets/img/portfolio/app-3.png" alt="">
+                  </a>
                 </div>
-
+              
                 <div class="swiper-slide">
-                  <img src="assets/img/portfolio/app-4.png" alt="">
+                  <a href="assets/img/portfolio/app-4.png" class="zoom-popup">
+                    <img src="assets/img/portfolio/app-4.png" alt="">
+                  </a>
                 </div>
-
               </div>
               <div class="swiper-pagination"></div>
-            </div>
-          </div>
+              
+              <script>
+                $(document).ready(function() {
+                  $('.zoom-popup').magnificPopup({
+                    type: 'image',
+                    gallery: {
+                      enabled: true
+                    },
+                    zoom: {
+                      enabled: true,
+                      duration: 300
+                    }
+                  });
+                });
+              </script>
+              
 
           <div class="col-lg-4">
             <div class="portfolio-info" data-aos="fade-up" data-aos-delay="200">
