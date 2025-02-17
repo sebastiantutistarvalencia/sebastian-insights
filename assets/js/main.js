@@ -228,44 +228,31 @@
 
 })();
 
-/* Estilos para el formulario */
-.contact .container {
-  margin-top: 30px;
-}
+// Configura tu servicio EmailJS y la plantilla
+emailjs.init('mqU5yUUvf4_aaENri'); // Aquí debes colocar tu Public Key
 
-.contact .info-item {
-  margin-bottom: 15px;
-}
+// Escucha la acción de envío del formulario
+const form = document.getElementById("contact-form");
 
-.contact .loading, .contact .sent-message, .contact .error-message {
-  display: none;
-  margin-top: 10px;
-  color: #555;
-  font-size: 16px;
-}
+form.addEventListener("submit", function(event) {
+  event.preventDefault(); // Previene la acción por defecto
 
-.contact .loading {
-  color: #3498db;
-  font-weight: bold;
-}
+  // Muestra el mensaje de carga
+  document.getElementById("loading-message").style.display = "block";
+  document.getElementById("sent-message").style.display = "none";
+  document.getElementById("error-message").innerText = "";
 
-.contact .sent-message {
-  color: #2ecc71;
-}
+  // Enviar datos del formulario a EmailJS
+  emailjs.sendForm('service_pt19cli', 'template_zw2264b', form)
+    .then(function(response) {
+      // Mostrar mensaje de éxito
+      document.getElementById("sent-message").style.display = "block";
+      document.getElementById("loading-message").style.display = "none";
+      form.reset();
+    }, function(error) {
+      // Mostrar mensaje de error
+      document.getElementById("error-message").innerText = "Ocurrió un error. Intenta nuevamente.";
+      document.getElementById("loading-message").style.display = "none";
+    });
+});
 
-.contact .error-message {
-  color: #e74c3c;
-}
-
-.contact button[type="submit"] {
-  background-color: #3498db;
-  color: #fff;
-  border: none;
-  padding: 12px 30px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.contact button[type="submit"]:hover {
-  background-color: #2980b9;
-}

@@ -706,36 +706,6 @@
       </div>
     </section>
         
-<script>
-  // Configura tu servicio EmailJS y la plantilla
-emailjs.init('mqU5yUUvf4_aaENri'); // Aquí debes colocar tu Public Key
-
-// Escucha la acción de envío del formulario
-const form = document.getElementById("contact-form");
-
-form.addEventListener("submit", function(event) {
-  event.preventDefault(); // Previene la acción por defecto
-
-  // Muestra el mensaje de carga
-  document.getElementById("loading-message").style.display = "block";
-  document.getElementById("sent-message").style.display = "none";
-  document.getElementById("error-message").innerText = "";
-
-  // Enviar datos del formulario a EmailJS
-  emailjs.sendForm('service_pt19cli', 'template_zw2264b', form)
-    .then(function(response) {
-      // Mostrar mensaje de éxito
-      document.getElementById("sent-message").style.display = "block";
-      document.getElementById("loading-message").style.display = "none";
-      form.reset();
-    }, function(error) {
-      // Mostrar mensaje de error
-      document.getElementById("error-message").innerText = "Ocurrió un error. Intenta nuevamente.";
-      document.getElementById("loading-message").style.display = "none";
-    });
-});
-
-</script>
 
   </main>
 
