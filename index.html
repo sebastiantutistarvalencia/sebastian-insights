@@ -684,84 +684,67 @@
           <div class="col-lg-7">
             <form id="contact-form" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
               <div class="row gy-4">
-          
+        
                 <div class="col-md-6">
                   <label for="name-field" class="pb-2">Nombre completo</label>
-                  <input type="text" id="name-field" class="form-control" required />
+                  <input type="text" name="name" id="name-field" class="form-control" required>
                 </div>
-          
+        
                 <div class="col-md-6">
                   <label for="email-field" class="pb-2">Correo electrónico</label>
-                  <input type="email" id="email-field" class="form-control" required />
+                  <input type="email" class="form-control" name="email" id="email-field" required>
                 </div>
-          
+        
                 <div class="col-md-12">
                   <label for="subject-field" class="pb-2">Asunto</label>
-                  <input type="text" id="subject-field" class="form-control" required />
+                  <input type="text" class="form-control" name="subject" id="subject-field" required>
                 </div>
-          
+        
                 <div class="col-md-12">
                   <label for="message-field" class="pb-2">Mensaje</label>
-                  <textarea id="message-field" class="form-control" rows="10" required></textarea>
+                  <textarea class="form-control" name="message" rows="10" id="message-field" required></textarea>
                 </div>
-          
+        
                 <div class="col-md-12 text-center">
                   <div class="loading">Cargando...</div>
                   <div class="error-message" id="error-message"></div>
-                  <div class="sent-message" id="sent-message" style="display:none;">Tu mensaje ha sido enviado. ¡Gracias!</div>
+                  <div class="sent-message" id="sent-message" style="display:none;">Tu mensaje ha sido envíado. Gracias!</div>
+        
                   <button type="submit">Enviar</button>
                 </div>
-          
+        
               </div>
             </form>
           </div><!-- End Contact Form -->
-          
+    
         </div>
     
       </div>
     
     </section><!-- /Contact Section -->
+    
     <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-
+    
     <script>
-      // Inicializar EmailJS con tu User ID
       (function() {
-        emailjs.init("YOUR_USER_ID"); // Reemplaza con tu User ID de EmailJS
+        emailjs.init("mqU5yUUvf4_aaENri");  // Reemplaza con tu Public Key
       })();
     
-      const form = document.getElementById("contact-form");
+      document.getElementById("contact-form").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevenir el envío del formulario por defecto
     
-      form.addEventListener("submit", function(event) {
-        event.preventDefault();
-    
-        const name = document.getElementById("name-field").value;
-        const email = document.getElementById("email-field").value;
-        const subject = document.getElementById("subject-field").value;
-        const message = document.getElementById("message-field").value;
-    
-        const templateParams = {
-          name: name,
-          email: email,
-          subject: subject,
-          message: message
-        };
-    
-        // Mostrar mensaje de carga
-        document.querySelector('.loading').style.display = 'block';
-    
-        // Enviar correo a través de EmailJS
-        emailjs.send("service_pt19cli", "YOUR_TEMPLATE_ID", templateParams)
+        const form = event.target;
+        
+        emailjs.sendForm("service_pt19cli", "template_id_here", form)  // Reemplaza con tu Template ID
           .then(function(response) {
-            document.querySelector('.loading').style.display = 'none'; // Ocultar carga
             document.getElementById("sent-message").style.display = "block";
             form.reset();
           }, function(error) {
-            document.querySelector('.loading').style.display = 'none'; // Ocultar carga
-            document.getElementById("error-message").innerText = "Ocurrió un error al enviar el mensaje. Intenta nuevamente.";
-            document.getElementById("error-message").style.display = 'block';
+            document.getElementById("error-message").innerText = "Ocurrió un error. Intenta nuevamente.";
           });
       });
     </script>
+    
         
 
   </main>
