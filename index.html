@@ -663,16 +663,9 @@
                   <h3>Correo electrónico</h3>
                   <p>sebas_psp19@hotmail.com</p>
                 </div>
-              </div><!-- End Info Item -->  
+              </div><!-- End Info Item -->
     
-              <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.4165085098766!2d-76.5264095!3d3.4789624!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e30a89fad97ec13%3A0x883c64cc06d210c9!2sParque%20de%20La%20Flora!5e0!3m2!1ses!2sco!4v1707840000000" 
-                frameborder="0" 
-                style="border:0; width: 100%; height: 270px;" 
-                allowfullscreen 
-                loading="lazy" 
-                referrerpolicy="no-referrer-when-downgrade">
-              </iframe>
+              <iframe src="https://www.google.com/maps/embed?pb=..." frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
           </div>
     
@@ -701,10 +694,9 @@
                 </div>
     
                 <div class="col-md-12 text-center">
-                  <div class="loading">Cargando...</div>
+                  <div class="loading" id="loading-message">Cargando...</div>
                   <div class="error-message" id="error-message"></div>
                   <div class="sent-message" id="sent-message" style="display:none;">Tu mensaje ha sido enviado. ¡Gracias!</div>
-    
                   <button type="submit">Enviar</button>
                 </div>
               </div>
@@ -713,54 +705,37 @@
         </div>
       </div>
     </section>
+        
+<script>
+  // Configura tu servicio EmailJS y la plantilla
+emailjs.init('mqU5yUUvf4_aaENri'); // Aquí debes colocar tu Public Key
 
-    <script type="text/javascript">
-      // Configura tu servicio EmailJS y la plantilla
-      emailjs.init('mqU5yUUvf4_aaENri'); // Aquí debes colocar tu Public Key
-    
-      // Escucha la acción de envío del formulario
-      const form = document.getElementById("contact-form");
-    
-      form.addEventListener("submit", function(event) {
-        event.preventDefault(); // Previene la acción por defecto
-    
-        // Enviar datos del formulario a EmailJS
-        emailjs.sendForm('service_pt19cli', 'template_zw2264b', form)  // Reemplaza 'your_template_id' con tu Template ID
-          .then(function(response) {
-            // Mostrar mensaje de éxito
-            document.getElementById("sent-message").style.display = "block";
-            form.reset();
-          }, function(error) {
-            // Mostrar mensaje de error
-            document.getElementById("error-message").innerText = "Ocurrió un error. Intenta nuevamente.";
-          });
-      });
-    </script>
-    
-    
-    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-    
-    <script>
-      (function() {
-        emailjs.init("mqU5yUUvf4_aaENri");  // Reemplaza con tu Public Key
-      })();
-    
-      document.getElementById("contact-form").addEventListener("submit", function(event) {
-        event.preventDefault(); // Prevenir el envío del formulario por defecto
-    
-        const form = event.target;
-        
-        emailjs.sendForm("service_pt19cli", "template_zw2264b", form)  // Reemplaza con tu Template ID
-          .then(function(response) {
-            document.getElementById("sent-message").style.display = "block";
-            form.reset();
-          }, function(error) {
-            document.getElementById("error-message").innerText = "Ocurrió un error. Intenta nuevamente.";
-          });
-      });
-    </script>
-    
-        
+// Escucha la acción de envío del formulario
+const form = document.getElementById("contact-form");
+
+form.addEventListener("submit", function(event) {
+  event.preventDefault(); // Previene la acción por defecto
+
+  // Muestra el mensaje de carga
+  document.getElementById("loading-message").style.display = "block";
+  document.getElementById("sent-message").style.display = "none";
+  document.getElementById("error-message").innerText = "";
+
+  // Enviar datos del formulario a EmailJS
+  emailjs.sendForm('service_pt19cli', 'template_zw2264b', form)
+    .then(function(response) {
+      // Mostrar mensaje de éxito
+      document.getElementById("sent-message").style.display = "block";
+      document.getElementById("loading-message").style.display = "none";
+      form.reset();
+    }, function(error) {
+      // Mostrar mensaje de error
+      document.getElementById("error-message").innerText = "Ocurrió un error. Intenta nuevamente.";
+      document.getElementById("loading-message").style.display = "none";
+    });
+});
+
+</script>
 
   </main>
 
