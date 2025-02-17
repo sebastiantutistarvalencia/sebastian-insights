@@ -1267,13 +1267,6 @@ section,
   color: var(--accent-color);
 }
 
-/*--------------------------------------------------------------
-# Starter Section Section
---------------------------------------------------------------*/
-.starter-section {
-  /* Add your styles here */
-}
-
 /* Estilos para el formulario */
 .contact .container {
   margin-top: 30px;
@@ -1315,3 +1308,4 @@ section,
 .contact button[type="submit"]:hover {
   background-color: #2980b9;
 }
+
