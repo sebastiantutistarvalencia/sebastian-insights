@@ -637,13 +637,13 @@
         <h2>Contacto</h2>
         <p>Para mayor información puedes contactarme a través del siguiente formulario: </p>
       </div><!-- End Section Title -->
-
+    
       <div class="container" data-aos="fade-up" data-aos-delay="100">
-
+    
         <div class="row gy-4">
-
+    
           <div class="col-lg-5">
-
+    
             <div class="info-wrap">
               <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
                 <i class="bi bi-geo-alt flex-shrink-0"></i>
@@ -652,7 +652,7 @@
                   <p>Av. 3f Nte. #52 Norte-46, El Rincon, Cali, Valle del Cauca</p>
                 </div>
               </div><!-- End Info Item -->
-
+    
               <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
                 <i class="bi bi-telephone flex-shrink-0"></i>
                 <div>
@@ -660,7 +660,7 @@
                   <p>+57 300 00 00 000</p>
                 </div>
               </div><!-- End Info Item -->
-
+    
               <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
                 <i class="bi bi-envelope flex-shrink-0"></i>
                 <div>
@@ -668,48 +668,47 @@
                   <p>sebas_psp19@hotmail.com</p>
                 </div>
               </div><!-- End Info Item -->  
-
+    
               <iframe 
-  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.4165085098766!2d-76.5264095!3d3.4789624!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e30a89fad97ec13%3A0x883c64cc06d210c9!2sParque%20de%20La%20Flora!5e0!3m2!1ses!2sco!4v1707840000000" 
-  frameborder="0" 
-  style="border:0; width: 100%; height: 270px;" 
-  allowfullscreen 
-  loading="lazy" 
-  referrerpolicy="no-referrer-when-downgrade">
-</iframe>
-
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.4165085098766!2d-76.5264095!3d3.4789624!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e30a89fad97ec13%3A0x883c64cc06d210c9!2sParque%20de%20La%20Flora!5e0!3m2!1ses!2sco!4v1707840000000" 
+                frameborder="0" 
+                style="border:0; width: 100%; height: 270px;" 
+                allowfullscreen 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+    
             </div>
           </div>
-
+    
           <div class="col-lg-7">
-            <form action="https://formspree.io/f/xdkadlvg" method="POST" class="php-email-form" data-aos="fade-up" data-aos-delay="200" id="contact-form">
+            <form id="contact-form" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
               <div class="row gy-4">
           
                 <div class="col-md-6">
                   <label for="name-field" class="pb-2">Nombre completo</label>
-                  <input type="text" name="name" id="name-field" class="form-control" required="">
+                  <input type="text" id="name-field" class="form-control" required />
                 </div>
           
                 <div class="col-md-6">
                   <label for="email-field" class="pb-2">Correo electrónico</label>
-                  <input type="email" class="form-control" name="email" id="email-field" required="">
+                  <input type="email" id="email-field" class="form-control" required />
                 </div>
           
                 <div class="col-md-12">
                   <label for="subject-field" class="pb-2">Asunto</label>
-                  <input type="text" class="form-control" name="subject" id="subject-field" required="">
+                  <input type="text" id="subject-field" class="form-control" required />
                 </div>
           
                 <div class="col-md-12">
                   <label for="message-field" class="pb-2">Mensaje</label>
-                  <textarea class="form-control" name="message" rows="10" id="message-field" required=""></textarea>
+                  <textarea id="message-field" class="form-control" rows="10" required></textarea>
                 </div>
           
                 <div class="col-md-12 text-center">
                   <div class="loading">Cargando...</div>
                   <div class="error-message" id="error-message"></div>
-                  <div class="sent-message" id="sent-message" style="display:none;">Tu mensaje ha sido envíado. Gracias!</div>
-          
+                  <div class="sent-message" id="sent-message" style="display:none;">Tu mensaje ha sido enviado. ¡Gracias!</div>
                   <button type="submit">Enviar</button>
                 </div>
           
@@ -717,44 +716,53 @@
             </form>
           </div><!-- End Contact Form -->
           
-          <script>
-            // Handle form submission
-            const form = document.getElementById("contact-form");
-          
-            form.addEventListener("submit", function(event) {
-              event.preventDefault(); // Prevent default form submission
-          
-              const formData = new FormData(form);
-              
-              // Send form data using Fetch API
-              fetch(form.action, {
-                method: "POST",
-                body: formData
-              })
-              .then(response => response.json())
-              .then(data => {
-                if (data.ok) {
-                  // Show success message and hide form
-                  document.getElementById("sent-message").style.display = "block";
-                  form.reset();
-                } else {
-                  // Show error message
-                  document.getElementById("error-message").innerText = "Exitoso";
-                }
-              })
-              .catch(error => {
-                // Handle error if Fetch fails
-                document.getElementById("error-message").innerText = "An error occurred. Please try again.";
-              });
-            });
-          </script>
-      
-
         </div>
-
+    
       </div>
-
+    
     </section><!-- /Contact Section -->
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+
+    <script>
+      // Inicializar EmailJS con tu User ID
+      (function() {
+        emailjs.init("YOUR_USER_ID"); // Reemplaza con tu User ID de EmailJS
+      })();
+    
+      const form = document.getElementById("contact-form");
+    
+      form.addEventListener("submit", function(event) {
+        event.preventDefault();
+    
+        const name = document.getElementById("name-field").value;
+        const email = document.getElementById("email-field").value;
+        const subject = document.getElementById("subject-field").value;
+        const message = document.getElementById("message-field").value;
+    
+        const templateParams = {
+          name: name,
+          email: email,
+          subject: subject,
+          message: message
+        };
+    
+        // Mostrar mensaje de carga
+        document.querySelector('.loading').style.display = 'block';
+    
+        // Enviar correo a través de EmailJS
+        emailjs.send("service_pt19cli", "YOUR_TEMPLATE_ID", templateParams)
+          .then(function(response) {
+            document.querySelector('.loading').style.display = 'none'; // Ocultar carga
+            document.getElementById("sent-message").style.display = "block";
+            form.reset();
+          }, function(error) {
+            document.querySelector('.loading').style.display = 'none'; // Ocultar carga
+            document.getElementById("error-message").innerText = "Ocurrió un error al enviar el mensaje. Intenta nuevamente.";
+            document.getElementById("error-message").style.display = 'block';
+          });
+      });
+    </script>
+        
 
   </main>
 
