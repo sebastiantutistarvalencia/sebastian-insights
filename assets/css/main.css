@@ -1267,45 +1267,23 @@ section,
   color: var(--accent-color);
 }
 
-/* Estilos para el formulario */
-.contact .container {
-  margin-top: 30px;
-}
-
-.contact .info-item {
-  margin-bottom: 15px;
-}
-
-.contact .loading, .contact .sent-message, .contact .error-message {
+/* Estilos para los mensajes de estado */
+.loading, .sent-message, .error-message {
   display: none;
   margin-top: 10px;
-  color: #555;
   font-size: 16px;
 }
 
-.contact .loading {
+.loading {
   color: #3498db;
   font-weight: bold;
 }
 
-.contact .sent-message {
+.sent-message {
   color: #2ecc71;
 }
 
-.contact .error-message {
+.error-message {
   color: #e74c3c;
-}
-
-.contact button[type="submit"] {
-  background-color: #3498db;
-  color: #fff;
-  border: none;
-  padding: 12px 30px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.contact button[type="submit"]:hover {
-  background-color: #2980b9;
 }
 
