@@ -704,6 +704,40 @@
           </div><!-- End Contact Form -->
         </div>
       </div>
+
+      <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+  // Inicializar EmailJS
+  (function() {
+    emailjs.init("service_pt19cli"); // Reemplaza "TU_USER_ID" con tu User ID de EmailJS
+  })();
+
+  document.getElementById("contact-form").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevenir la recarga de la página al enviar el formulario
+
+    document.getElementById("loading-message").style.display = "block";
+    document.getElementById("sent-message").style.display = "none";
+    document.getElementById("error-message").style.display = "none";
+
+    // Configurar el envío de datos
+    const serviceID = "service_pt19cli"; // Reemplaza "TU_SERVICE_ID" por tu Service ID de EmailJS
+    const templateID = "template_zw2264b"; // Reemplaza "TU_TEMPLATE_ID" por tu Template ID de EmailJS
+
+    emailjs.sendForm(serviceID, templateID, this)
+      .then(
+        function() {
+          document.getElementById("loading-message").style.display = "none";
+          document.getElementById("sent-message").style.display = "block";
+        },
+        function(error) {
+          document.getElementById("loading-message").style.display = "none";
+          document.getElementById("error-message").textContent = "Error: " + error.text;
+          document.getElementById("error-message").style.display = "block";
+        }
+      );
+  });
+</script>
+
       
     </section>
         
