@@ -629,117 +629,125 @@
 
     </section><!-- /Portfolio Section -->
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact section">
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Contacto</h2>
-        <p>Para mayor información puedes contactarme a través del siguiente formulario:</p>
-      </div><!-- End Section Title -->
-    
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <div class="row gy-4">
-          <div class="col-lg-5">
-            <div class="info-wrap">
-              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
-                <i class="bi bi-geo-alt flex-shrink-0"></i>
-                <div>
-                  <h3>Dirección</h3>
-                  <p>Av. 3f Nte. #52 Norte-46, El Rincon, Cali, Valle del Cauca</p>
-                </div>
-              </div><!-- End Info Item -->
-    
-              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
-                <i class="bi bi-telephone flex-shrink-0"></i>
-                <div>
-                  <h3>Contáctame</h3>
-                  <p>+57 300 00 00 000</p>
-                </div>
-              </div><!-- End Info Item -->
-    
-              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
-                <i class="bi bi-envelope flex-shrink-0"></i>
-                <div>
-                  <h3>Correo electrónico</h3>
-                  <p>sebas_psp19@hotmail.com</p>
-                </div>
-              </div><!-- End Info Item -->
-    
-              <iframe src="https://www.google.com/maps/embed?pb=..." frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <!-- Contact Section --><!-- Contact Section -->
+<section id="contact" class="contact section">
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Contacto</h2>
+    <p>Para mayor información puedes contactarme a través del siguiente formulario:</p>
+  </div>
+  <!-- End Section Title -->
+
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="row gy-4">
+      <div class="col-lg-5">
+        <div class="info-wrap">
+          <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
+            <i class="bi bi-geo-alt flex-shrink-0"></i>
+            <div>
+              <h3>Dirección</h3>
+              <p>Av. 3f Nte. #52 Norte-46, El Rincon, Cali, Valle del Cauca</p>
             </div>
           </div>
-    
-          <div class="col-lg-7">
-            <!-- Contact Form -->
-            <form id="contact-form">
-              <div class="row gy-4">
-                <div class="col-md-6">
-                  <label for="name-field">Nombre completo</label>
-                  <input type="text" name="name" id="name-field" class="form-control" required>
-                </div>
-    
-                <div class="col-md-6">
-                  <label for="email-field">Correo electrónico</label>
-                  <input type="email" name="email" id="email-field" class="form-control" required>
-                </div>
-    
-                <div class="col-md-12">
-                  <label for="subject-field">Asunto</label>
-                  <input type="text" name="subject" id="subject-field" class="form-control" required>
-                </div>
-    
-                <div class="col-md-12">
-                  <label for="message-field">Mensaje</label>
-                  <textarea name="message" id="message-field" class="form-control" rows="10" required></textarea>
-                </div>
-    
-                <div class="col-md-12 text-center">
-                  <div class="loading" id="loading-message">Cargando...</div>
-                  <div class="error-message" id="error-message"></div>
-                  <div class="sent-message" id="sent-message" style="display:none;">Tu mensaje ha sido enviado. ¡Gracias!</div>
-                  <button type="submit" class="btn btn-primary btn-lg">Enviar</button>
-                </div>
-              </div>
-            </form>
-          </div><!-- End Contact Form -->
+          <!-- End Info Item -->
+
+          <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+            <i class="bi bi-telephone flex-shrink-0"></i>
+            <div>
+              <h3>Contáctame</h3>
+              <p>+57 300 00 00 000</p>
+            </div>
+          </div>
+          <!-- End Info Item -->
+
+          <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
+            <i class="bi bi-envelope flex-shrink-0"></i>
+            <div>
+              <h3>Correo electrónico</h3>
+              <p>sebas_psp19@hotmail.com</p>
+            </div>
+          </div>
+          <!-- End Info Item -->
+
+          <iframe src="https://www.google.com/maps/embed?pb=..." frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
       </div>
 
-      <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-<script>
-// Inicializar EmailJS solo una vez
-emailjs.init("service_pt19cli"); // Solo una llamada en todo el proyecto
+      <div class="col-lg-7">
+        <!-- Contact Form -->
+        <form id="contact-form">
+          <div class="row gy-4">
+            <div class="col-md-6">
+              <label for="name-field">Nombre completo</label>
+              <input type="text" name="name" id="name-field" class="form-control" required>
+            </div>
 
-document.getElementById("contact-form").addEventListener("submit", function(event) {
-  event.preventDefault(); // Prevenir la recarga de la página al enviar
+            <div class="col-md-6">
+              <label for="email-field">Correo electrónico</label>
+              <input type="email" name="email" id="email-field" class="form-control" required>
+            </div>
 
-  // Mostrar mensaje de carga
-  document.getElementById("loading-message").style.display = "block";
-  document.getElementById("sent-message").style.display = "none";
-  document.getElementById("error-message").style.display = "none";
+            <div class="col-md-12">
+              <label for="subject-field">Asunto</label>
+              <input type="text" name="subject" id="subject-field" class="form-control" required>
+            </div>
 
-  const serviceID = "service_pt19cli";
-  const templateID = "template_zw2264b";
+            <div class="col-md-12">
+              <label for="message-field">Mensaje</label>
+              <textarea name="message" id="message-field" class="form-control" rows="10" required></textarea>
+            </div>
 
-  // Enviar formulario solo una vez
-  emailjs.sendForm(serviceID, templateID, this)
-    .then(
-      function() {
-        document.getElementById("loading-message").style.display = "none";
-        document.getElementById("sent-message").style.display = "block";
-      },
-      function(error) {
-        document.getElementById("loading-message").style.display = "none";
-        document.getElementById("error-message").textContent = "Error: " + error.text;
-        document.getElementById("error-message").style.display = "block";
-      }
-    );
-});
+            <div class="col-md-12 text-center">
+              <div class="loading" id="loading-message">Cargando...</div>
+              <div class="error-message" id="error-message"></div>
+              <div class="sent-message" id="sent-message" style="display:none;">Tu mensaje ha sido enviado. ¡Gracias!</div>
+              <button type="submit" class="btn btn-primary btn-lg">Enviar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- End Contact Form -->
+    </div>
+  </div>
 
-</script>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    // Inicializar EmailJS solo una vez
+    emailjs.init("service_pt19cli");
 
-      
-    </section>
+    document.getElementById("contact-form").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevenir la recarga de la página al enviar
+
+      // Deshabilitar el botón para evitar múltiples envíos
+      document.querySelector("button[type='submit']").disabled = true;
+
+      // Mostrar mensaje de carga
+      document.getElementById("loading-message").style.display = "block";
+      document.getElementById("sent-message").style.display = "none";
+      document.getElementById("error-message").style.display = "none";
+
+      const serviceID = "service_pt19cli";
+      const templateID = "template_zw2264b";
+
+      // Enviar formulario solo una vez
+      emailjs.sendForm(serviceID, templateID, this)
+        .then(
+          function() {
+            document.getElementById("loading-message").style.display = "none";
+            document.getElementById("sent-message").style.display = "block";
+            document.querySelector("button[type='submit']").disabled = false; // Reactivar el botón
+          },
+          function(error) {
+            document.getElementById("loading-message").style.display = "none";
+            document.getElementById("error-message").textContent = "Error: " + error.text;
+            document.getElementById("error-message").style.display = "block";
+            document.querySelector("button[type='submit']").disabled = false; // Reactivar el botón
+          }
+        );
+    });
+  </script>
+</section>
+
         
   </main>
 
