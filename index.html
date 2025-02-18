@@ -707,35 +707,35 @@
 
       <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 <script>
-  // Inicializar EmailJS
-  (function() {
-    emailjs.init("service_pt19cli"); // Reemplaza "TU_USER_ID" con tu User ID de EmailJS
-  })();
+// Inicializar EmailJS solo una vez
+emailjs.init("service_pt19cli"); // Solo una llamada en todo el proyecto
 
-  document.getElementById("contact-form").addEventListener("submit", function(event) {
-    event.preventDefault(); // Prevenir la recarga de la página al enviar el formulario
+document.getElementById("contact-form").addEventListener("submit", function(event) {
+  event.preventDefault(); // Prevenir la recarga de la página al enviar
 
-    document.getElementById("loading-message").style.display = "block";
-    document.getElementById("sent-message").style.display = "none";
-    document.getElementById("error-message").style.display = "none";
+  // Mostrar mensaje de carga
+  document.getElementById("loading-message").style.display = "block";
+  document.getElementById("sent-message").style.display = "none";
+  document.getElementById("error-message").style.display = "none";
 
-    // Configurar el envío de datos
-    const serviceID = "service_pt19cli"; // Reemplaza "TU_SERVICE_ID" por tu Service ID de EmailJS
-    const templateID = "template_zw2264b"; // Reemplaza "TU_TEMPLATE_ID" por tu Template ID de EmailJS
+  const serviceID = "service_pt19cli";
+  const templateID = "template_zw2264b";
 
-    emailjs.sendForm(serviceID, templateID, this)
-      .then(
-        function() {
-          document.getElementById("loading-message").style.display = "none";
-          document.getElementById("sent-message").style.display = "block";
-        },
-        function(error) {
-          document.getElementById("loading-message").style.display = "none";
-          document.getElementById("error-message").textContent = "Error: " + error.text;
-          document.getElementById("error-message").style.display = "block";
-        }
-      );
-  });
+  // Enviar formulario solo una vez
+  emailjs.sendForm(serviceID, templateID, this)
+    .then(
+      function() {
+        document.getElementById("loading-message").style.display = "none";
+        document.getElementById("sent-message").style.display = "block";
+      },
+      function(error) {
+        document.getElementById("loading-message").style.display = "none";
+        document.getElementById("error-message").textContent = "Error: " + error.text;
+        document.getElementById("error-message").style.display = "block";
+      }
+    );
+});
+
 </script>
 
       
