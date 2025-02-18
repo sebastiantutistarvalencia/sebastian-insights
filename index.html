@@ -629,7 +629,7 @@
 
     </section><!-- /Portfolio Section -->
 
-    <!-- Contact Section --><!-- Contact Section -->
+<!-- Contact Section -->
 <section id="contact" class="contact section">
   <!-- Section Title -->
   <div class="container section-title" data-aos="fade-up">
@@ -698,8 +698,8 @@
             </div>
 
             <div class="col-md-12 text-center">
-              <div class="loading" id="loading-message">Cargando...</div>
-              <div class="error-message" id="error-message"></div>
+              <div class="loading" id="loading-message" style="display:none;">Cargando...</div>
+              <div class="error-message" id="error-message" style="display:none;"></div>
               <div class="sent-message" id="sent-message" style="display:none;">Tu mensaje ha sido enviado. ¡Gracias!</div>
               <button type="submit" class="btn btn-primary btn-lg">Enviar</button>
             </div>
@@ -719,7 +719,8 @@
       event.preventDefault(); // Prevenir la recarga de la página al enviar
 
       // Deshabilitar el botón para evitar múltiples envíos
-      document.querySelector("button[type='submit']").disabled = true;
+      const submitButton = document.querySelector("button[type='submit']");
+      submitButton.disabled = true; // Desactivar para evitar envíos repetidos
 
       // Mostrar mensaje de carga
       document.getElementById("loading-message").style.display = "block";
@@ -735,18 +736,19 @@
           function() {
             document.getElementById("loading-message").style.display = "none";
             document.getElementById("sent-message").style.display = "block";
-            document.querySelector("button[type='submit']").disabled = false; // Reactivar el botón
+            submitButton.disabled = false; // Reactivar el botón si el envío es exitoso
           },
           function(error) {
             document.getElementById("loading-message").style.display = "none";
             document.getElementById("error-message").textContent = "Error: " + error.text;
             document.getElementById("error-message").style.display = "block";
-            document.querySelector("button[type='submit']").disabled = false; // Reactivar el botón
+            submitButton.disabled = false; // Reactivar el botón si el envío falla
           }
         );
     });
   </script>
 </section>
+
 
         
   </main>
