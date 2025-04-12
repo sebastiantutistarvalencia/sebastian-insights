@@ -111,12 +111,12 @@
     <section id="portfolio-details" class="portfolio-details section">
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
-
+    
         <div class="row gy-4">
-
+    
+          <!-- Imagen -->
           <div class="col-lg-8">
             <div class="portfolio-details-slider swiper init-swiper">
-
               <script type="application/json" class="swiper-config">
                 {
                   "loop": true,
@@ -132,63 +132,73 @@
                   }
                 }
               </script>
-
+    
               <div class="swiper-wrapper align-items-center">
-
                 <div class="swiper-slide">
-                  <img src="assets/img/portfolio/fam2025.png" alt="" class="bi bi-zoom-in">
+                  <img src="assets/img/portfolio/fam2025.png" alt="Imagen del Programa" class="img-fluid">
                 </div>
+              </div>
               <div class="swiper-pagination"></div>
             </div>
           </div>
-
+    
+          <!-- Información -->
           <div class="col-lg-4">
             <div class="portfolio-info" data-aos="fade-up" data-aos-delay="200">
               <h2>📌 Planteamiento del problema</h2>
-              <p>
-                Aunque el programa <strong>Más Familias en Acción</strong> tiene una amplia cobertura nacional, con más de 
-                <strong>10 millones de beneficiarios</strong>, existen desafíos importantes relacionados con:
-              </p>
+              <p>Aunque el programa <strong>Más Familias en Acción</strong> tiene una amplia cobertura nacional, con más de 
+                <strong>10 millones de beneficiarios</strong>, existen desafíos importantes relacionados con:</p>
               <ul>
                 <li>La distribución equitativa de los beneficios.</li>
                 <li>La variabilidad en el crecimiento de la población beneficiada.</li>
                 <li>El acceso efectivo a los beneficios por parte de poblaciones vulnerables (indígenas, desplazados, personas con discapacidad).</li>
                 <li>Fluctuaciones significativas en los datos anuales de cobertura.</li>
                 <li>Cambios en la proporción de beneficiarios, que pueden afectar la eficiencia del programa.</li>
-              </ul>            
+              </ul>
+            </div>
+    
             <div class="portfolio-description" data-aos="fade-up" data-aos-delay="300">
-              <h2>Principales características y objetivos</h2>
-              <ol>
-                <ul>
+              <h2>🌍 Contexto</h2>
+              <ul>
+                <li><strong>Cobertura:</strong> 1026 municipios en 33 departamentos.</li>
+                <li><strong>Beneficiarios:</strong> Mujeres (78,5%), jóvenes entre 18 y 29 años (39,9%).</li>
+                <li><strong>Poblaciones objetivo:</strong>
                   <ul>
-                    <li>Cobertura nacional, alcanzando <strong>1026 municipios</strong> en <strong>33 departamentos</strong>.</li>
-                    <li>Mayoría de beneficiarios: <strong>mujeres (78,5%)</strong> y <strong>jóvenes entre 18 y 29 años (39,9%)</strong>.</li>
-                    <li>Poblaciones objetivo principales:
-                      <ul>
-                        <li>Desplazados: 29%</li>
-                        <li>Indígenas: 5%</li>
-                        <li>Población SISBEN: resto significativo</li>
-                      </ul>
-                    </li>
-                    <li>Caída progresiva del número de beneficiarios desde <strong>2013 hasta 2018</strong>.</li>
-                    <li>Alta concentración de beneficios en estratos económicos bajos: <strong>74,2%</strong> con ingresos entre <strong>$0 y $1.500.000 COP</strong>.</li>
-                    <li>Departamentos:
-                      <ul>
-                        <li>Mayor cobertura: <strong>Antioquia (12%)</strong></li>
-                        <li>Menor cobertura: <strong>Vaupés (0,1%)</strong></li>
-                      </ul>
-                    </li>
+                    <li>Desplazados: 29%</li>
+                    <li>Indígenas: 5%</li>
+                    <li>Población SISBEN: resto significativo</li>
                   </ul>
-              </ol>
+                </li>
+                <li><strong>Tendencia:</strong> Caída progresiva de beneficiarios entre 2013 y 2018.</li>
+                <li><strong>Ingreso:</strong> 74,2% de los beneficiarios ganan entre $0 y $1.500.000 COP.</li>
+                <li><strong>Cobertura por departamento:</strong>
+                  <ul>
+                    <li>Mayor: Antioquia (12%)</li>
+                    <li>Menor: Vaupés (0,1%)</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
           </div>
-
+    
         </div>
-
+    
+        <!-- Power BI Embed -->
+        <div class="mt-5">
+          <h2 class="text-center mb-4">📊 Tablero Interactivo</h2>
+          <iframe title="familiasaccion2025"
+                  width="100%"
+                  height="1000"
+                  style="min-height: 800px; border: none;"
+                  src="https://app.powerbi.com/view?r=eyJrIjoiNjg4Y2FkZDQtYmNmMi00NzE3LTgyYjAtMjUzZDE1Mjc1YWQ3IiwidCI6ImZkNzY2ZWRkLThiZWEtNGM5OS04NjcyLTU2ZDFjYWJjMjcwNiIsImMiOjR9"
+                  allowFullScreen="true">
+          </iframe>
+        </div>
+    
       </div>
-
-      <iframe title="familiasaccion2025" width="1024" height="1060" src="https://app.powerbi.com/view?r=eyJrIjoiNjg4Y2FkZDQtYmNmMi00NzE3LTgyYjAtMjUzZDE1Mjc1YWQ3IiwidCI6ImZkNzY2ZWRkLThiZWEtNGM5OS04NjcyLTU2ZDFjYWJjMjcwNiIsImMiOjR9" frameborder="0" allowFullScreen="true"></iframe>
-    </section><!-- /Portfolio Details Section -->
-
+    
+    </section>
+    
   </main>
 
   <footer id="footer" class="footer position-relative light-background">
