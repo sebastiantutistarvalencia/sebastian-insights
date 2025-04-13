@@ -110,82 +110,61 @@
     <!-- Portfolio Details Section -->
     <section id="portfolio-details" class="portfolio-details section">
       <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <div class="row gy-4">
+        <div class="row gy-5 align-items-start">
     
-          <!-- Imagen principal -->
-          <div class="col-lg-8">
-            <div class="portfolio-details-slider swiper init-swiper">
-              <script type="application/json" class="swiper-config">
-                {
-                  "loop": true,
-                  "speed": 600,
-                  "autoplay": {
-                    "delay": 5000
-                  },
-                  "slidesPerView": "auto",
-                  "pagination": {
-                    "el": ".swiper-pagination",
-                    "type": "bullets",
-                    "clickable": true
-                  }
-                }
-              </script>
-    
-              <div class="swiper-wrapper align-items-center">
-                <div class="swiper-slide">
-                  <img src="assets/img/portfolio/fam2025.png" alt="Imagen del Programa" class="img-fluid">
-                </div>
-              </div>
-              <div class="swiper-pagination"></div>
+          <!-- Imagen (ahora más pequeña para mejor distribución) -->
+          <div class="col-lg-5">
+            <div class="ratio ratio-16x9 mb-4">
+              <img src="assets/img/portfolio/fam2025.png" alt="Dashboard del Proyecto" class="img-fluid rounded shadow-sm">
             </div>
           </div>
     
           <!-- Información del proyecto -->
-          <div class="col-lg-4">
-            <div class="portfolio-info" data-aos="fade-up" data-aos-delay="200">
-              <h2>🧩 Contexto del Problema</h2>
+          <div class="col-lg-7">
+            <div class="portfolio-info mb-4" data-aos="fade-up" data-aos-delay="200">
+              <h2 class="mb-3"><span style="color:#4CAF50;">✖</span> Contexto del Problema</h2>
               <p>
-                La empresa <strong>SucursalCF2025</strong> (ficticia, como parte de un bootcamp de SQL) gestiona diferentes áreas comerciales relacionadas con ventas, clientes, proyectos y cobranzas. Como muchas empresas en crecimiento, enfrenta desafíos como:
+                La empresa <strong>SucursalCF2025</strong> (ficticia, como parte de un bootcamp de SQL) gestiona diferentes áreas comerciales relacionadas con ventas, clientes, proyectos y cobranzas. En su proceso de crecimiento, ha identificado varios desafíos:
               </p>
               <ul>
-                <li>📌 Información dispersa entre ventas, clientes, proyectos y pagos.</li>
-                <li>📌 Falta de trazabilidad de las ventas por canal, vendedor o cliente.</li>
-                <li>📌 Dificultad para calcular y analizar el desempeño de oficinas o vendedores.</li>
-                <li>📌 Inconsistencias en el control de cobranzas asociadas a facturas y clientes.</li>
-                <li>📌 Necesidad de analizar segmentos de clientes y su comportamiento por ubicación.</li>
+                <li>🔴 Información dispersa entre ventas, clientes, proyectos y pagos.</li>
+                <li>🔴 Falta de trazabilidad de ventas por canal, vendedor o cliente.</li>
+                <li>🔴 Dificultad para evaluar el desempeño de oficinas y vendedores.</li>
+                <li>🔴 Inconsistencias en el control de cobranzas por factura y cliente.</li>
+                <li>🔴 Necesidad de analizar segmentos de clientes por ubicación.</li>
               </ul>
             </div>
     
             <div class="portfolio-description" data-aos="fade-up" data-aos-delay="300">
-              <h2>💡 ¿Qué entra a solucionar este modelo?</h2>
+              <h3 class="mb-3">💡 ¿Qué entra a solucionar este modelo?</h3>
               <p>
                 Este modelo relacional en <strong>SQLite</strong> busca centralizar y estructurar toda la información para lograr una gestión eficiente, analítica y escalable.
               </p>
     
-              <h3>✅ 1. Gestión Integral de Operaciones Comerciales</h3>
+              <h4>✅ 1. Gestión Integral de Operaciones Comerciales</h4>
               <ul>
-                <li>Facturas conectadas con clientes, vendedores y canales.</li>
-                <li>Pagos (cobranzas) rastreados por cliente y factura.</li>
-                <li>Proyectos asociados a clientes y oficinas para control de costos y tiempos.</li>
+                <li>Relación entre facturas, clientes, canales y vendedores.</li>
+                <li>Rastreo de cobranzas por cliente y factura.</li>
+                <li>Proyectos asociados a clientes y oficinas.</li>
               </ul>
     
-              <h3>✅ 2. Control y Análisis Financiero</h3>
+              <h4>✅ 2. Control y Análisis Financiero</h4>
               <ul>
-                <li>Ingresos por oficina, canal, cliente o vendedor.</li>
-                <li>Comparación entre facturado y cobrado (morosidad).</li>
-                <li>Detalle de impuestos e ítems (JSON en facturas).</li>
+                <li>Ingresos por oficina, canal, cliente y vendedor.</li>
+                <li>Diferencia entre monto facturado y cobrado (morosidad).</li>
+                <li>Análisis de impuestos y estructura de ítems (JSON).</li>
               </ul>
     
-              <h3>✅ 3. Segmentación y Georreferenciación</h3>
+              <h4>✅ 3. Segmentación y Georreferenciación</h4>
               <ul>
                 <li>Clientes clasificados por segmento, ciudad y país.</li>
-                <li>Posibilidad de marketing segmentado y análisis geográfico.</li>
+                <li>Facilidad para marketing geográfico o análisis regional.</li>
               </ul>
     
-              <h3>✅ 4. Monitoreo de Desempeño</h3>
+              <h4>✅ 4. Monitoreo de Desempeño</h4>
               <ul>
-                <li>Relación entre proyectos y oficinas para evaluar rentabilidad.</li>
-                <li>Medición de desempeño por canal y por vendedor.</li>
+                <li>Evaluación de rentabilidad por proyecto/oficina.</li>
+                <li>Desempeño por canal de venta y vendedor.</li>
               </ul>
             </div>
           </div>
@@ -193,6 +172,7 @@
         </div>
       </div>
     </section>
+    
     
   </main>
 
