@@ -27,13 +27,27 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: iPortfolio
-  * Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
-  * Updated: Jun 29 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+  <style>
+    #hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      background-color: black;
+    }
+    #hero h2, #hero p {
+      position: relative;
+      z-index: 2;
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+  </style>
 </head>
 
 <body class="index-page">
@@ -46,14 +60,11 @@
     </div>
 
     <a href="index.html" class="logo d-flex align-items-center justify-content-center">
-      <!-- Uncomment the line below if you also wish to use an image logo -->
-      <!-- <img src="assets/img/logo.png" alt=""> -->
       <h1 class="sitename">Sebastián Tutistar</h1>
     </a>
 
     <div class="social-links text-center">
       <a href="https://www.linkedin.com/in/sebastian-tutistar-valencia-55b8131a2/" class="linkedin"><i class="bi bi-linkedin"></i></a>
-        
     </div>
 
     <nav id="navmenu" class="navmenu">
@@ -67,29 +78,6 @@
         <li><a href="index.html#contact"><i class="bi bi-envelope navicon"></i> Contacto</a></li>
       </ul>
     </nav>
-
-    <style>
-        #hero {
-            position: relative;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            background-color: black;
-        }
-        #hero h2, #hero p {
-            position: relative;
-            z-index: 2;
-        }
-        canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
-        }
-    </style>
-
   </header>
 
   <main class="main">
@@ -136,42 +124,39 @@
               <div class="swiper-wrapper align-items-center">
 
                 <div class="swiper-slide">
-                  <img src="assets/img/portfolio/bme1.png" alt="" class="bi bi-zoom-in">
+                  <img src="assets/img/portfolio/bme1.png" alt="BME Tool 1" class="bi bi-zoom-in">
                 </div>
 
                 <div class="swiper-slide">
-                  <img src="assets/img/portfolio/bme2.png" alt="" class="bi bi-zoom-in">
+                  <img src="assets/img/portfolio/bme2.png" alt="BME Tool 2" class="bi bi-zoom-in">
                 </div>
 
                 <div class="swiper-slide">
-                  <img src="assets/img/portfolio/bme3.png" alt="" class="bi bi-zoom-in">
+                  <img src="assets/img/portfolio/bme3.png" alt="BME Tool 3" class="bi bi-zoom-in">
                 </div>
+
+                <div class="swiper-slide">
+                  <img src="assets/img/portfolio/bme4.png" alt="BME Tool 4" class="bi bi-zoom-in">
+                </div>
+
+                <div class="swiper-slide">
+                  <img src="assets/img/portfolio/bme5.png" alt="BME Tool 5" class="bi bi-zoom-in">
+                </div>
+
+                <div class="swiper-slide">
+                  <img src="assets/img/portfolio/bme6.png" alt="BME Tool 6" class="bi bi-zoom-in">
+                </div>
+
+                <div class="swiper-slide">
+                  <img src="assets/img/portfolio/bme7.png" alt="BME Tool 7" class="bi bi-zoom-in">
+                </div>
+
+                <div class="swiper-slide">
+                  <img src="assets/img/portfolio/bme8.png" alt="BME Tool 8" class="bi bi-zoom-in">
+                </div>
+
               </div>
               
-                <div class="swiper-slide">
-                  <img src="assets/img/portfolio/bme4.png" alt="" class="bi bi-zoom-in">
-                </div>
-              </div>
-              
-                <div class="swiper-slide">
-                  <img src="assets/img/portfolio/bme5.png" alt="" class="bi bi-zoom-in">
-                </div>
-              </div>
-              
-                <div class="swiper-slide">
-                  <img src="assets/img/portfolio/bme6.png" alt="" class="bi bi-zoom-in">
-                </div>
-              </div>
-              
-                <div class="swiper-slide">
-                  <img src="assets/img/portfolio/bme7.png" alt="" class="bi bi-zoom-in">
-                </div>
-              </div>
-              
-                <div class="swiper-slide">
-                  <img src="assets/img/portfolio/bme8.png" alt="" class="bi bi-zoom-in">
-                </div>
-              </div>
               <div class="swiper-pagination"></div>
             </div>
           </div>
@@ -237,13 +222,9 @@
                 <li><strong>Gobernanza y calidad de datos</strong></li>
               </ul>
 
-            </div>            
+            </div>
 
-
-
-
-
-
+          </div>
 
         </div>
 
@@ -260,16 +241,11 @@
         <p>© <span>Copyright</span> <strong class="px-1 sitename"></strong> <span>Todos los Derechos Reservados</span></p>
       </div>
       <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you've purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
         DEV <a href="https://sebastiantutistarvalencia.github.io/portfolio/">Sebastián Tutistar Valencia</a>
       </div>
     </div>
 
   </footer>
-
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
