@@ -50,10 +50,85 @@
     
     /* Limitar tamaño de imágenes del portfolio */
     .portfolio-details-slider .swiper-slide img {
-      max-height: 500px;
+      max-height: 450px;
       width: 100%;
       object-fit: contain;
       background-color: #f8f9fa;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Ajustar el contenedor del slider */
+    .portfolio-details-slider {
+      padding: 20px 0;
+    }
+    
+    /* Mejorar espaciado en la descripción */
+    .portfolio-description h3 {
+      margin-top: 25px;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #2c3e50;
+    }
+    
+    .portfolio-description p {
+      margin-bottom: 20px;
+      line-height: 1.8;
+      text-align: justify;
+    }
+    
+    .portfolio-description ul {
+      margin-bottom: 25px;
+      padding-left: 20px;
+    }
+    
+    .portfolio-description ul li {
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+    
+    /* Mejorar el card de información */
+    .portfolio-info {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    .portfolio-info h3 {
+      color: white;
+      font-weight: 700;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+    }
+    
+    .portfolio-info ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .portfolio-info ul li {
+      color: white;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 0.95rem;
+    }
+    
+    .portfolio-info ul li:last-child {
+      border-bottom: none;
+    }
+    
+    .portfolio-info ul li strong {
+      font-weight: 600;
+      margin-right: 8px;
+    }
+    
+    /* Responsive */
+    @media (max-width: 992px) {
+      .portfolio-details-slider .swiper-slide img {
+        max-height: 350px;
+      }
     }
   </style>
 </head>
