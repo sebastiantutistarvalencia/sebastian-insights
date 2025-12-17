@@ -167,49 +167,270 @@
 
 <!-- Stats Section --> 
 <section id="stats" class="stats section">
+  <style>
+    .stats.section {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 80px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stats.section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: moveGrid 20s linear infinite;
+    }
+
+    @keyframes moveGrid {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(50px, 50px); }
+    }
+
+    .stats .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 30px;
+      padding: 60px 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .stats .row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+
+    .stats .stats-item {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      padding: 35px 25px;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.6s ease-out backwards;
+    }
+
+    .stats .stats-item:nth-child(1) { animation-delay: 0.1s; }
+    .stats .stats-item:nth-child(2) { animation-delay: 0.2s; }
+    .stats .stats-item:nth-child(3) { animation-delay: 0.3s; }
+    .stats .stats-item:nth-child(4) { animation-delay: 0.4s; }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .stats .stats-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: left 0.5s;
+    }
+
+    .stats .stats-item:hover::before {
+      left: 100%;
+    }
+
+    .stats .stats-item:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .stats .stats-item i {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      color: white;
+      transition: all 0.4s ease;
+    }
+
+    .stats .stats-item:hover i {
+      transform: rotate(360deg) scale(1.1);
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    }
+
+    .stats .stats-item span.purecounter {
+      font-size: 48px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 15px 0;
+      display: block;
+    }
+
+    .stats .stats-item p strong {
+      font-size: 18px;
+      font-weight: 600;
+      color: #2d3748;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .stats .stats-item p span {
+      font-size: 14px;
+      color: #718096;
+      line-height: 1.6;
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .stats .container {
+        padding: 40px 20px;
+      }
+      
+      .stats .stats-item span.purecounter {
+        font-size: 36px;
+      }
+      
+      .stats .row {
+        gap: 20px;
+      }
+    }
+
+    .plus-symbol {
+      font-size: 36px;
+      vertical-align: super;
+      margin-left: 2px;
+    }
+  </style>
 
   <div class="container" data-aos="fade-up" data-aos-delay="100">
-
     <div class="row gy-4">
 
       <div class="col-lg-3 col-md-6">
         <div class="stats-item">
-          <i class="bi bi-bar-chart-line"></i> <!-- Icono más relacionado con análisis de datos -->
-          <span data-purecounter-start="0" data-purecounter-end="10" data-purecounter-duration="1" class="purecounter"></span>
+          <i class="bi bi-bar-chart-line"></i>
+          <span data-purecounter-start="0" data-purecounter-end="10" data-purecounter-duration="1" class="purecounter">0</span>
           <p><strong>Proyectos</strong> <span>10+ análisis de datos completados en diferentes sectores.</span></p>
         </div>
-      </div><!-- End Stats Item -->
+      </div>
 
       <div class="col-lg-3 col-md-6">
         <div class="stats-item">
-          <i class="bi bi-gear-wide-connected"></i> <!-- Icono representando automatización y procesos -->
-          <span data-purecounter-start="0" data-purecounter-end="800" data-purecounter-duration="1" class="purecounter"></span>
+          <i class="bi bi-gear-wide-connected"></i>
+          <span data-purecounter-start="0" data-purecounter-end="800" data-purecounter-duration="1" class="purecounter">0</span>
           <p><strong>Automatización y Optimización</strong> <span>800+ contratistas procesados para optimización de pagos.</span></p>
         </div>
-      </div><!-- End Stats Item -->
+      </div>
 
       <div class="col-lg-3 col-md-6">
         <div class="stats-item">
-          <i class="bi bi-graph-up-arrow"></i> <!-- Icono representando impacto y crecimiento -->
-          <span data-purecounter-start="0" data-purecounter-end="41200" data-purecounter-duration="1" class="purecounter"></span>
+          <i class="bi bi-graph-up-arrow"></i>
+          <span data-purecounter-start="0" data-purecounter-end="41200" data-purecounter-duration="1" class="purecounter">0</span>
           <p><strong>Impacto</strong> <span>41,200+ beneficiarios analizados para medir alcance e impacto.</span></p>
         </div>
-      </div><!-- End Stats Item -->
+      </div>
 
       <div class="col-lg-3 col-md-6">
         <div class="stats-item">
-          <i class="bi bi-map"></i> <!-- Icono representando análisis geoespacial y cobertura territorial -->
-          <span data-purecounter-start="0" data-purecounter-end="42" data-purecounter-duration="1" class="purecounter"></span>
+          <i class="bi bi-map"></i>
+          <span data-purecounter-start="0" data-purecounter-end="42" data-purecounter-duration="1" class="purecounter">0</span>
           <p><strong>Cobertura</strong> <span>42+ municipios estudiados en el Valle del Cauca (CO)</span></p>
         </div>
-      </div><!-- End Stats Item -->
+      </div>
 
     </div>
-
   </div>
 
-</section><!-- /Stats Section -->
+  <script>
+    (function() {
+      function animateCounter(el) {
+        const target = parseInt(el.dataset.purecounterEnd);
+        const duration = 2000;
+        const step = target / (duration / 16);
+        let current = 0;
+        
+        const timer = setInterval(() => {
+          current += step;
+          if (current >= target) {
+            current = target;
+            clearInterval(timer);
+          }
+          
+          if (target >= 1000) {
+            el.innerHTML = Math.floor(current).toLocaleString('es-ES') + '<span class="plus-symbol">+</span>';
+          } else {
+            el.innerHTML = Math.floor(current) + '<span class="plus-symbol">+</span>';
+          }
+        }, 16);
+      }
 
+      const observerOptions = {
+        threshold: 0.3,
+        rootMargin: '0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const counters = entry.target.querySelectorAll('.purecounter');
+            counters.forEach(counter => {
+              if (!counter.classList.contains('counted')) {
+                counter.classList.add('counted');
+                animateCounter(counter);
+              }
+            });
+          }
+        });
+      }, observerOptions);
+
+      const statsSection = document.querySelector('#stats');
+      if (statsSection) {
+        observer.observe(statsSection);
+      }
+
+      document.querySelectorAll('.stats-item').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+          card.querySelector('i').style.animation = 'pulse 0.5s ease';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          card.querySelector('i').style.animation = '';
+        });
+      });
+
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes pulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.05); }
+        }
+      `;
+      document.head.appendChild(style);
+    })();
+  </script>
+</section>
 
     <!-- Resume Section -->
     <section id="formacion" class="resume section">
