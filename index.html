@@ -170,7 +170,7 @@
   <style>
     .stats.section {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      padding: 80px 0;
+      padding: 80px 20px;
       position: relative;
       overflow: hidden;
     }
@@ -206,9 +206,27 @@
     }
 
     .stats .row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      margin: -15px;
+    }
+
+    .stats .row > div {
+      padding: 15px;
+      flex: 0 0 auto;
+      width: 25%;
+    }
+
+    @media (max-width: 991px) {
+      .stats .row > div {
+        width: 50%;
+      }
+    }
+
+    @media (max-width: 575px) {
+      .stats .row > div {
+        width: 100%;
+      }
     }
 
     .stats .stats-item {
@@ -221,6 +239,11 @@
       position: relative;
       overflow: hidden;
       animation: fadeInUp 0.6s ease-out backwards;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 280px;
     }
 
     .stats .stats-item:nth-child(1) { animation-delay: 0.1s; }
@@ -260,17 +283,18 @@
     }
 
     .stats .stats-item i {
-      width: 80px;
-      height: 80px;
+      width: 70px;
+      height: 70px;
       margin: 0 auto 20px;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 40px;
+      font-size: 32px;
       color: white;
       transition: all 0.4s ease;
+      line-height: 1;
     }
 
     .stats .stats-item:hover i {
@@ -279,7 +303,7 @@
     }
 
     .stats .stats-item span.purecounter {
-      font-size: 48px;
+      font-size: 42px;
       font-weight: 700;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       -webkit-background-clip: text;
@@ -287,20 +311,25 @@
       background-clip: text;
       margin: 15px 0;
       display: block;
+      line-height: 1.2;
+    }
+
+    .stats .stats-item p {
+      margin: 0;
     }
 
     .stats .stats-item p strong {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 600;
       color: #2d3748;
       display: block;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .stats .stats-item p span {
-      font-size: 14px;
+      font-size: 13px;
       color: #718096;
-      line-height: 1.6;
+      line-height: 1.5;
       display: block;
     }
 
@@ -309,17 +338,24 @@
         padding: 40px 20px;
       }
       
+      .stats .stats-item {
+        min-height: 260px;
+        padding: 30px 20px;
+      }
+      
       .stats .stats-item span.purecounter {
         font-size: 36px;
       }
-      
-      .stats .row {
-        gap: 20px;
+
+      .stats .stats-item i {
+        width: 60px;
+        height: 60px;
+        font-size: 28px;
       }
     }
 
     .plus-symbol {
-      font-size: 36px;
+      font-size: 30px;
       vertical-align: super;
       margin-left: 2px;
     }
@@ -332,7 +368,7 @@
         <div class="stats-item">
           <i class="bi bi-bar-chart-line"></i>
           <span data-purecounter-start="0" data-purecounter-end="10" data-purecounter-duration="1" class="purecounter">0</span>
-          <p><strong>Proyectos</strong> <span>10+ análisis de datos completados en diferentes sectores.</span></p>
+          <p><strong>Proyectos</strong> <span>Análisis de datos completados en diferentes sectores</span></p>
         </div>
       </div>
 
@@ -340,7 +376,7 @@
         <div class="stats-item">
           <i class="bi bi-gear-wide-connected"></i>
           <span data-purecounter-start="0" data-purecounter-end="800" data-purecounter-duration="1" class="purecounter">0</span>
-          <p><strong>Automatización y Optimización</strong> <span>800+ contratistas procesados para optimización de pagos.</span></p>
+          <p><strong>Automatización</strong> <span>Contratistas procesados para optimización de pagos</span></p>
         </div>
       </div>
 
@@ -348,7 +384,7 @@
         <div class="stats-item">
           <i class="bi bi-graph-up-arrow"></i>
           <span data-purecounter-start="0" data-purecounter-end="41200" data-purecounter-duration="1" class="purecounter">0</span>
-          <p><strong>Impacto</strong> <span>41,200+ beneficiarios analizados para medir alcance e impacto.</span></p>
+          <p><strong>Impacto</strong> <span>Beneficiarios analizados para medir alcance e impacto</span></p>
         </div>
       </div>
 
@@ -356,7 +392,7 @@
         <div class="stats-item">
           <i class="bi bi-map"></i>
           <span data-purecounter-start="0" data-purecounter-end="42" data-purecounter-duration="1" class="purecounter">0</span>
-          <p><strong>Cobertura</strong> <span>42+ municipios estudiados en el Valle del Cauca (CO)</span></p>
+          <p><strong>Cobertura</strong> <span>Municipios estudiados en el Valle del Cauca (CO)</span></p>
         </div>
       </div>
 
