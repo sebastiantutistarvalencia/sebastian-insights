@@ -169,36 +169,13 @@
 <section id="stats" class="stats section">
   <style>
     .stats.section {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: #ffffff;
       padding: 80px 20px;
       position: relative;
       overflow: hidden;
     }
 
-    .stats.section::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-      background-size: 50px 50px;
-      animation: moveGrid 20s linear infinite;
-    }
-
-    @keyframes moveGrid {
-      0% { transform: translate(0, 0); }
-      100% { transform: translate(50px, 50px); }
-    }
-
     .stats .container {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 30px;
-      padding: 60px 40px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.2);
       position: relative;
       z-index: 1;
       max-width: 1200px;
@@ -230,7 +207,7 @@
     }
 
     .stats .stats-item {
-      background: rgba(255, 255, 255, 0.95);
+      background: #f8f9fa;
       border-radius: 20px;
       padding: 35px 25px;
       text-align: center;
@@ -244,6 +221,7 @@
       flex-direction: column;
       justify-content: center;
       min-height: 280px;
+      border: 1px solid #e9ecef;
     }
 
     .stats .stats-item:nth-child(1) { animation-delay: 0.1s; }
@@ -269,7 +247,7 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      background: linear-gradient(90deg, transparent, rgba(0, 123, 255, 0.1), transparent);
       transition: left 0.5s;
     }
 
@@ -279,14 +257,15 @@
 
     .stats .stats-item:hover {
       transform: translateY(-10px) scale(1.03);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 15px 40px rgba(0, 123, 255, 0.15);
+      background: #ffffff;
     }
 
     .stats .stats-item i {
       width: 70px;
       height: 70px;
       margin: 0 auto 20px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: #007bff;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -299,16 +278,13 @@
 
     .stats .stats-item:hover i {
       transform: rotate(360deg) scale(1.1);
-      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+      box-shadow: 0 10px 30px rgba(0, 123, 255, 0.3);
     }
 
     .stats .stats-item span.purecounter {
       font-size: 42px;
       font-weight: 700;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: #007bff;
       margin: 15px 0;
       display: block;
       line-height: 1.2;
