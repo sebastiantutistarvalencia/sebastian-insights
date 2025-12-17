@@ -916,6 +916,7 @@
 
     <!-- Skills Section -->
 <section id="skills" class="skills section light-background">
+
   <style>
     .skills.section {
       background: #f8f9fa;
@@ -927,39 +928,33 @@
     .skills.section::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, rgba(0, 123, 255, 0.03) 0%, rgba(0, 123, 255, 0.01) 100%);
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(0, 123, 255, 0.03),
+        rgba(0, 123, 255, 0.01)
+      );
       pointer-events: none;
     }
 
+    /* ---------- TITLE ---------- */
     .skills .section-title {
       text-align: center;
       margin-bottom: 60px;
       animation: fadeInDown 0.8s ease-out;
       position: relative;
       z-index: 1;
-      padding: 0 20px;
     }
 
     @keyframes fadeInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(-25px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .skills .section-title h2 {
       font-size: 32px;
       font-weight: 700;
       color: #2d3748;
-      margin-bottom: 20px;
       position: relative;
       display: inline-block;
     }
@@ -977,33 +972,33 @@
     }
 
     .skills .section-title p {
+      margin-top: 30px;
+      max-width: 900px;
+      margin-inline: auto;
       font-size: 16px;
       color: #718096;
       line-height: 1.8;
-      max-width: 1000px;
-      margin: 30px auto 0;
-      padding: 0 20px;
     }
 
+    /* ---------- GRID ---------- */
     .skills .container {
       max-width: 1000px;
-      margin: 0 auto;
+      margin: auto;
       position: relative;
       z-index: 1;
-      padding: 0 30px;
     }
 
     .skills .row {
       display: flex;
       flex-wrap: wrap;
-      margin: -20px;
       justify-content: center;
+      margin: -20px;
     }
 
     .skills .col-lg-6 {
-      padding: 20px;
       flex: 0 0 50%;
       max-width: 50%;
+      padding: 20px;
     }
 
     @media (max-width: 991px) {
@@ -1013,345 +1008,179 @@
       }
     }
 
+    /* ---------- CARD ---------- */
     .skills .progress {
       background: #ffffff;
       border-radius: 15px;
       padding: 25px 30px;
       margin-bottom: 25px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      position: relative;
-      overflow: hidden;
-      animation: fadeInUp 0.6s ease-out backwards;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+      transition: all 0.35s ease;
       border: 2px solid transparent;
       max-width: 450px;
-      margin-left: auto;
-      margin-right: auto;
+      margin-inline: auto;
+      animation: fadeInUp 0.6s ease backwards;
     }
 
-    .skills .progress:nth-child(1) { animation-delay: 0.1s; }
-    .skills .progress:nth-child(2) { animation-delay: 0.2s; }
-    .skills .progress:nth-child(3) { animation-delay: 0.3s; }
-    .skills .progress:nth-child(4) { animation-delay: 0.4s; }
+    .skills .progress:nth-child(1) { animation-delay: .1s; }
+    .skills .progress:nth-child(2) { animation-delay: .2s; }
+    .skills .progress:nth-child(3) { animation-delay: .3s; }
+    .skills .progress:nth-child(4) { animation-delay: .4s; }
 
     @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .skills .progress::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(0, 123, 255, 0.1), transparent);
-      transition: left 0.6s ease;
-    }
-
-    .skills .progress:hover::before {
-      left: 100%;
+      from { opacity: 0; transform: translateY(25px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .skills .progress:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 12px 30px rgba(0, 123, 255, 0.2);
+      transform: translateY(-6px);
+      box-shadow: 0 14px 32px rgba(0, 123, 255, 0.18);
       border-color: #007bff;
     }
 
-    .skills .progress .skill {
+    /* ---------- HEADER ---------- */
+    .skills .skill {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 15px;
     }
 
-    .skills .progress .skill i:first-child {
-      font-size: 24px;
+    .skills .skill i:first-child {
+      font-size: 22px;
       color: #007bff;
       margin-right: 12px;
-      transition: all 0.3s ease;
     }
 
-    .skills .progress:hover .skill i:first-child {
-      transform: scale(1.2) rotate(10deg);
-    }
-
-    .skills .progress .skill span {
+    .skills .skill span {
+      flex: 1;
       font-size: 18px;
       font-weight: 600;
       color: #2d3748;
-      flex: 1;
     }
 
-    .skills .progress .skill i.val {
-      font-size: 16px;
+    .skills .skill .val {
+      font-size: 14px;
       font-weight: 700;
-      color: #007bff;
       background: rgba(0, 123, 255, 0.1);
-      padding: 5px 15px;
+      color: #007bff;
+      padding: 5px 14px;
       border-radius: 20px;
       font-style: normal;
-      transition: all 0.3s ease;
     }
 
-    .skills .progress:hover .skill i.val {
-      background: #007bff;
-      color: #ffffff;
-      transform: scale(1.1);
-    }
-
+    /* ---------- BAR ---------- */
     .skills .progress-bar-wrap {
-      background: #e9ecef;
       height: 12px;
+      background: #e9ecef;
       border-radius: 10px;
       overflow: hidden;
-      position: relative;
-    }
-
-    .skills .progress-bar-wrap::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
-      animation: shimmer 2s infinite;
-    }
-
-    @keyframes shimmer {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
     }
 
     .skills .progress-bar {
       height: 100%;
-      background: linear-gradient(90deg, #007bff 0%, #0056b3 100%);
-      border-radius: 10px;
       width: 0;
-      transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #007bff, #0056b3);
+      transition: width 1.4s ease;
     }
 
-    .skills .progress-bar::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      animation: slide 2s infinite;
-    }
-
-    @keyframes slide {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
-
-    /* Animación de las barras cuando entran en viewport */
-    .skills .progress.animated .progress-bar[aria-valuenow="90"] {
-      width: 90%;
-    }
-
-    .skills .progress.animated .progress-bar[aria-valuenow="80"] {
-      width: 80%;
-    }
-
-    .skills .progress.animated .progress-bar[aria-valuenow="65"] {
-      width: 65%;
-    }
-
-    .skills .progress.animated .progress-bar[aria-valuenow="50"] {
-      width: 50%;
-    }
+    /* ---------- WIDTHS ---------- */
+    .skills .progress.animated .progress-bar[aria-valuenow="90"] { width: 90%; }
+    .skills .progress.animated .progress-bar[aria-valuenow="80"] { width: 80%; }
+    .skills .progress.animated .progress-bar[aria-valuenow="65"] { width: 65%; }
+    .skills .progress.animated .progress-bar[aria-valuenow="50"] { width: 50%; }
 
     @media (max-width: 768px) {
-      .skills .section-title h2 {
-        font-size: 26px;
-      }
-
-      .skills .section-title p {
-        font-size: 14px;
-        padding: 0 15px;
-      }
-
-      .skills .progress {
-        padding: 20px;
-      }
-
-      .skills .progress .skill span {
-        font-size: 16px;
-      }
-
-      .skills .progress .skill i:first-child {
-        font-size: 20px;
-      }
-
-      .skills .progress .skill i.val {
-        font-size: 14px;
-        padding: 4px 12px;
-      }
-
-      .skills .container {
-        padding: 0 15px;
-      }
-    }
-
-    /* Efecto de pulso en hover */
-    @keyframes pulse {
-      0%, 100% {
-        box-shadow: 0 12px 30px rgba(0, 123, 255, 0.2);
-      }
-      50% {
-        box-shadow: 0 12px 40px rgba(0, 123, 255, 0.3);
-      }
-    }
-
-    .skills .progress:hover {
-      animation: pulse 2s infinite;
+      .skills .section-title h2 { font-size: 26px; }
+      .skills .section-title p { font-size: 14px; }
+      .skills .progress { padding: 20px; }
+      .skills .skill span { font-size: 16px; }
     }
   </style>
 
-  <!-- Section Title -->
-  <div class="container section-title" data-aos="fade-up">
+  <!-- TITLE -->
+  <div class="container section-title">
     <h2>Skills</h2>
-    <p>Altamente capacitado en análisis de datos, visualización de datos e inteligencia empresarial. Dominio de Excel, SQL, Python, Power BI, Tableau, Looker Studio y R Studio, con un enfoque sólido en transformar datos complejos en información útil para la toma de decisiones</p>
-  </div><!-- End Section Title -->
+    <p>
+      Altamente capacitado en análisis de datos, visualización e inteligencia empresarial.
+      Dominio de Excel, SQL, Python, Power BI, Tableau, Looker Studio y R Studio,
+      enfocado en transformar datos complejos en información útil para la toma de decisiones.
+    </p>
+  </div>
 
-  <div class="container" data-aos="fade-up" data-aos-delay="100">
+  <!-- CONTENT -->
+  <div class="container">
+    <div class="row skills-content">
 
-    <div class="row skills-content skills-animation">
-  
-      <div class="row">
-
-        <div class="col-lg-6">
-      
-          <div class="progress">
-            <span class="skill">
-              <i class="fab fa-microsoft"></i> <span>Excel</span> 
-              <i class="val">90%</i>
-            </span>
-            <div class="progress-bar-wrap">
-              <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-          </div><!-- End Skills Item -->
-      
-          <div class="progress">
-            <span class="skill">
-              <i class="fas fa-database"></i> <span>SQL</span> 
-              <i class="val">80%</i>
-            </span>
-            <div class="progress-bar-wrap">
-              <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-          </div><!-- End Skills Item -->
-      
-          <div class="progress">
-            <span class="skill">
-              <i class="fab fa-python"></i> <span>Python</span> 
-              <i class="val">80%</i>
-            </span>
-            <div class="progress-bar-wrap">
-              <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-          </div><!-- End Skills Item -->
-      
-          <div class="progress">
-            <span class="skill">
-              <i class="fas fa-chart-line"></i> <span>Power BI</span> 
-              <i class="val">80%</i>
-            </span>
-            <div class="progress-bar-wrap">
-              <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-          </div><!-- End Skills Item -->
-      
+      <div class="col-lg-6">
+        <div class="progress">
+          <span class="skill"><i class="fab fa-microsoft"></i><span>Excel</span><i class="val">Avanzado</i></span>
+          <div class="progress-bar-wrap"><div class="progress-bar" aria-valuenow="90"></div></div>
         </div>
-      
-        <div class="col-lg-6">
-      
-          <div class="progress">
-            <span class="skill">
-              <i class="fas fa-chart-bar"></i> <span>Tableau</span> 
-              <i class="val">90%</i>
-            </span>
-            <div class="progress-bar-wrap">
-              <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-          </div><!-- End Skills Item -->
-      
-          <div class="progress">
-            <span class="skill">
-              <i class="fas fa-chart-pie"></i> <span>Looker Studio</span> 
-              <i class="val">80%</i>
-            </span>
-            <div class="progress-bar-wrap">
-              <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-          </div><!-- End Skills Item -->
-      
-          <div class="progress">
-            <span class="skill">
-              <i class="fas fa-code"></i> <span>R Studio</span> 
-              <i class="val">65%</i>
-            </span>
-            <div class="progress-bar-wrap">
-              <div class="progress-bar" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-          </div><!-- End Skills Item -->
-      
-          <div class="progress">
-            <span class="skill">
-              <i class="fas fa-project-diagram"></i> <span>Alteryx</span> 
-              <i class="val">50%</i>
-            </span>
-            <div class="progress-bar-wrap">
-              <div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-          </div><!-- End Skills Item -->
+
+        <div class="progress">
+          <span class="skill"><i class="fas fa-database"></i><span>SQL</span><i class="val">Intermedio</i></span>
+          <div class="progress-bar-wrap"><div class="progress-bar" aria-valuenow="80"></div></div>
+        </div>
+
+        <div class="progress">
+          <span class="skill"><i class="fab fa-python"></i><span>Python</span><i class="val">Intermedio</i></span>
+          <div class="progress-bar-wrap"><div class="progress-bar" aria-valuenow="80"></div></div>
+        </div>
+
+        <div class="progress">
+          <span class="skill"><i class="fas fa-chart-line"></i><span>Power BI</span><i class="val">Intermedio</i></span>
+          <div class="progress-bar-wrap"><div class="progress-bar" aria-valuenow="80"></div></div>
         </div>
       </div>
+
+      <div class="col-lg-6">
+        <div class="progress">
+          <span class="skill"><i class="fas fa-chart-bar"></i><span>Tableau</span><i class="val">Avanzado</i></span>
+          <div class="progress-bar-wrap"><div class="progress-bar" aria-valuenow="90"></div></div>
+        </div>
+
+        <div class="progress">
+          <span class="skill"><i class="fas fa-chart-pie"></i><span>Looker Studio</span><i class="val">Intermedio</i></span>
+          <div class="progress-bar-wrap"><div class="progress-bar" aria-valuenow="80"></div></div>
+        </div>
+
+        <div class="progress">
+          <span class="skill"><i class="fas fa-code"></i><span>R Studio</span><i class="val">En progreso</i></span>
+          <div class="progress-bar-wrap"><div class="progress-bar" aria-valuenow="65"></div></div>
+        </div>
+
+        <div class="progress">
+          <span class="skill"><i class="fas fa-project-diagram"></i><span>Alteryx</span><i class="val">Básico</i></span>
+          <div class="progress-bar-wrap"><div class="progress-bar" aria-valuenow="50"></div></div>
+        </div>
+      </div>
+
     </div>
   </div>
 
   <script>
-    (function() {
-      const observerOptions = {
-        threshold: 0.3,
-        rootMargin: '0px'
-      };
-
-      const observer = new IntersectionObserver((entries) => {
+    (function () {
+      const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            const progressBars = entry.target.querySelectorAll('.progress');
-            progressBars.forEach((bar, index) => {
-              setTimeout(() => {
-                bar.classList.add('animated');
-              }, index * 100);
-            });
+            entry.target.querySelectorAll('.progress')
+              .forEach((el, i) =>
+                setTimeout(() => el.classList.add('animated'), i * 100)
+              );
             observer.unobserve(entry.target);
           }
         });
-      }, observerOptions);
+      }, { threshold: 0.3 });
 
-      const skillsSection = document.querySelector('#skills .skills-content');
-      if (skillsSection) {
-        observer.observe(skillsSection);
-      }
+      const skills = document.querySelector('#skills .skills-content');
+      if (skills) observer.observe(skills);
     })();
   </script>
+
 </section>
+
 
 <!-- /Skills Section -->
 
