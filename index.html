@@ -162,298 +162,34 @@
     </section><!-- /About Section -->
 
 <!-- Stats Section --> 
-<section id="stats" class="stats section">
+
+<section id="skills" class="skills section light-background">
   <style>
-    .stats.section {
-      background: #ffffff;
-      padding: 80px 20px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .stats .container {
-      position: relative;
-      z-index: 1;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .stats .row {
-      display: flex;
-      flex-wrap: wrap;
-      margin: -15px;
-    }
-
-    .stats .row > div {
-      padding: 15px;
-      flex: 0 0 auto;
-      width: 25%;
-    }
-
-    @media (max-width: 991px) {
-      .stats .row > div {
-        width: 50%;
-      }
-    }
-
-    @media (max-width: 575px) {
-      .stats .row > div {
-        width: 100%;
-      }
-    }
-
-    .stats .stats-item {
+    .skills.section {
       background: #f8f9fa;
-      border-radius: 20px;
-      padding: 35px 25px;
-      text-align: center;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      cursor: pointer;
+      padding: 50px 20px;
       position: relative;
       overflow: hidden;
-      animation: fadeInUp 0.6s ease-out backwards;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      min-height: 280px;
-      border: 1px solid #e9ecef;
     }
 
-    .stats .stats-item:nth-child(1) { animation-delay: 0.1s; }
-    .stats .stats-item:nth-child(2) { animation-delay: 0.2s; }
-    .stats .stats-item:nth-child(3) { animation-delay: 0.3s; }
-    .stats .stats-item:nth-child(4) { animation-delay: 0.4s; }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .stats .stats-item::before {
+    .skills.section::before {
       content: '';
       position: absolute;
       top: 0;
-      left: -100%;
+      left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(0, 123, 255, 0.1), transparent);
-      transition: left 0.5s;
+      background: linear-gradient(135deg, rgba(0, 123, 255, 0.03) 0%, rgba(0, 123, 255, 0.01) 100%);
+      pointer-events: none;
     }
 
-    .stats .stats-item:hover::before {
-      left: 100%;
-    }
-
-    .stats .stats-item:hover {
-      transform: translateY(-10px) scale(1.03);
-      box-shadow: 0 15px 40px rgba(0, 123, 255, 0.15);
-      background: #ffffff;
-    }
-
-    .stats .stats-item i {
-      width: 70px;
-      height: 70px;
-      margin: 0 auto 20px;
-      background: #007bff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 32px;
-      color: white;
-      transition: all 0.4s ease;
-      line-height: 1;
-    }
-
-    .stats .stats-item:hover i {
-      transform: rotate(360deg) scale(1.1);
-      box-shadow: 0 10px 30px rgba(0, 123, 255, 0.3);
-    }
-
-    .stats .stats-item span.purecounter {
-      font-size: 42px;
-      font-weight: 700;
-      color: #007bff;
-      margin: 15px 0;
-      display: block;
-      line-height: 1.2;
-    }
-
-    .stats .stats-item p {
-      margin: 0;
-    }
-
-    .stats .stats-item p strong {
-      font-size: 16px;
-      font-weight: 600;
-      color: #2d3748;
-      display: block;
-      margin-bottom: 8px;
-    }
-
-    .stats .stats-item p span {
-      font-size: 13px;
-      color: #718096;
-      line-height: 1.5;
-      display: block;
-    }
-
-    @media (max-width: 768px) {
-      .stats .container {
-        padding: 40px 20px;
-      }
-      
-      .stats .stats-item {
-        min-height: 260px;
-        padding: 30px 20px;
-      }
-      
-      .stats .stats-item span.purecounter {
-        font-size: 36px;
-      }
-
-      .stats .stats-item i {
-        width: 60px;
-        height: 60px;
-        font-size: 28px;
-      }
-    }
-
-    .plus-symbol {
-      font-size: 30px;
-      vertical-align: super;
-      margin-left: 2px;
-    }
-  </style>
-
-  <div class="container" data-aos="fade-up" data-aos-delay="100">
-    <div class="row gy-4">
-
-      <div class="col-lg-3 col-md-6">
-        <div class="stats-item">
-          <i class="bi bi-bar-chart-line"></i>
-          <span data-purecounter-start="0" data-purecounter-end="10" data-purecounter-duration="1" class="purecounter">0</span>
-            <p><strong>Proyectos</strong> <span>Casos reales de análisis de datos en sector público y privado</span></p>
-        </div>
-      </div>
-
-    <div class="col-lg-3 col-md-6">
-      <div class="stats-item">
-        <i class="bi bi-gear-wide-connected"></i>
-        <span data-purecounter-start="0" data-purecounter-end="90" data-purecounter-duration="1" data-purecounter-suffix="%" class="purecounter">0</span>
-        <p><strong>Automatización</strong> <span>Reducción en un 90% los tiempos de ejecución - planeación financiera para Johnson & Johnson</span></p>
-      </div>
-    </div>
-
-      <div class="col-lg-3 col-md-6">
-        <div class="stats-item">
-          <i class="bi bi-graph-up-arrow"></i>
-          <span data-purecounter-start="0" data-purecounter-end="50000" data-purecounter-duration="1" class="purecounter">0</span>
-          <p><strong>Impacto</strong> <span>Lideré la medición de impacto del proyecto Escuelas Culturales Vallecaucanas, cuantificando un alcance superior a 50.000 beneficiarios mediante indicadores estadísticos de cobertura y participación.</span></p>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-md-6">
-        <div class="stats-item">
-          <i class="bi bi-map"></i>
-          <span data-purecounter-start="0" data-purecounter-end="42" data-purecounter-duration="1" class="purecounter">0</span>
-            <p><strong>Cobertura</strong> <span>Municipios, comunas y corregimientos analizados en el Valle del Cauca (CO)</span></p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <script>
-    (function() {
-      function animateCounter(el) {
-        const target = parseInt(el.dataset.purecounterEnd);
-        const duration = 2000;
-        const step = target / (duration / 16);
-        let current = 0;
-        
-        const timer = setInterval(() => {
-          current += step;
-          if (current >= target) {
-            current = target;
-            clearInterval(timer);
-          }
-          
-          if (target >= 1000) {
-            el.innerHTML = Math.floor(current).toLocaleString('es-ES') + '<span class="plus-symbol">+</span>';
-          } else {
-            el.innerHTML = Math.floor(current) + '<span class="plus-symbol">+</span>';
-          }
-        }, 16);
-      }
-
-      const observerOptions = {
-        threshold: 0.3,
-        rootMargin: '0px'
-      };
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const counters = entry.target.querySelectorAll('.purecounter');
-            counters.forEach(counter => {
-              if (!counter.classList.contains('counted')) {
-                counter.classList.add('counted');
-                animateCounter(counter);
-              }
-            });
-          }
-        });
-      }, observerOptions);
-
-      const statsSection = document.querySelector('#stats');
-      if (statsSection) {
-        observer.observe(statsSection);
-      }
-
-      document.querySelectorAll('.stats-item').forEach(card => {
-        card.addEventListener('mouseenter', () => {
-          card.querySelector('i').style.animation = 'pulse 0.5s ease';
-        });
-        
-        card.addEventListener('mouseleave', () => {
-          card.querySelector('i').style.animation = '';
-        });
-      });
-
-      const style = document.createElement('style');
-      style.textContent = `
-        @keyframes pulse {
-          0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.05); }
-        }
-      `;
-      document.head.appendChild(style);
-    })();
-  </script>
-</section>
-
-    <!-- Resume Section -->
-
-<section id="formacion" class="resume section">
-  <style>
-    .resume.section {
-      background: #ffffff;
-      padding: 80px 20px;
-      position: relative;
-    }
-
-    .resume .section-title {
+    .skills .section-title {
       text-align: center;
-      margin-bottom: 60px;
+      margin-bottom: 40px;
       animation: fadeInDown 0.8s ease-out;
+      position: relative;
+      z-index: 1;
+      padding: 0 20px;
     }
 
     @keyframes fadeInDown {
@@ -467,7 +203,7 @@
       }
     }
 
-    .resume .section-title h2 {
+    .skills .section-title h2 {
       font-size: 32px;
       font-weight: 700;
       color: #2d3748;
@@ -476,7 +212,7 @@
       display: inline-block;
     }
 
-    .resume .section-title h2::after {
+    .skills .section-title h2::after {
       content: '';
       position: absolute;
       bottom: -10px;
@@ -488,78 +224,63 @@
       border-radius: 2px;
     }
 
-    .resume .section-title p {
+    .skills .section-title p {
       font-size: 16px;
       color: #718096;
       line-height: 1.8;
-      max-width: 900px;
+      max-width: 1000px;
       margin: 30px auto 0;
+      padding: 0 20px;
     }
 
-    .resume .container {
-      max-width: 1200px;
+    .skills .container {
+      max-width: 1000px;
       margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      padding: 0 30px;
     }
 
-    .resume .row {
+    .skills .row {
       display: flex;
       flex-wrap: wrap;
-      margin: -15px;
+      margin: -20px;
+      justify-content: center;
     }
 
-    .resume .col-lg-6 {
-      padding: 15px;
+    .skills .col-lg-6 {
+      padding: 20px;
       flex: 0 0 50%;
       max-width: 50%;
     }
 
     @media (max-width: 991px) {
-      .resume .col-lg-6 {
+      .skills .col-lg-6 {
         flex: 0 0 100%;
         max-width: 100%;
       }
     }
 
-    .resume .resume-title {
-      font-size: 26px;
-      font-weight: 700;
-      color: #2d3748;
-      margin-bottom: 30px;
-      padding-bottom: 15px;
-      border-bottom: 3px solid #007bff;
-      position: relative;
-      animation: slideInLeft 0.6s ease-out;
-    }
-
-    @keyframes slideInLeft {
-      from {
-        opacity: 0;
-        transform: translateX(-30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    .resume .resume-item {
-      background: #f8f9fa;
+    .skills .progress {
+      background: #ffffff;
       border-radius: 15px;
-      padding: 30px;
+      padding: 25px 30px;
       margin-bottom: 25px;
-      position: relative;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      border: 2px solid transparent;
+      position: relative;
+      overflow: hidden;
       animation: fadeInUp 0.6s ease-out backwards;
+      border: 2px solid transparent;
+      max-width: 450px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
-    .resume .resume-item:nth-child(odd) {
-      animation-delay: 0.1s;
-    }
-
-    .resume .resume-item:nth-child(even) {
-      animation-delay: 0.2s;
-    }
+    .skills .progress:nth-child(1) { animation-delay: 0.1s; }
+    .skills .progress:nth-child(2) { animation-delay: 0.2s; }
+    .skills .progress:nth-child(3) { animation-delay: 0.3s; }
+    .skills .progress:nth-child(4) { animation-delay: 0.4s; }
 
     @keyframes fadeInUp {
       from {
@@ -572,159 +293,313 @@
       }
     }
 
-    .resume .resume-item::before {
+    .skills .progress::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 123, 255, 0.1), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .skills .progress:hover::before {
+      left: 100%;
+    }
+
+    .skills .progress:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px rgba(0, 123, 255, 0.2);
+      border-color: #007bff;
+    }
+
+    .skills .progress .skill {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+
+    .skills .progress .skill i:first-child {
+      font-size: 24px;
+      color: #007bff;
+      margin-right: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .skills .progress:hover .skill i:first-child {
+      transform: scale(1.2) rotate(10deg);
+    }
+
+    .skills .progress .skill span {
+      font-size: 18px;
+      font-weight: 600;
+      color: #2d3748;
+      flex: 1;
+    }
+
+    .skills .progress .skill i.val {
+      font-size: 16px;
+      font-weight: 700;
+      color: #007bff;
+      background: rgba(0, 123, 255, 0.1);
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-style: normal;
+      transition: all 0.3s ease;
+    }
+
+    .skills .progress:hover .skill i.val {
+      background: #007bff;
+      color: #ffffff;
+      transform: scale(1.1);
+    }
+
+    .skills .progress-bar-wrap {
+      background: #e9ecef;
+      height: 12px;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .skills .progress-bar-wrap::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
-      width: 4px;
+      width: 100%;
       height: 100%;
-      background: #007bff;
-      border-radius: 15px 0 0 15px;
-      transform: scaleY(0);
-      transition: transform 0.3s ease;
+      background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+      animation: shimmer 2s infinite;
     }
 
-    .resume .resume-item:hover::before {
-      transform: scaleY(1);
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
     }
 
-    .resume .resume-item:hover {
-      transform: translateX(10px);
-      box-shadow: 0 10px 30px rgba(0, 123, 255, 0.15);
-      border-color: #007bff;
-      background: #ffffff;
-    }
-
-    .resume .resume-item img {
-      max-width: 80px;
-      height: 80px;
-      object-fit: contain;
-      margin-bottom: 20px;
+    .skills .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #007bff 0%, #0056b3 100%);
       border-radius: 10px;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .resume .resume-item:hover img {
-      transform: scale(1.1) rotate(5deg);
-    }
-
-    .resume .resume-item h4 {
-      font-size: 20px;
-      font-weight: 700;
-      color: #2d3748;
-      margin-bottom: 10px;
-      line-height: 1.4;
-    }
-
-    .resume .resume-item h5 {
-      font-size: 14px;
-      font-weight: 600;
-      color: #ffffff;
-      background: #007bff;
-      display: inline-block;
-      padding: 5px 15px;
-      border-radius: 20px;
-      margin-bottom: 15px;
-    }
-
-    .resume .resume-item p {
-      font-size: 15px;
-      color: #4a5568;
-      margin-bottom: 10px;
-      line-height: 1.6;
-    }
-
-    .resume .resume-item p em {
-      color: #007bff;
-      font-weight: 600;
-      font-style: normal;
-    }
-
-    .resume .resume-item ul {
-      list-style: none;
-      padding: 0;
-      margin: 15px 0 0 0;
-    }
-
-    .resume .resume-item ul li {
-      padding: 8px 0 8px 25px;
+      width: 0;
+      transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
-      color: #4a5568;
-      font-size: 14px;
-      line-height: 1.6;
+      overflow: hidden;
     }
 
-    .resume .resume-item ul li::before {
-      content: '▸';
+    .skills .progress-bar::after {
+      content: '';
       position: absolute;
+      top: 0;
       left: 0;
-      color: #007bff;
-      font-size: 18px;
-      font-weight: 700;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: slide 2s infinite;
     }
 
-    .resume .resume-item strong {
-      color: #2d3748;
-      font-weight: 700;
+    @keyframes slide {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* Animación de las barras cuando entran en viewport */
+    .skills .progress.animated .progress-bar[aria-valuenow="90"] {
+      width: 90%;
+    }
+
+    .skills .progress.animated .progress-bar[aria-valuenow="80"] {
+      width: 80%;
+    }
+
+    .skills .progress.animated .progress-bar[aria-valuenow="65"] {
+      width: 65%;
+    }
+
+    .skills .progress.animated .progress-bar[aria-valuenow="50"] {
+      width: 50%;
     }
 
     @media (max-width: 768px) {
-      .resume .section-title h2 {
+      .skills .section-title h2 {
         font-size: 26px;
       }
 
-      .resume .section-title p {
+      .skills .section-title p {
         font-size: 14px;
+        padding: 0 15px;
       }
 
-      .resume .resume-title {
-        font-size: 22px;
-      }
-
-      .resume .resume-item {
+      .skills .progress {
         padding: 20px;
       }
 
-      .resume .resume-item h4 {
-        font-size: 18px;
+      .skills .progress .skill span {
+        font-size: 16px;
       }
 
-      .resume .resume-item img {
-        max-width: 60px;
-        height: 60px;
+      .skills .progress .skill i:first-child {
+        font-size: 20px;
+      }
+
+      .skills .progress .skill i.val {
+        font-size: 14px;
+        padding: 4px 12px;
+      }
+
+      .skills .container {
+        padding: 0 15px;
       }
     }
 
-    /* Efecto de scroll suave */
-    .resume .resume-item {
-      opacity: 0;
-      animation: fadeInUp 0.6s ease-out forwards;
-    }
-
-    /* Indicador visual de timeline */
-    .resume .col-lg-6 {
-      position: relative;
-    }
-
-    .resume .col-lg-6::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 60px;
-      bottom: 0;
-      width: 2px;
-      background: linear-gradient(to bottom, #007bff 0%, transparent 100%);
-      opacity: 0.3;
-    }
-
-    @media (max-width: 991px) {
-      .resume .col-lg-6::before {
-        display: none;
+    /* Efecto de pulso en hover */
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 12px 30px rgba(0, 123, 255, 0.2);
       }
+      50% {
+        box-shadow: 0 12px 40px rgba(0, 123, 255, 0.3);
+      }
+    }
+
+    .skills .progress:hover {
+      animation: pulse 2s infinite;
     }
   </style>
+
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Skills</h2>
+    <p>Altamente capacitado en análisis de datos, visualización de datos e inteligencia empresarial. Dominio de Excel, SQL, Python, Power BI, Tableau, Looker Studio y R Studio, con un enfoque sólido en transformar datos complejos en información útil para la toma de decisiones</p>
+  </div><!-- End Section Title -->
+
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+    <div class="row skills-content skills-animation">
+  
+      <div class="row">
+
+        <div class="col-lg-6">
+      
+          <div class="progress">
+            <span class="skill">
+              <i class="fab fa-microsoft"></i> <span>Excel</span> 
+              <i class="val">90%</i>
+            </span>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div><!-- End Skills Item -->
+      
+          <div class="progress">
+            <span class="skill">
+              <i class="fas fa-database"></i> <span>SQL</span> 
+              <i class="val">80%</i>
+            </span>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div><!-- End Skills Item -->
+      
+          <div class="progress">
+            <span class="skill">
+              <i class="fab fa-python"></i> <span>Python</span> 
+              <i class="val">80%</i>
+            </span>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div><!-- End Skills Item -->
+      
+          <div class="progress">
+            <span class="skill">
+              <i class="fas fa-chart-line"></i> <span>Power BI</span> 
+              <i class="val">80%</i>
+            </span>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div><!-- End Skills Item -->
+      
+        </div>
+      
+        <div class="col-lg-6">
+      
+          <div class="progress">
+            <span class="skill">
+              <i class="fas fa-chart-bar"></i> <span>Tableau</span> 
+              <i class="val">90%</i>
+            </span>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div><!-- End Skills Item -->
+      
+          <div class="progress">
+            <span class="skill">
+              <i class="fas fa-chart-pie"></i> <span>Looker Studio</span> 
+              <i class="val">80%</i>
+            </span>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div><!-- End Skills Item -->
+      
+          <div class="progress">
+            <span class="skill">
+              <i class="fas fa-code"></i> <span>R Studio</span> 
+              <i class="val">65%</i>
+            </span>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div><!-- End Skills Item -->
+      
+          <div class="progress">
+            <span class="skill">
+              <i class="fas fa-project-diagram"></i> <span>Alteryx</span> 
+              <i class="val">50%</i>
+            </span>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div><!-- End Skills Item -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const observerOptions = {
+        threshold: 0.3,
+        rootMargin: '0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const progressBars = entry.target.querySelectorAll('.progress');
+            progressBars.forEach((bar, index) => {
+              setTimeout(() => {
+                bar.classList.add('animated');
+              }, index * 100);
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      const skillsSection = document.querySelector('#skills .skills-content');
+      if (skillsSection) {
+        observer.observe(skillsSection);
+      }
+    })();
+  </script>
+</section>
 
   <!-- Section Title -->
   <div class="container section-title" data-aos="fade-up">
