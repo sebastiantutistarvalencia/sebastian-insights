@@ -1254,32 +1254,87 @@
     </section><!-- /Services Section -->
 
     <!-- Portfolio Section -->
-    <section id="portfolio" class="portfolio section light-background">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Portafolio</h2>
-        <p>"Trabajar con datos es como explorar el Universo: Cuanto más exploras, más maravillas descubres" Hillary Mason</p>
-      </div><!-- End Section Title -->
-
-      <div class="container">
-        <div class="container section-title" data-aos="fade-up" style="text-align: center;">
-          <h2>Contribuciones en GitHub</h2>
-          <p>
-            <a href="https://github.com/sebastiantutistarvalencia" target="_blank" style="font-size: 18px; color: #0366d6; text-decoration: none;">
-              github.com/sebastiantutistarvalencia
-            </a>
-          </p>
-          <img src="https://ghchart.rshah.org/sebastiantutistarvalencia" alt="GitHub chart" style="max-width: 100%; height: auto;" />
-        </div><!-- End Section Title -->
-      </div>
-
-<section id="portfolio" class="portfolio section">
+<section id="portfolio" class="portfolio section light-background">
   <style>
     .portfolio.section {
-      background: #ffffff;
+      background: #f8f9fa;
       padding: 80px 20px;
       position: relative;
+    }
+
+    .portfolio .section-title {
+      text-align: center;
+      margin-bottom: 60px;
+      animation: fadeInDown 0.8s ease-out;
+      position: relative;
+      z-index: 1;
+      padding: 0 20px;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .portfolio .section-title h2 {
+      font-size: 32px;
+      font-weight: 700;
+      color: #2d3748;
+      margin-bottom: 20px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .portfolio .section-title h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 4px;
+      background: #007bff;
+      border-radius: 2px;
+    }
+
+    .portfolio .section-title p {
+      font-size: 16px;
+      color: #718096;
+      line-height: 1.8;
+      max-width: 1000px;
+      margin: 30px auto 0;
+      padding: 0 20px;
+      font-style: italic;
+    }
+
+    .portfolio .section-title a {
+      color: #007bff;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+
+    .portfolio .section-title a:hover {
+      color: #0056b3;
+      text-decoration: underline;
+    }
+
+    .portfolio .section-title img {
+      margin-top: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .portfolio .section-title img:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 30px rgba(0, 123, 255, 0.15);
     }
 
     .portfolio .container {
@@ -1299,19 +1354,8 @@
       animation: fadeInDown 0.6s ease-out;
     }
 
-    @keyframes fadeInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
     .portfolio-filters li {
-      background: #f8f9fa;
+      background: #ffffff;
       color: #2d3748;
       padding: 12px 28px;
       border-radius: 25px;
@@ -1322,6 +1366,7 @@
       border: 2px solid transparent;
       position: relative;
       overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     }
 
     .portfolio-filters li::before {
@@ -1479,32 +1524,6 @@
       box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
     }
 
-    /* Animación de filtrado */
-    .portfolio-item {
-      transition: all 0.3s ease;
-    }
-
-    .portfolio-item.hidden {
-      opacity: 0;
-      transform: scale(0.8);
-      position: absolute;
-      pointer-events: none;
-    }
-
-    /* Estados hover mejorados */
-    @keyframes float {
-      0%, 100% {
-        transform: translateY(-10px);
-      }
-      50% {
-        transform: translateY(-15px);
-      }
-    }
-
-    .portfolio-content:hover {
-      animation: float 2s ease-in-out infinite;
-    }
-
     /* Badge de categoría */
     .portfolio-content::before {
       content: attr(data-category);
@@ -1528,8 +1547,16 @@
       transform: translateX(0);
     }
 
-    /* Responsive para filtros */
+    /* Responsive */
     @media (max-width: 768px) {
+      .portfolio .section-title h2 {
+        font-size: 26px;
+      }
+
+      .portfolio .section-title p {
+        font-size: 14px;
+      }
+
       .portfolio-filters {
         gap: 10px;
       }
@@ -1556,13 +1583,26 @@
     .portfolio-item {
       will-change: transform, opacity;
     }
-
-    /* Mejora visual del grid */
-    .isotope-container {
-      position: relative;
-    }
   </style>
 
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Portafolio</h2>
+    <p>"Trabajar con datos es como explorar el Universo: Cuanto más exploras, más maravillas descubres" Hillary Mason</p>
+  </div><!-- End Section Title -->
+
+  <div class="container">
+    <div class="container section-title" data-aos="fade-up" style="text-align: center;">
+      <h2>Contribuciones en GitHub</h2>
+      <p>
+        <a href="https://github.com/sebastiantutistarvalencia" target="_blank" style="font-size: 18px; color: #0366d6; text-decoration: none;">
+          github.com/sebastiantutistarvalencia
+        </a>
+      </p>
+      <img src="https://ghchart.rshah.org/sebastiantutistarvalencia" alt="GitHub chart" style="max-width: 100%; height: auto;" />
+    </div><!-- End Section Title -->
+  </div>
+  
   <div class="container">
 
     <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
@@ -1787,12 +1827,7 @@
       items.forEach(item => observer.observe(item));
     })();
   </script>
-</section>
-
-
-
-
-    </section><!-- /Portfolio Section -->
+</section><!-- /Portfolio Section -->
 
 <!-- Contact Section -->
 <section id="contact" class="contact section">
