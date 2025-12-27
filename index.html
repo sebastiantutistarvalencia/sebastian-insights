@@ -1026,35 +1026,30 @@
 
     <!-- Skills Section -->
 <!-- Skills Section con Grafo Interactivo -->
-<section id="skills" class="skills section" style="background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); padding: 80px 0; min-height: 100vh; position: relative;">
+<section id="skills" class="skills section light-background">
   
   <style>
     #skills.skills {
-      overflow: hidden;
+      padding: 80px 0;
+      background: #f8f9fa;
     }
 
     .skills-graph-header {
       text-align: center;
-      color: white;
       padding: 0 20px 40px;
       animation: fadeInSkills 1s ease-in;
-      position: relative;
-      z-index: 1;
     }
 
     .skills-graph-header h2 {
       font-size: 2.8em;
       margin-bottom: 20px;
-      background: linear-gradient(90deg, #00f2fe, #4facfe, #00f2fe);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      font-weight: 800;
+      color: #2c3e50;
+      font-weight: 700;
     }
 
     .skills-graph-header p {
       font-size: 1.1em;
-      color: #b4b4b4;
+      color: #6c757d;
       max-width: 900px;
       margin: 0 auto;
       line-height: 1.6;
@@ -1065,8 +1060,6 @@
       max-width: 1400px;
       margin: 0 auto;
       padding: 0 20px;
-      position: relative;
-      z-index: 1;
     }
 
     .skills-canvas-container {
@@ -1079,11 +1072,12 @@
     #skillsGraphCanvas {
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.3);
+      background: #ffffff;
       border-radius: 20px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
       cursor: grab;
       display: block;
+      border: 1px solid #e9ecef;
     }
 
     #skillsGraphCanvas:active {
@@ -1096,25 +1090,24 @@
       gap: 20px;
       padding: 20px;
       flex-wrap: wrap;
-      position: relative;
-      z-index: 1;
     }
 
     .skills-legend-item {
       display: flex;
       align-items: center;
       gap: 10px;
-      color: white;
+      color: #495057;
       font-size: 0.95em;
-      background: rgba(255, 255, 255, 0.1);
+      background: #ffffff;
       padding: 10px 20px;
       border-radius: 50px;
-      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
       transition: all 0.3s ease;
+      border: 1px solid #e9ecef;
     }
 
     .skills-legend-item:hover {
-      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
       transform: translateY(-2px);
     }
 
@@ -1122,7 +1115,7 @@
       width: 18px;
       height: 18px;
       border-radius: 50%;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     }
 
     .skills-info-panel {
@@ -1130,14 +1123,13 @@
       top: 50%;
       right: 30px;
       transform: translateY(-50%);
-      background: rgba(0, 0, 0, 0.95);
+      background: #ffffff;
       padding: 30px;
       border-radius: 20px;
-      color: white;
+      color: #2c3e50;
       min-width: 280px;
-      backdrop-filter: blur(20px);
-      border: 2px solid rgba(79, 172, 254, 0.5);
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      border: 2px solid #0d6efd;
       display: none;
       z-index: 2000;
     }
@@ -1150,27 +1142,24 @@
     .skills-info-panel h3 {
       font-size: 1.8em;
       margin-bottom: 15px;
-      color: #4facfe;
+      color: #0d6efd;
       font-weight: 700;
     }
 
     .skills-info-panel .percentage {
       font-size: 3.5em;
       font-weight: 800;
-      background: linear-gradient(135deg, #00f2fe, #4facfe);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: #0d6efd;
       margin: 15px 0;
       display: block;
     }
 
     .skills-info-panel .category {
-      color: #b4b4b4;
+      color: #6c757d;
       font-size: 1em;
       margin-top: 15px;
       padding-top: 15px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid #e9ecef;
     }
 
     @keyframes fadeInSkills {
@@ -1217,10 +1206,10 @@
     }
   </style>
 
-  <div class="container">
+  <div class="container section-title" data-aos="fade-up">
     <div class="skills-graph-header">
-      <h2>🚀 Mapa de Habilidades Técnicas</h2>
-      <p>Explora mis competencias en análisis de datos, visualización e inteligencia empresarial. Interactúa con el grafo: arrastra los nodos, haz clic para ver detalles.</p>
+      <h2>Skills</h2>
+      <p>Altamente capacitado en análisis de datos, visualización de datos e inteligencia empresarial. Dominio de Excel, Python, PySpark, SQL Server, Power BI, Tableau, Looker Studio y R Studio, con un enfoque sólido en transformar datos complejos en información útil para la toma de decisiones estratégicas</p>
     </div>
 
     <div class="skills-canvas-wrapper">
@@ -1230,19 +1219,19 @@
 
       <div class="skills-legend">
         <div class="skills-legend-item">
-          <div class="skills-legend-color" style="background: linear-gradient(135deg, #ff6b6b, #ee5a6f);"></div>
+          <div class="skills-legend-color" style="background: #0d6efd;"></div>
           <span>Centro</span>
         </div>
         <div class="skills-legend-item">
-          <div class="skills-legend-color" style="background: linear-gradient(135deg, #4facfe, #00f2fe);"></div>
+          <div class="skills-legend-color" style="background: #0dcaf0;"></div>
           <span>Análisis</span>
         </div>
         <div class="skills-legend-item">
-          <div class="skills-legend-color" style="background: linear-gradient(135deg, #43e97b, #38f9d7);"></div>
+          <div class="skills-legend-color" style="background: #198754;"></div>
           <span>Visualización</span>
         </div>
         <div class="skills-legend-item">
-          <div class="skills-legend-color" style="background: linear-gradient(135deg, #fa709a, #fee140);"></div>
+          <div class="skills-legend-color" style="background: #ffc107;"></div>
           <span>Big Data</span>
         </div>
       </div>
@@ -1281,15 +1270,15 @@
       }
 
       const nodes = [
-        { id: 'center', label: 'YO', radius: 70, color: '#ff6b6b', percentage: 100, category: 'Centro de Datos', icon: '👨‍💻' },
-        { id: 'excel', label: 'Excel', radius: 50, color: '#4facfe', percentage: 90, category: 'Análisis', icon: '📊' },
-        { id: 'python', label: 'Python', radius: 48, color: '#4facfe', percentage: 80, category: 'Análisis', icon: '🐍' },
-        { id: 'pyspark', label: 'PySpark', radius: 45, color: '#fa709a', percentage: 70, category: 'Big Data', icon: '⚡' },
-        { id: 'sql', label: 'SQL Server', radius: 48, color: '#4facfe', percentage: 80, category: 'Análisis', icon: '🗄️' },
-        { id: 'powerbi', label: 'Power BI', radius: 48, color: '#43e97b', percentage: 80, category: 'Visualización', icon: '📈' },
-        { id: 'tableau', label: 'Tableau', radius: 50, color: '#43e97b', percentage: 90, category: 'Visualización', icon: '📉' },
-        { id: 'looker', label: 'Looker', radius: 48, color: '#43e97b', percentage: 80, category: 'Visualización', icon: '👁️' },
-        { id: 'rstudio', label: 'R Studio', radius: 43, color: '#4facfe', percentage: 65, category: 'Análisis', icon: '📐' }
+        { id: 'center', label: 'YO', radius: 70, color: '#0d6efd', percentage: 100, category: 'Centro de Datos', icon: '👨‍💻' },
+        { id: 'excel', label: 'Excel', radius: 50, color: '#0dcaf0', percentage: 90, category: 'Análisis', icon: '📊' },
+        { id: 'python', label: 'Python', radius: 48, color: '#0dcaf0', percentage: 80, category: 'Análisis', icon: '🐍' },
+        { id: 'pyspark', label: 'PySpark', radius: 45, color: '#ffc107', percentage: 70, category: 'Big Data', icon: '⚡' },
+        { id: 'sql', label: 'SQL Server', radius: 48, color: '#0dcaf0', percentage: 80, category: 'Análisis', icon: '🗄️' },
+        { id: 'powerbi', label: 'Power BI', radius: 48, color: '#198754', percentage: 80, category: 'Visualización', icon: '📈' },
+        { id: 'tableau', label: 'Tableau', radius: 50, color: '#198754', percentage: 90, category: 'Visualización', icon: '📉' },
+        { id: 'looker', label: 'Looker', radius: 48, color: '#198754', percentage: 80, category: 'Visualización', icon: '👁️' },
+        { id: 'rstudio', label: 'R Studio', radius: 43, color: '#0dcaf0', percentage: 65, category: 'Análisis', icon: '📐' }
       ];
 
       function initNodePositions() {
@@ -1357,16 +1346,16 @@
           const currentRadius = node.radius * scale;
 
           ctx.shadowColor = node.color;
-          ctx.shadowBlur = isHovered ? 40 : 20;
+          ctx.shadowBlur = isHovered ? 30 : 15;
           
-          const glowGradient = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, currentRadius + 20);
+          const glowGradient = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, currentRadius + 15);
           glowGradient.addColorStop(0, node.color + 'ff');
-          glowGradient.addColorStop(0.5, node.color + '80');
+          glowGradient.addColorStop(0.5, node.color + '60');
           glowGradient.addColorStop(1, node.color + '00');
           
           ctx.fillStyle = glowGradient;
           ctx.beginPath();
-          ctx.arc(node.x, node.y, currentRadius + 20, 0, 2 * Math.PI);
+          ctx.arc(node.x, node.y, currentRadius + 15, 0, 2 * Math.PI);
           ctx.fill();
 
           const mainGradient = ctx.createRadialGradient(
@@ -1377,15 +1366,15 @@
             node.y, 
             currentRadius
           );
-          mainGradient.addColorStop(0, node.color + 'ff');
-          mainGradient.addColorStop(1, node.color + 'cc');
+          mainGradient.addColorStop(0, node.color);
+          mainGradient.addColorStop(1, node.color + 'dd');
           
           ctx.fillStyle = mainGradient;
           ctx.beginPath();
           ctx.arc(node.x, node.y, currentRadius, 0, 2 * Math.PI);
           ctx.fill();
 
-          ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
           ctx.lineWidth = 2;
           ctx.beginPath();
           ctx.arc(node.x, node.y, currentRadius - 2, 0, 2 * Math.PI);
@@ -1400,17 +1389,17 @@
           ctx.fillText(node.icon, node.x, node.y);
 
           ctx.font = 'bold 16px Arial';
-          ctx.fillStyle = 'white';
-          ctx.strokeStyle = 'rgba(0, 0, 0, 0.9)';
-          ctx.lineWidth = 5;
+          ctx.fillStyle = '#2c3e50';
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
+          ctx.lineWidth = 4;
           ctx.strokeText(node.label, node.x, node.y + currentRadius + 25);
           ctx.fillText(node.label, node.x, node.y + currentRadius + 25);
 
           if (node.id !== 'center') {
             ctx.font = 'bold 14px Arial';
-            ctx.fillStyle = '#4facfe';
-            ctx.strokeStyle = 'rgba(0, 0, 0, 0.9)';
-            ctx.lineWidth = 4;
+            ctx.fillStyle = '#0d6efd';
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.lineWidth = 3;
             ctx.strokeText(`${node.percentage}%`, node.x, node.y + currentRadius + 45);
             ctx.fillText(`${node.percentage}%`, node.x, node.y + currentRadius + 45);
           }
