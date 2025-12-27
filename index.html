@@ -1026,49 +1026,64 @@
 
     <!-- Skills Section -->
 <!-- Skills Section con Grafo Interactivo -->
-<section id="skills" class="skills section" style="background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); padding: 60px 0; min-height: 100vh;">
+<section id="skills" class="skills section" style="background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); padding: 80px 0; min-height: 100vh; position: relative;">
   
   <style>
+    #skills.skills {
+      overflow: hidden;
+    }
+
     .skills-graph-header {
       text-align: center;
       color: white;
-      padding: 0 20px 20px;
+      padding: 0 20px 40px;
       animation: fadeInSkills 1s ease-in;
+      position: relative;
+      z-index: 1;
     }
 
     .skills-graph-header h2 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
+      font-size: 2.8em;
+      margin-bottom: 20px;
       background: linear-gradient(90deg, #00f2fe, #4facfe, #00f2fe);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      background-clip: text;
       font-weight: 800;
     }
 
     .skills-graph-header p {
-      font-size: 1em;
+      font-size: 1.1em;
       color: #b4b4b4;
       max-width: 900px;
       margin: 0 auto;
-      line-height: 1.5;
+      line-height: 1.6;
+    }
+
+    .skills-canvas-wrapper {
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
     }
 
     .skills-canvas-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      min-height: 600px;
+      width: 100%;
+      height: 700px;
+      position: relative;
+      margin-bottom: 40px;
     }
 
     #skillsGraphCanvas {
       width: 100%;
-      max-width: 1600px;
-      height: 600px;
+      height: 100%;
       background: rgba(0, 0, 0, 0.3);
       border-radius: 20px;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
       cursor: grab;
+      display: block;
     }
 
     #skillsGraphCanvas:active {
@@ -1081,6 +1096,8 @@
       gap: 20px;
       padding: 20px;
       flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
     }
 
     .skills-legend-item {
@@ -1088,17 +1105,24 @@
       align-items: center;
       gap: 10px;
       color: white;
-      font-size: 0.9em;
+      font-size: 0.95em;
       background: rgba(255, 255, 255, 0.1);
-      padding: 8px 16px;
+      padding: 10px 20px;
       border-radius: 50px;
       backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .skills-legend-item:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
     }
 
     .skills-legend-color {
-      width: 16px;
-      height: 16px;
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     }
 
     .skills-info-panel {
@@ -1106,68 +1130,70 @@
       top: 50%;
       right: 30px;
       transform: translateY(-50%);
-      background: rgba(0, 0, 0, 0.9);
-      padding: 25px;
-      border-radius: 15px;
+      background: rgba(0, 0, 0, 0.95);
+      padding: 30px;
+      border-radius: 20px;
       color: white;
-      min-width: 250px;
-      backdrop-filter: blur(10px);
+      min-width: 280px;
+      backdrop-filter: blur(20px);
       border: 2px solid rgba(79, 172, 254, 0.5);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
       display: none;
-      z-index: 1000;
+      z-index: 2000;
     }
 
     .skills-info-panel.active {
       display: block;
-      animation: slideInPanel 0.3s ease-out;
+      animation: slideInPanel 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .skills-info-panel h3 {
-      font-size: 1.5em;
+      font-size: 1.8em;
       margin-bottom: 15px;
       color: #4facfe;
+      font-weight: 700;
     }
 
     .skills-info-panel .percentage {
-      font-size: 3em;
+      font-size: 3.5em;
       font-weight: 800;
-      background: linear-gradient(90deg, #00f2fe, #4facfe);
+      background: linear-gradient(135deg, #00f2fe, #4facfe);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin: 10px 0;
+      background-clip: text;
+      margin: 15px 0;
+      display: block;
     }
 
     .skills-info-panel .category {
       color: #b4b4b4;
-      font-size: 0.9em;
-      margin-top: 10px;
+      font-size: 1em;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     @keyframes fadeInSkills {
-      from { opacity: 0; transform: translateY(-20px); }
+      from { opacity: 0; transform: translateY(-30px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes slideInPanel {
-      from { transform: translateY(-50%) translateX(50px); opacity: 0; }
+      from { transform: translateY(-50%) translateX(100px); opacity: 0; }
       to { transform: translateY(-50%) translateX(0); opacity: 1; }
     }
 
     @media (max-width: 768px) {
       .skills-graph-header h2 {
-        font-size: 1.8em;
+        font-size: 2em;
       }
       
       .skills-graph-header p {
-        font-size: 0.9em;
+        font-size: 0.95em;
       }
       
       .skills-canvas-container {
-        min-height: 500px;
-      }
-
-      #skillsGraphCanvas {
-        height: 500px;
+        height: 550px;
       }
       
       .skills-info-panel {
@@ -1177,44 +1203,49 @@
         right: 20px;
         left: 20px;
         transform: none;
+        min-width: auto;
       }
       
       .skills-info-panel.active {
-        animation: slideUpPanel 0.3s ease-out;
+        animation: slideUpPanel 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
       }
       
       @keyframes slideUpPanel {
-        from { transform: translateY(100px); opacity: 0; }
+        from { transform: translateY(150px); opacity: 0; }
         to { transform: translateY(0); opacity: 1; }
       }
     }
   </style>
 
-  <div class="skills-graph-header">
-    <h2>🚀 Mapa de Habilidades Técnicas</h2>
-    <p>Explora mis competencias en análisis de datos, visualización e inteligencia empresarial. Interactúa con el grafo: arrastra los nodos, haz clic para ver detalles.</p>
-  </div>
+  <div class="container">
+    <div class="skills-graph-header">
+      <h2>🚀 Mapa de Habilidades Técnicas</h2>
+      <p>Explora mis competencias en análisis de datos, visualización e inteligencia empresarial. Interactúa con el grafo: arrastra los nodos, haz clic para ver detalles.</p>
+    </div>
 
-  <div class="skills-canvas-container">
-    <canvas id="skillsGraphCanvas"></canvas>
-  </div>
+    <div class="skills-canvas-wrapper">
+      <div class="skills-canvas-container">
+        <canvas id="skillsGraphCanvas"></canvas>
+      </div>
 
-  <div class="skills-legend">
-    <div class="skills-legend-item">
-      <div class="skills-legend-color" style="background: linear-gradient(135deg, #ff6b6b, #ee5a6f);"></div>
-      <span>Centro</span>
-    </div>
-    <div class="skills-legend-item">
-      <div class="skills-legend-color" style="background: linear-gradient(135deg, #4facfe, #00f2fe);"></div>
-      <span>Análisis</span>
-    </div>
-    <div class="skills-legend-item">
-      <div class="skills-legend-color" style="background: linear-gradient(135deg, #43e97b, #38f9d7);"></div>
-      <span>Visualización</span>
-    </div>
-    <div class="skills-legend-item">
-      <div class="skills-legend-color" style="background: linear-gradient(135deg, #fa709a, #fee140);"></div>
-      <span>Big Data</span>
+      <div class="skills-legend">
+        <div class="skills-legend-item">
+          <div class="skills-legend-color" style="background: linear-gradient(135deg, #ff6b6b, #ee5a6f);"></div>
+          <span>Centro</span>
+        </div>
+        <div class="skills-legend-item">
+          <div class="skills-legend-color" style="background: linear-gradient(135deg, #4facfe, #00f2fe);"></div>
+          <span>Análisis</span>
+        </div>
+        <div class="skills-legend-item">
+          <div class="skills-legend-color" style="background: linear-gradient(135deg, #43e97b, #38f9d7);"></div>
+          <span>Visualización</span>
+        </div>
+        <div class="skills-legend-item">
+          <div class="skills-legend-color" style="background: linear-gradient(135deg, #fa709a, #fee140);"></div>
+          <span>Big Data</span>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1227,17 +1258,24 @@
   <script>
     (function() {
       const canvas = document.getElementById('skillsGraphCanvas');
+      if (!canvas) return;
+      
       const ctx = canvas.getContext('2d');
       const infoPanel = document.getElementById('skillsInfoPanel');
-
       let animationId;
 
       function resizeCanvas() {
+        const container = canvas.parentElement;
         const dpr = window.devicePixelRatio || 1;
-        canvas.width = canvas.offsetWidth * dpr;
-        canvas.height = canvas.offsetHeight * dpr;
-        canvas.style.width = canvas.offsetWidth + 'px';
-        canvas.style.height = canvas.offsetHeight + 'px';
+        
+        const width = container.offsetWidth;
+        const height = container.offsetHeight;
+        
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+        
         ctx.scale(dpr, dpr);
         initNodePositions();
       }
@@ -1257,7 +1295,7 @@
       function initNodePositions() {
         const centerX = canvas.offsetWidth / 2;
         const centerY = canvas.offsetHeight / 2;
-        const radius = Math.min(canvas.offsetWidth, canvas.offsetHeight) * 0.35;
+        const radius = Math.min(canvas.offsetWidth, canvas.offsetHeight) * 0.32;
         
         nodes[0].x = centerX;
         nodes[0].y = centerY;
@@ -1496,11 +1534,17 @@
       });
 
       resizeCanvas();
+      
+      let resizeTimeout;
       window.addEventListener('resize', () => {
-        cancelAnimationFrame(animationId);
-        resizeCanvas();
-        animate();
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          cancelAnimationFrame(animationId);
+          resizeCanvas();
+          animate();
+        }, 100);
       });
+      
       animate();
     })();
   </script>
