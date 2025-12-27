@@ -1033,64 +1033,529 @@
         <p>Altamente capacitado en análisis de datos, visualización de datos e inteligencia empresarial. Dominio de Excel, Python, Power BI, Tableau, Looker Studio y R Studio, con un enfoque sólido en transformar datos complejos en información útil para la toma de decisiones</p>
       </div><!-- End Section Title -->
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+          <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        <div class="row skills-content skills-animation">
-      
-          <div class="col-lg-6">
-      
-            <div class="progress">
-              <span class="skill"><span>Excel</span> <i class="val">90%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div><!-- End Skills Item -->
-      
-            <div class="progress">
-              <span class="skill"><span>Python</span> <i class="val">80%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div><!-- End Skills Item -->
-      
-            <div class="progress">
-              <span class="skill"><span>PowerBI</span> <i class="val">80%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div><!-- End Skills Item -->
-      
-          </div>
-      
-          <div class="col-lg-6">
-      
-            <div class="progress">
-              <span class="skill"><span>Tableau</span> <i class="val">90%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div><!-- End Skills Item -->
-      
-            <div class="progress">
-              <span class="skill"><span>Looker Studio</span> <i class="val">80%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div><!-- End Skills Item -->
-      
-            <div class="progress">
-              <span class="skill"><span>R Studio</span> <i class="val">65%</i></span>
-              <div class="progress-bar-wrap">
-                <div class="progress-bar" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-            </div><!-- End Skills Item -->
-      
-          </div>
-  
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            padding: 30px 20px 20px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #00f2fe, #4facfe, #00f2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .header p {
+            font-size: 1em;
+            color: #b4b4b4;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        .canvas-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            min-height: 600px;
+        }
+
+        #graphCanvas {
+            width: 100%;
+            max-width: 1600px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            cursor: grab;
+        }
+
+        #graphCanvas:active {
+            cursor: grabbing;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            font-size: 0.9em;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+        }
+
+        .info-panel {
+            position: fixed;
+            top: 50%;
+            right: 30px;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 25px;
+            border-radius: 15px;
+            color: white;
+            min-width: 250px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(79, 172, 254, 0.5);
+            display: none;
+            z-index: 1000;
+        }
+
+        .info-panel.active {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .info-panel h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #4facfe;
+        }
+
+        .info-panel .percentage {
+            font-size: 3em;
+            font-weight: 800;
+            background: linear-gradient(90deg, #00f2fe, #4facfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 10px 0;
+        }
+
+        .info-panel .category {
+            color: #b4b4b4;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50%) translateX(50px); opacity: 0; }
+            to { transform: translateY(-50%) translateX(0); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .header p {
+                font-size: 0.9em;
+            }
+            
+            .canvas-container {
+                min-height: 500px;
+            }
+            
+            .info-panel {
+                position: fixed;
+                bottom: 20px;
+                top: auto;
+                right: 20px;
+                left: 20px;
+                transform: none;
+            }
+            
+            .info-panel.active {
+                animation: slideUp 0.3s ease-out;
+            }
+            
+            @keyframes slideUp {
+                from { transform: translateY(100px); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🚀 Mapa de Habilidades Técnicas</h1>
+        <p>Explora mis competencias en análisis de datos, visualización e inteligencia empresarial. Interactúa con el grafo: arrastra los nodos, haz clic para ver detalles.</p>
+    </div>
+
+    <div class="canvas-container">
+        <canvas id="graphCanvas"></canvas>
+    </div>
+
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-color" style="background: linear-gradient(135deg, #ff6b6b, #ee5a6f);"></div>
+            <span>Centro</span>
         </div>
-      
-      </div>
-      
+        <div class="legend-item">
+            <div class="legend-color" style="background: linear-gradient(135deg, #4facfe, #00f2fe);"></div>
+            <span>Análisis</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: linear-gradient(135deg, #43e97b, #38f9d7);"></div>
+            <span>Visualización</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: linear-gradient(135deg, #fa709a, #fee140);"></div>
+            <span>Big Data</span>
+        </div>
+    </div>
+
+    <div class="info-panel" id="infoPanel">
+        <h3 id="skillName">Skill</h3>
+        <div class="percentage" id="skillPercentage">0%</div>
+        <div class="category" id="skillCategory">Categoría</div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('graphCanvas');
+        const ctx = canvas.getContext('2d');
+        const infoPanel = document.getElementById('infoPanel');
+
+        let animationId;
+
+        // Ajustar canvas al tamaño real con mejor resolución
+        function resizeCanvas() {
+            const container = canvas.parentElement;
+            const dpr = window.devicePixelRatio || 1;
+            
+            canvas.width = container.offsetWidth * dpr;
+            canvas.height = container.offsetHeight * dpr;
+            canvas.style.width = container.offsetWidth + 'px';
+            canvas.style.height = container.offsetHeight + 'px';
+            
+            ctx.scale(dpr, dpr);
+            
+            // Reposicionar nodos
+            initNodePositions();
+        }
+
+        // Definir nodos con categorías
+        const nodes = [
+            { id: 'center', label: 'YO', radius: 70, color: '#ff6b6b', percentage: 100, category: 'Centro de Datos', icon: '👨‍💻' },
+            { id: 'excel', label: 'Excel', radius: 50, color: '#4facfe', percentage: 90, category: 'Análisis', icon: '📊' },
+            { id: 'python', label: 'Python', radius: 48, color: '#4facfe', percentage: 80, category: 'Análisis', icon: '🐍' },
+            { id: 'pyspark', label: 'PySpark', radius: 45, color: '#fa709a', percentage: 70, category: 'Big Data', icon: '⚡' },
+            { id: 'sql', label: 'SQL Server', radius: 48, color: '#4facfe', percentage: 80, category: 'Análisis', icon: '🗄️' },
+            { id: 'powerbi', label: 'Power BI', radius: 48, color: '#43e97b', percentage: 80, category: 'Visualización', icon: '📈' },
+            { id: 'tableau', label: 'Tableau', radius: 50, color: '#43e97b', percentage: 90, category: 'Visualización', icon: '📉' },
+            { id: 'looker', label: 'Looker', radius: 48, color: '#43e97b', percentage: 80, category: 'Visualización', icon: '👁️' },
+            { id: 'rstudio', label: 'R Studio', radius: 43, color: '#4facfe', percentage: 65, category: 'Análisis', icon: '📐' }
+        ];
+
+        function initNodePositions() {
+            const centerX = canvas.offsetWidth / 2;
+            const centerY = canvas.offsetHeight / 2;
+            
+            // Calcular radio apropiado basado en el tamaño del canvas
+            const radius = Math.min(canvas.offsetWidth, canvas.offsetHeight) * 0.35;
+            
+            nodes[0].x = centerX;
+            nodes[0].y = centerY;
+            nodes[0].vx = 0;
+            nodes[0].vy = 0;
+            
+            // Posicionar otros nodos en círculo
+            for (let i = 1; i < nodes.length; i++) {
+                const angle = ((i - 1) * (2 * Math.PI / (nodes.length - 1))) - Math.PI / 2;
+                nodes[i].x = centerX + radius * Math.cos(angle);
+                nodes[i].y = centerY + radius * Math.sin(angle);
+                nodes[i].vx = 0;
+                nodes[i].vy = 0;
+                nodes[i].targetAngle = angle;
+                nodes[i].targetRadius = radius;
+            }
+        }
+
+        // Variables para drag
+        let draggedNode = null;
+        let offsetX = 0;
+        let offsetY = 0;
+        let hoveredNode = null;
+
+        // Dibujar conexiones con partículas
+        function drawConnections() {
+            const centerNode = nodes[0];
+            
+            for (let i = 1; i < nodes.length; i++) {
+                const node = nodes[i];
+                
+                // Línea con gradiente
+                const gradient = ctx.createLinearGradient(centerNode.x, centerNode.y, node.x, node.y);
+                gradient.addColorStop(0, centerNode.color + '60');
+                gradient.addColorStop(1, node.color + 'a0');
+                
+                ctx.strokeStyle = gradient;
+                ctx.lineWidth = 3;
+                ctx.setLineDash([]);
+                ctx.beginPath();
+                ctx.moveTo(centerNode.x, centerNode.y);
+                ctx.lineTo(node.x, node.y);
+                ctx.stroke();
+
+                // Partículas en movimiento
+                const progress = (Date.now() / 2000 + i * 0.2) % 1;
+                const particleX = centerNode.x + (node.x - centerNode.x) * progress;
+                const particleY = centerNode.y + (node.y - centerNode.y) * progress;
+                
+                ctx.shadowColor = node.color;
+                ctx.shadowBlur = 10;
+                ctx.fillStyle = node.color;
+                ctx.beginPath();
+                ctx.arc(particleX, particleY, 5, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        // Dibujar nodos
+        function drawNodes() {
+            nodes.forEach(node => {
+                const isHovered = node === hoveredNode;
+                const isDragged = node === draggedNode;
+                const scale = isHovered || isDragged ? 1.15 : 1;
+                const currentRadius = node.radius * scale;
+
+                // Efecto glow exterior
+                ctx.shadowColor = node.color;
+                ctx.shadowBlur = isHovered ? 40 : 20;
+                
+                // Gradiente radial para el glow
+                const glowGradient = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, currentRadius + 20);
+                glowGradient.addColorStop(0, node.color + 'ff');
+                glowGradient.addColorStop(0.5, node.color + '80');
+                glowGradient.addColorStop(1, node.color + '00');
+                
+                ctx.fillStyle = glowGradient;
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, currentRadius + 20, 0, 2 * Math.PI);
+                ctx.fill();
+
+                // Círculo principal
+                const mainGradient = ctx.createRadialGradient(
+                    node.x - currentRadius * 0.3, 
+                    node.y - currentRadius * 0.3, 
+                    0, 
+                    node.x, 
+                    node.y, 
+                    currentRadius
+                );
+                mainGradient.addColorStop(0, node.color + 'ff');
+                mainGradient.addColorStop(1, node.color + 'cc');
+                
+                ctx.fillStyle = mainGradient;
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, currentRadius, 0, 2 * Math.PI);
+                ctx.fill();
+
+                // Borde brillante
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, currentRadius - 2, 0, 2 * Math.PI);
+                ctx.stroke();
+
+                ctx.shadowBlur = 0;
+
+                // Icono más grande
+                ctx.font = `${currentRadius * 0.7}px Arial`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = 'white';
+                ctx.fillText(node.icon, node.x, node.y);
+
+                // Etiqueta con mejor contraste
+                ctx.font = 'bold 16px Arial';
+                ctx.fillStyle = 'white';
+                ctx.strokeStyle = 'rgba(0, 0, 0, 0.9)';
+                ctx.lineWidth = 5;
+                ctx.strokeText(node.label, node.x, node.y + currentRadius + 25);
+                ctx.fillText(node.label, node.x, node.y + currentRadius + 25);
+
+                // Porcentaje
+                if (node.id !== 'center') {
+                    ctx.font = 'bold 14px Arial';
+                    ctx.fillStyle = '#4facfe';
+                    ctx.strokeStyle = 'rgba(0, 0, 0, 0.9)';
+                    ctx.lineWidth = 4;
+                    ctx.strokeText(`${node.percentage}%`, node.x, node.y + currentRadius + 45);
+                    ctx.fillText(`${node.percentage}%`, node.x, node.y + currentRadius + 45);
+                }
+            });
+        }
+
+        // Física mejorada
+        function updatePhysics() {
+            const centerNode = nodes[0];
+            
+            for (let i = 1; i < nodes.length; i++) {
+                const node = nodes[i];
+                if (node === draggedNode) continue;
+
+                // Posición objetivo
+                const targetX = centerNode.x + node.targetRadius * Math.cos(node.targetAngle);
+                const targetY = centerNode.y + node.targetRadius * Math.sin(node.targetAngle);
+
+                const dx = targetX - node.x;
+                const dy = targetY - node.y;
+
+                // Atracción suave
+                node.vx += dx * 0.02;
+                node.vy += dy * 0.02;
+
+                // Fricción
+                node.vx *= 0.85;
+                node.vy *= 0.85;
+
+                node.x += node.vx;
+                node.y += node.vy;
+
+                // Repulsión entre nodos periféricos
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const other = nodes[j];
+                    const dx = node.x - other.x;
+                    const dy = node.y - other.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (dist < 120 && dist > 0) {
+                        const force = (120 - dist) * 0.3;
+                        const angle = Math.atan2(dy, dx);
+                        node.vx += Math.cos(angle) * force;
+                        node.vy += Math.sin(angle) * force;
+                        other.vx -= Math.cos(angle) * force;
+                        other.vy -= Math.sin(angle) * force;
+                    }
+                }
+            }
+        }
+
+        // Animación principal
+        function animate() {
+            ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
+            
+            updatePhysics();
+            drawConnections();
+            drawNodes();
+            
+            animationId = requestAnimationFrame(animate);
+        }
+
+        // Eventos del mouse
+        function getMousePos(e) {
+            const rect = canvas.getBoundingClientRect();
+            return {
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top
+            };
+        }
+
+        canvas.addEventListener('mousedown', (e) => {
+            const pos = getMousePos(e);
+
+            for (const node of nodes) {
+                const dist = Math.sqrt(Math.pow(pos.x - node.x, 2) + Math.pow(pos.y - node.y, 2));
+                if (dist < node.radius) {
+                    draggedNode = node;
+                    offsetX = pos.x - node.x;
+                    offsetY = pos.y - node.y;
+                    break;
+                }
+            }
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            const pos = getMousePos(e);
+
+            if (draggedNode && draggedNode.id !== 'center') {
+                draggedNode.x = pos.x - offsetX;
+                draggedNode.y = pos.y - offsetY;
+                draggedNode.vx = 0;
+                draggedNode.vy = 0;
+            } else {
+                hoveredNode = null;
+                for (const node of nodes) {
+                    const dist = Math.sqrt(Math.pow(pos.x - node.x, 2) + Math.pow(pos.y - node.y, 2));
+                    if (dist < node.radius) {
+                        hoveredNode = node;
+                        canvas.style.cursor = 'pointer';
+                        break;
+                    }
+                }
+                if (!hoveredNode) {
+                    canvas.style.cursor = 'grab';
+                }
+            }
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            draggedNode = null;
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            draggedNode = null;
+            hoveredNode = null;
+        });
+
+        canvas.addEventListener('click', (e) => {
+            const pos = getMousePos(e);
+
+            for (const node of nodes) {
+                const dist = Math.sqrt(Math.pow(pos.x - node.x, 2) + Math.pow(pos.y - node.y, 2));
+                if (dist < node.radius) {
+                    document.getElementById('skillName').textContent = node.label;
+                    document.getElementById('skillPercentage').textContent = node.percentage + '%';
+                    document.getElementById('skillCategory').textContent = node.category;
+                    infoPanel.classList.add('active');
+                    return;
+                }
+            }
+            infoPanel.classList.remove('active');
+        });
+
+        // Inicializar
+        resizeCanvas();
+        window.addEventListener('resize', () => {
+            cancelAnimationFrame(animationId);
+            resizeCanvas();
+            animate();
+        });
+        animate();
+    </script>
 
     </section><!-- /Skills Section -->
 
