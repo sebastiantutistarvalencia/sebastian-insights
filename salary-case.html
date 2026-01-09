@@ -64,7 +64,7 @@
     <i class="header-toggle d-xl-none bi bi-list"></i>
 
     <div class="profile-img">
-      <img src="assets/img/my-profile-img.png" alt="" class="img-fluid rounded-circle">
+      <img src="assets/img/my-profile-img.png" alt="Sebastián Tutistar" class="img-fluid rounded-circle">
     </div>
 
     <a href="index.html" class="logo d-flex align-items-center justify-content-center">
@@ -72,18 +72,18 @@
     </a>
 
     <div class="social-links text-center">
-      <a href="https://www.linkedin.com/in/sebastian-tutistar-valencia-55b8131a2/" class="linkedin"><i class="bi bi-linkedin"></i></a>
+      <a href="https://www.linkedin.com/in/sebastian-tutistar-valencia-55b8131a2/" class="linkedin" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
     </div>
 
     <nav id="navmenu" class="navmenu">
       <ul>
-        <li><a href="index.html#hero" class="active"><i class="bi bi-house navicon"></i>Inicio</a></li>
-        <li><a href="index.html#about"><i class="bi bi-person navicon"></i>Acerca de mi</a></li>
-        <li><a href="index.html#formacion"><i class="bi bi-file-earmark-text navicon"></i> Formación</a></li>
+        <li><a href="index.html#hero"><i class="bi bi-house navicon"></i>Inicio</a></li>
+        <li><a href="index.html#about"><i class="bi bi-person navicon"></i>Acerca de mí</a></li>
+        <li><a href="index.html#formacion"><i class="bi bi-file-earmark-text navicon"></i>Formación</a></li>
         <li><a href="index.html#skills"><i class="bi bi-file-earmark-text navicon"></i>Skills</a></li>
-        <li><a href="index.html#services"><i class="bi bi-file-earmark-text navicon"></i> Servicios</a></li>
-        <li><a href="index.html#portfolio"><i class="bi bi-images navicon"></i> Portafolio</a></li>
-        <li><a href="index.html#contact"><i class="bi bi-envelope navicon"></i> Contacto</a></li>
+        <li><a href="index.html#services"><i class="bi bi-file-earmark-text navicon"></i>Servicios</a></li>
+        <li><a href="index.html#portfolio" class="active"><i class="bi bi-images navicon"></i>Portafolio</a></li>
+        <li><a href="index.html#contact"><i class="bi bi-envelope navicon"></i>Contacto</a></li>
       </ul>
     </nav>
   </header>
@@ -93,11 +93,12 @@
     <!-- Page Title -->
     <div class="page-title dark-background">
       <div class="container d-lg-flex justify-content-between align-items-center">
-        <h1 class="mb-2 mb-lg-0">Diferencias en Salario Docentes</h1>
+        <h1 class="mb-2 mb-lg-0">Diferencias en Salarios Docentes</h1>
         <nav class="breadcrumbs">
           <ol>
             <li><a href="index.html">Inicio</a></li>
-            <li class="current">Portafolio</li>
+            <li><a href="index.html#portfolio">Portafolio</a></li>
+            <li class="current">Análisis Salarios Académicos</li>
           </ol>
         </nav>
       </div>
@@ -125,6 +126,10 @@
                     "el": ".swiper-pagination",
                     "type": "bullets",
                     "clickable": true
+                  },
+                  "navigation": {
+                    "nextEl": ".swiper-button-next",
+                    "prevEl": ".swiper-button-prev"
                   }
                 }
               </script>
@@ -132,96 +137,153 @@
               <div class="swiper-wrapper align-items-center">
 
                 <div class="swiper-slide">
-                  <img src="assets/img/portfolio/graph1.png" alt="BME Tool 1" class="bi bi-zoom-in">
+                  <img src="assets/img/portfolio/graph1.png" alt="Distribución de frecuencias por género y salario" class="img-fluid">
                 </div>
 
                 <div class="swiper-slide">
-                  <img src="assets/img/portfolio/graph2.png" alt="BME Tool 2" class="bi bi-zoom-in">
+                  <img src="assets/img/portfolio/graph2.png" alt="Análisis por rango académico y disciplina" class="img-fluid">
                 </div>
 
                 <div class="swiper-slide">
-                  <img src="assets/img/portfolio/graph3.png" alt="BME Tool 3" class="bi bi-zoom-in">
+                  <img src="assets/img/portfolio/graph3.png" alt="Relación entre experiencia y salario" class="img-fluid">
                 </div>
 
                 <div class="swiper-slide">
-                  <img src="assets/img/portfolio/graph4.png" alt="BME Tool 4" class="bi bi-zoom-in">
+                  <img src="assets/img/portfolio/graph4.png" alt="Matriz de correlaciones" class="img-fluid">
                 </div>
+
               </div>
+              
+              <div class="swiper-pagination"></div>
+              <div class="swiper-button-prev"></div>
+              <div class="swiper-button-next"></div>
+
+            </div>
           </div>
 
           <div class="col-lg-4">
             <div class="portfolio-info" data-aos="fade-up" data-aos-delay="200">
-              <h3>Diferencias entre Salarios de Docentes</h3>
+              <h3>Análisis Estadístico de Salarios</h3>
               <ul>
                 <li><strong>Categoría</strong>: Académico</li>
-                <li><strong>Cliente</strong>: Académico.</li>
+                <li><strong>Cliente</strong>: Investigación Institucional</li>
                 <li><strong>Fecha Proyecto</strong>: 15 de Noviembre, 2025</li>
+                <li><strong>Herramientas</strong>: R, ggplot2, dplyr</li>
+                <li><strong>Dataset</strong>: 397 profesores (2008-09)</li>
               </ul>
             </div>
 
-<div class="portfolio-description" data-aos="fade-up" data-aos-delay="300">
+            <div class="portfolio-description" data-aos="fade-up" data-aos-delay="300">
 
-  <p>
-    Este proyecto corresponde a un <strong>análisis estadístico exhaustivo de salarios académicos</strong> en una universidad estadounidense durante el período académico 2008-09. El estudio se centra en <strong>identificar y cuantificar diferencias salariales entre géneros</strong> como parte del esfuerzo institucional de monitoreo de equidad salarial entre profesores.
-  </p>
+              <h2>Resumen Ejecutivo</h2>
+              
+              <p>
+                Este proyecto corresponde a un <strong>análisis estadístico exhaustivo de salarios académicos</strong> en una universidad estadounidense durante el período académico 2008-09. El estudio se centra en <strong>identificar y cuantificar diferencias salariales entre géneros</strong> como parte del esfuerzo institucional de monitoreo de equidad salarial entre profesores.
+              </p>
 
-  <h3>Objetivo principal</h3>
-  
-  <p>
-    Determinar si existen <strong>diferencias significativas en los salarios de nueve meses</strong> entre profesores masculinos y femeninos, controlando por <strong>rango académico, disciplina, experiencia y antigüedad</strong>, para informar políticas institucionales de compensación equitativa.
-  </p>
+              <h3>Objetivo Principal</h3>
+              
+              <p>
+                Determinar si existen <strong>diferencias significativas en los salarios de nueve meses</strong> entre profesores masculinos y femeninos, controlando por <strong>rango académico, disciplina, experiencia y antigüedad</strong>, para informar políticas institucionales de compensación equitativa.
+              </p>
 
-  <h3>¿Qué revela el análisis?</h3>
-  
-  <ul>
-    <li><strong>Disparidad de género evidente:</strong> Los profesores masculinos tienen salarios sustancialmente más altos (mediana ~$115K) comparado con mujeres (mediana ~$101K).</li>
-    <li><strong>Distribución desigual por rango:</strong> Solo 39 mujeres vs 358 hombres en la muestra, con sub-representación femenina en rangos superiores (Prof).</li>
-    <li><strong>Brecha por disciplina:</strong> Diferencias salariales existen tanto en disciplinas teóricas (A) como aplicadas (B).</li>
-    <li><strong>Experiencia vs. compensación:</strong> La correlación entre años de servicio y salario es alta (r=0.91), pero persisten diferencias de género.</li>
-    <li><strong>Impacto de la antigüedad:</strong> Correlaciones moderadas entre años desde PhD (r=0.42) y años de servicio (r=0.33) con el salario sugieren factores adicionales en juego.</li>
-  </ul>
+              <h3>¿Qué Revela el Análisis?</h3>
+              
+              <ul>
+                <li><strong>Disparidad de género evidente:</strong> Los profesores masculinos tienen salarios sustancialmente más altos (mediana ~$115,000) comparado con mujeres (mediana ~$101,000).</li>
+                <li><strong>Distribución desigual por rango:</strong> Solo 39 mujeres versus 358 hombres en la muestra, con sub-representación femenina en rangos superiores (Full Professor).</li>
+                <li><strong>Brecha por disciplina:</strong> Diferencias salariales existen tanto en disciplinas teóricas (A) como aplicadas (B), aunque la brecha es más pronunciada en disciplinas aplicadas.</li>
+                <li><strong>Experiencia versus compensación:</strong> La correlación entre años de servicio y salario es muy alta (r=0.91), pero persisten diferencias de género incluso controlando por experiencia.</li>
+                <li><strong>Impacto de la antigüedad:</strong> Correlaciones moderadas entre años desde PhD (r=0.42) y años de servicio (r=0.33) con el salario sugieren que factores adicionales influyen en la compensación.</li>
+              </ul>
 
-  <h3>Variables del dataset</h3>
-  
-  <ul>
-    <li><strong>rank:</strong> Rango académico (Assistant Prof, Associate Prof, Full Prof)</li>
-    <li><strong>discipline:</strong> Área disciplinar - A (teórica) o B (aplicada)</li>
-    <li><strong>yrs.since.phd:</strong> Años transcurridos desde obtención del doctorado</li>
-    <li><strong>yrs.service:</strong> Años de servicio en la institución</li>
-    <li><strong>sex:</strong> Género del profesor (Female/Male)</li>
-    <li><strong>salary:</strong> Salario académico de nueve meses (USD)</li>
-  </ul>
+              <h3>Variables del Dataset</h3>
+              
+              <ul>
+                <li><strong>rank:</strong> Rango académico (Assistant Prof, Associate Prof, Full Prof)</li>
+                <li><strong>discipline:</strong> Área disciplinar - A (teórica) o B (aplicada)</li>
+                <li><strong>yrs.since.phd:</strong> Años transcurridos desde obtención del doctorado</li>
+                <li><strong>yrs.service:</strong> Años de servicio en la institución</li>
+                <li><strong>sex:</strong> Género del profesor (Female/Male)</li>
+                <li><strong>salary:</strong> Salario académico de nueve meses (USD)</li>
+              </ul>
 
-  <h3>Hallazgos clave</h3>
-  
-  <p>
-    El análisis visual y correlacional revela un <strong>patrón sistemático de inequidad salarial</strong> que requiere:
-  </p>
-  
-  <ul>
-    <li>Evaluación de políticas de contratación y promoción por género</li>
-    <li>Análisis de negociaciones salariales iniciales y aumentos</li>
-    <li>Revisión de criterios de compensación por rango y disciplina</li>
-    <li>Implementación de auditorías regulares de equidad salarial</li>
-    <li>Modelos estadísticos avanzados (regresión multivariada) para aislar el efecto específico del género</li>
-  </ul>
+              <h3>Hallazgos Clave por Visualización</h3>
+              
+              <h4>Gráfico 1: Distribución por Género</h4>
+              <p>
+                Muestra una <strong>diferencia dramática en la representación</strong> (39 mujeres vs 358 hombres) y evidencia clara de disparidad salarial. Los boxplots revelan que la mediana salarial masculina supera consistentemente a la femenina, con mayor dispersión en salarios masculinos.
+              </p>
 
-  <h3>Metodología y herramientas</h3>
-  
-  <ul>
-    <li><strong>R Statistical Software</strong> - Análisis exploratorio de datos</li>
-    <li><strong>Visualización estadística</strong> - Gráficos de barras, boxplots, diagramas de correlación</li>
-    <li><strong>Análisis descriptivo</strong> - Medidas de tendencia central y dispersión por grupos</li>
-    <li><strong>Estadística inferencial</strong> - Identificación de patrones y relaciones significativas</li>
-  </ul>
+              <h4>Gráfico 2: Análisis por Rango y Disciplina</h4>
+              <p>
+                Demuestra que las diferencias persisten <strong>a través de todos los rangos académicos</strong>. La proporción de mujeres disminuye significativamente en rangos superiores. En disciplinas aplicadas (B), la brecha salarial es más evidente.
+              </p>
 
-  <h3>Implicaciones institucionales</h3>
-  
-  <p>
-    Los resultados proporcionan <strong>evidencia cuantitativa clara</strong> para que la administración universitaria implemente ajustes salariales correctivos, revise procesos de contratación y establezca mecanismos transparentes de compensación que garanticen equidad de género en la facultad.
-  </p>
+              <h4>Gráfico 3: Experiencia y Trayectoria</h4>
+              <p>
+                Los scatter plots muestran correlación positiva entre años de servicio/PhD y salario, pero las profesoras (puntos rosados) tienden a concentrarse en la parte inferior de la distribución salarial <strong>incluso con experiencia similar</strong>.
+              </p>
 
-</div>
+              <h4>Gráfico 4: Matriz de Correlaciones</h4>
+              <p>
+                Revela la <strong>correlación extremadamente alta</strong> entre años de servicio y salario (r=0.91), sugiriendo que la antigüedad es el predictor más fuerte. Sin embargo, esto no explica completamente las diferencias observadas por género.
+              </p>
+
+              <h3>Implicaciones y Recomendaciones</h3>
+              
+              <p>
+                El análisis visual y correlacional revela un <strong>patrón sistemático de inequidad salarial</strong> que requiere acción institucional inmediata:
+              </p>
+              
+              <ul>
+                <li><strong>Auditoría salarial completa:</strong> Revisión caso por caso de salarios ajustando por rango, experiencia y disciplina</li>
+                <li><strong>Análisis de negociaciones iniciales:</strong> Evaluación de si existen sesgos en ofertas salariales de entrada</li>
+                <li><strong>Políticas de promoción:</strong> Identificar barreras para el avance de mujeres a rangos superiores</li>
+                <li><strong>Transparencia en compensación:</strong> Establecer bandas salariales claras por rango y disciplina</li>
+                <li><strong>Modelado estadístico avanzado:</strong> Implementar regresión multivariada para cuantificar el efecto específico del género controlando todas las variables</li>
+                <li><strong>Monitoreo continuo:</strong> Establecer métricas de equidad salarial en reportes anuales</li>
+              </ul>
+
+              <h3>Metodología y Herramientas</h3>
+              
+              <ul>
+                <li><strong>R Statistical Software</strong> - Análisis exploratorio y modelado estadístico</li>
+                <li><strong>ggplot2</strong> - Visualización de datos de alta calidad</li>
+                <li><strong>dplyr</strong> - Manipulación y transformación de datos</li>
+                <li><strong>Análisis descriptivo</strong> - Medidas de tendencia central, dispersión y distribución por grupos</li>
+                <li><strong>Análisis correlacional</strong> - Identificación de relaciones entre variables continuas</li>
+                <li><strong>Visualización comparativa</strong> - Boxplots, scatter plots y matrices de correlación</li>
+              </ul>
+
+              <h3>Limitaciones del Estudio</h3>
+              
+              <p>
+                Es importante considerar que este análisis es <strong>exploratorio y descriptivo</strong>. Para conclusiones causales, se requeriría:
+              </p>
+              
+              <ul>
+                <li>Análisis de regresión multivariada con controles adicionales</li>
+                <li>Datos sobre productividad académica (publicaciones, citas, grants)</li>
+                <li>Información sobre cargas administrativas y de enseñanza</li>
+                <li>Historial de negociaciones y aumentos salariales</li>
+                <li>Datos longitudinales para análisis de trayectorias</li>
+              </ul>
+
+              <h3>Conclusión</h3>
+              
+              <p>
+                Los resultados proporcionan <strong>evidencia cuantitativa clara y visual</strong> de disparidades salariales por género en la institución. La magnitud de la diferencia (~$14,000 en mediana), la sub-representación femenina en rangos superiores, y la persistencia de la brecha a través de disciplinas y niveles de experiencia justifican una <strong>intervención institucional inmediata</strong> para garantizar equidad salarial y avanzar hacia una cultura académica más justa e inclusiva.
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
     </section><!-- /Portfolio Details Section -->
 
   </main>
@@ -229,11 +291,11 @@
   <footer id="footer" class="footer position-relative light-background">
 
     <div class="container">
-      <div class="copyright text-center ">
-        <p>© <span>Copyright</span> <strong class="px-1 sitename"></strong> <span>Todos los Derechos Reservados</span></p>
+      <div class="copyright text-center">
+        <p>© <span>Copyright 2025</span> <strong class="px-1 sitename">Sebastián Tutistar Valencia</strong> <span>Todos los Derechos Reservados</span></p>
       </div>
       <div class="credits">
-        DEV <a href="https://sebastiantutistarvalencia.github.io/portfolio/">Sebastián Tutistar Valencia</a>
+        Desarrollado por <a href="https://sebastiantutistarvalencia.github.io/portfolio/">Sebastián Tutistar Valencia</a>
       </div>
     </div>
 
@@ -261,5 +323,4 @@
   <script src="assets/js/main.js"></script>
 
 </body>
-
 </html>
