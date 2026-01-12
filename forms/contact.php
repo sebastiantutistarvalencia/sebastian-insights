@@ -27,13 +27,11 @@
     'port' => '587'
   );
   */
-
-  // Agrega los mensajes al correo
+  
   $contact->add_message($_POST['name'], 'Nombre');
   $contact->add_message($_POST['email'], 'Correo');
   $contact->add_message($_POST['message'], 'Mensaje', 10);
 
-  // Envía el correo y devuelve el resultado
   echo $contact->send();
 ?>
 
